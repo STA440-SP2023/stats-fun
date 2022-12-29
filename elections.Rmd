@@ -1,0 +1,146 @@
+---
+title: "Case Study 3: Election Prediction"
+---
+
+```{r, echo=FALSE, include=FALSE}
+library(kableExtra)
+library(knitr)
+library(tidyverse)
+```
+![From medium.com](images/2020election.png)
+
+# Learning Objectives
+
+- continue developing skills in using models for prediction
+- evaluate and update predictions based on dynamic data
+- combine data on a variety of levels (national, state, individual) to predict election outcomes
+
+# Case Study Goals
+Goals of this case study are (1) to predict the outcome of the presidential election, (2) to predict whether the US Senate remains in Republican control, (3) to predict the electoral college vote, (4) to predict the outcomes of all NC Congressional elections (the 13 federal Representatives to Congress), and (5) to predict the outcome of the NC Senate election, including characterization of uncertainty in predictions.
+
+We will present predictions and corresponding uncertainty quantification weekly. In addition, prizes will be given in a number of categories (e.g., most creative useful data source).
+
+# Data
+
+- [gay_marriage_megapoll.dta](decks/data/gay_marriage_megapoll.dta)
+- [NC voter files](https://dl.ncsbe.gov/?prefix=data/) Note these data are processed on Sakai.
+- [Cooperative Congressional Election Study](https://cces.gov.harvard.edu/pages/welcome-cooperative-congressional-election-study) 
+- [Opportunity Insights Data Library](https://opportunityinsights.org/data/?geographic_level=0&topic=0&paper_id=0#resource-listing)
+- See data on cluster 
+
+# Resources
+
+- [BBC's Simple Guide to the US Election](https://www.bbc.com/news/election-us-2020-53785985)
+- [Andy Gelman Interview on Election Forecasting](https://www.datacamp.com/community/blog/election-forecasting-polling) (This is a very interesting interview overall. I suggest listening to it all, but the polling/election modeling component starts about 30 minutes into the interview.)
+- [Andy Gelman's Predictive Model for *The Economist*](https://projects.economist.com/us-2020-forecast/president/how-this-works)
+- [Linzer Paper on Forecasting US Presidential Elections]( https://votamatic.org/wp-content/uploads/2013/07/Linzer-JASA13.pdf)
+- [North Carolina Congressional Elections Fall 2020](https://ballotpedia.org/United_States_House_of_Representatives_elections_in_North_Carolina,_2020)
+- [Which districts are viewed as competitive?](https://ballotpedia.org/U.S._House_battlegrounds,_2020)
+- [Why do we care about likely voters?](https://fivethirtyeight.com/features/registered-voter-polls-will-usually-overrate-democrats/)
+- [FiveThirtyEight's election page]( https://fivethirtyeight.com/politics/elections/)
+- [FiveThirtyEight 2020 polling data overview](https://github.com/fivethirtyeight/data/tree/master/polls)
+- [2020 Presidential polls](https://projects.fivethirtyeight.com/polls-page/president_polls.csv)
+- [2020 Senate polls](https://projects.fivethirtyeight.com/polls-page/senate_polls.csv)
+- [2020 House of Representatives polls](https://projects.fivethirtyeight.com/polls-page/house_polls.csv)
+- [Historic Polling Data: final 3 weeks, 1998-2019]( https://github.com/fivethirtyeight/data/tree/master/pollster-ratings)
+- [2019 NC population data (Census Bureau)](https://www2.census.gov/programs-surveys/popest/datasets/2010-2019/counties/asrh/cc-est2019-alldata-37.csv)
+- [NC population data codebook](https://www2.census.gov/programs-surveys/popest/technical-documentation/file-layouts/2010-2019/cc-est2019-alldata.pdf)
+- [Huffington Post Pollster](https://elections.huffingtonpost.com/pollster)
+- [Google Street View and Voting](https://www.citylab.com/transportation/2017/12/google-street-view-data-demographics-cars-research/547436/)
+- [Pickup Trucks and Voting](http://www.thedrive.com/news/16712/trump-supporting-towns-more-likely-to-be-filled-with-pickup-trucks-study-claims)
+
+# Video Lectures (See Sakai - these are shorter bytes of what we covered in class)
+
+[Matrix Formulation of the Linear Model]
+
+[Introduction to Multilevel Modeling]
+
+[Some Light Technical Details About Multilevel Models]
+
+[More Details on the Radon Example]
+
+[Deep Dive into R Code]
+
+
+
+# Slides 
+- [ANOVA](decks/anova.html)
+- [Multilevel Models](decks/multilevel.html)
+- [Radon Code in One File](decks/radoncode.html)
+- [Basics of Election Prediction](decks/cs03_1.html)
+- [Poststratification and Weighting](decks/cs03_2.html)
+- [MRP Tutorial](decks/cs03_3.html)
+- [Predicting Electoral College Outcomes (Graham's Lab 10/5)](decks/electoralcollege.html)
+- [Random Effects Logistic Models](decks/glmm_01_deck.html)
+- [Election Modeling in Lab](decks/electionmodellab.html)
+
+# Reports
+
+- Groups: you can select your own group, or I can put you into groups. There are no restrictions on who can be in your group. It must have at least 3 members and no more than 5. Groups will be allocated on a first-come, first-served basis.  I reserve the right to add group members to smaller groups if needed (any groups I construct from students without team member preferences will aim to have 4-5 students).
+
+- Interim report: who votes in NC? Using the NC voter files, identify who votes in NC so that these data can be used in conjunction with surveys and other data in order to predict outcomes of NC congressional elections. Present results in short (<5 min) video presentation to upload. Page limit is 8 pages.
+
+- Weekly updates on predictions starting 10/16: provide point estimates of the probability of the probability that President Trump is re-elected and the probability the US Senate remains in Republican control; please also provide estimates of the predicted two-party vote share (point and interval estimates) for the 13 NC Congressional elections and the Tillis vs. Cunningham Senate race (point and interval estimates) -- have one person do this in Quizzes/Tests.
+
+- Final report: Items for Final Report (12 page limit) due 8am on Election Day:
+  - The final report itself should be structured with an introduction, description of methods (e.g., modeling and prediction strategy along with the models themselves), results (e.g., point and interval estimates of the % of votes won by each Congressional candidate, point and interval estimates of electoral college vote share). Discussion should include some evaluation of the relative predictive ability of variables in your models (e.g., maybe you tried to predict voter turnout as a function of pet ownership rates, but maybe pet ownership rates are not at all predictive – so we want to know which data sources you felt were most useful) as well as discussion of strengths and weaknesses of your strategy. Any visualizations should be included (or linked, if they are interactive) in the final report. The final report should contain two appendices, described below.
+    - Appendix A: Numbered list of all models/modeling procedures, with explicit details about model purpose, model structure (models written out using equations!), and resulting estimates from each model (raw output is fine for this appendix). Reproducible code and data should also be uploaded to Sakai.
+    - Appendix B: List of all data sets/data sources used, along with an explicit mapping from the models in Appendix A to the variables used from Appendix B in each model.
+- Presentation after election: discuss what went right and wrong with your modeling and assumptions based on election outcomes (e.g., winners, who voted, etc.)
+
+# Assessment
+
+In addition to the usual grade, a best prediction winner will be chosen, with all due honor and glory, based on the following algorithm developed by students in STA 340 (decision analysis), shown here for the outcome of the 13 NC congressional races. We'll include the NC senate race in this algorithm as well.
+
+For a predicted vote share $p$, truth $\theta$, and confidence interval $CI$ with bounds $p_\min, p_\max$:
+
+$$
+\begin{aligned}
+L(p, \theta) &=
+100\cdot|p-\theta| + I\{\theta\notin CI\}\cdot200\min\{|p-p_\min|,|p-p_\max|\} + 10\cdot|p_\max-p_\min|\\& + I\{0.5\notin CI\}\cdot\big(10\cdot I\{wrong\} - 3\cdot I\{right\}\big)  \\
+S &= -\sum_{i=1}^{13} L(p_i, \theta_i)
+\end{aligned}
+$$
+
+Point estimates within the $CI$ are penalized linearly and outside the $CI$ are penalized linearly with a higher slope. There is an additional penalty for wide confidence intervals, but only at 1/10th (or less) the cost of missing the point estimate. 
+
+The term on the second line of the loss function only comes into play when a confidence interval did not include 0.5. That is, the team was very certain of calling the race for one side or the other. Being very certain and wrong incurs an additional loss. Being very certain and right incurs utility, but with lower magnitude than being wrong. The idea behind this choice is some races should be easy to call and being unambiguously wrong with the confidence interval should hurt more.
+
+## Weekly Prediction Update: October 16
+
+- Estimates for the probability that President Trump wins re-election ranged from 0.004 to 0.49 (median 0.20)
+- Estimates for the probability that the Senate remains under Republican control ranged from 0.093 to 0.746 (median 0.43 )
+- Estimates for Tillis (vs Cunningham) two-party vote share ranged from 39-64% (median 47.5%) with confidence interval widths ranging from 1 to 28
+- 1st Congressional District of NC:  2/6 teams pick Smith
+- 2nd District: 5/6 teams pick Ross
+- 3rd District: 5/6 teams pick Murphy
+- 4th District: 5/6 teams pick Price
+- 5th District: all picked Foxx
+- 6th District: 4/6 teams pick Manning
+- 7th District: all teams pick Rouzer
+- 8th District: all teams pick Hudson
+- 9th District: 3/6 teams pick Bishop
+- 10th District: all teams pick McHenry
+- 11th District: all teams pick Cawthorn
+- 12th District: all teams pick Adams (with varying vote shares -- check that ballot!)
+- 13th District: all teams pick Budd
+
+## Weekly Prediction Update: October 26
+
+- Estimates for the probability that President Trump wins re-election ranged from 0.06 to 0.89 (median 0.23)
+- Estimates for the probability that the Senate remains under Republican control ranged from 0.17 to 0.82 (median 0.31 )
+- Estimates for Tillis (vs Cunningham) two-party vote share ranged from 32-48% (median 46.5%) 
+- 1st Congressional District of NC:  1/6 teams pick Smith
+- 2nd District: 5/6 teams pick Ross
+- 3rd District: 5/6 teams pick Murphy
+- 4th District: 5/6 teams pick Price
+- 5th District: 5/6 pick Foxx
+- 6th District: 4/6 teams pick Manning
+- 7th District: 5/6 teams pick Rouzer
+- 8th District: 5/6 teams pick Hudson
+- 9th District: 3/6 teams pick Bishop
+- 10th District: 5/6 teams pick McHenry
+- 11th District: 4/6 teams pick Cawthorn
+- 12th District: 5/6 teams pick Adams (with varying vote shares -- check that ballot!)
+- 13th District: all teams pick Budd
+                                                                                  

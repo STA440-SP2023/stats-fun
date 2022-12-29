@@ -1,0 +1,36 @@
+name: Case Studies in the Practice of Statistics
+output_dir: '.'
+navbar:
+  title: Case Studies
+  type: inverse
+  left:
+  - text: Home
+    href: index.html
+  - text: Policies
+    href: policies.html
+  - text: Discrimination 
+    href: discrimination.html
+  - text: Lifespans of World Leaders 
+    href: leaders.html
+  - text: Wearables and Health
+    href: detectstress.html
+  - text: Election Prediction
+    href: elections.html
+  - text: Individual Project
+    href: individual.html
+  
+
+  
+
+output:html_document:
+  theme: yeti
+  highlight: tango
+  fig_caption: yes
+  toc: yes
+  toc_float:
+    collapsed: no
+    smooth_scroll: yes
+  css: styles.css
+  lib_dir: site_libs
+  self_contained: no
+
