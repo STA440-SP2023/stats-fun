@@ -8,13 +8,11 @@ navbar:
     href: index.html
   - text: Policies
     href: policies.html
-  - text: Discrimination 
-    href: discrimination.html
-  - text: Lifespans of World Leaders 
+  - text: Time to Loan Default
     href: leaders.html
-  - text: Wearables and Health
+  - text: Lepidoptera Prediction
     href: detectstress.html
-  - text: Election Prediction
+  - text: Modeling the Visual Field
     href: elections.html
   - text: Individual Project
     href: individual.html

@@ -13,22 +13,36 @@
 
 <title>Case Study 3: Election Prediction</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
-<style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -41,32 +55,8 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
+
 
 
 
@@ -76,10 +66,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -96,40 +82,16 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -157,7 +119,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -169,7 +131,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -179,11 +141,28 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.parent().addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -195,7 +174,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -262,7 +240,7 @@ $(document).ready(function () {
 <div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -278,16 +256,13 @@ $(document).ready(function () {
   <a href="policies.html">Policies</a>
 </li>
 <li>
-  <a href="discrimination.html">Discrimination</a>
+  <a href="leaders.html">Time to Loan Default</a>
 </li>
 <li>
-  <a href="leaders.html">Lifespans of World Leaders</a>
+  <a href="detectstress.html">Lepidoptera Prediction</a>
 </li>
 <li>
-  <a href="detectstress.html">Wearables and Health</a>
-</li>
-<li>
-  <a href="elections.html">Election Prediction</a>
+  <a href="elections.html">Modeling the Visual Field</a>
 </li>
 <li>
   <a href="individual.html">Individual Project</a>
@@ -300,7 +275,7 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -318,49 +293,104 @@ $(document).ready(function () {
 <ul>
 <li>continue developing skills in using models for prediction</li>
 <li>evaluate and update predictions based on dynamic data</li>
-<li>combine data on a variety of levels (national, state, individual) to predict election outcomes</li>
+<li>combine data on a variety of levels (national, state, individual) to
+predict election outcomes</li>
 </ul>
 </div>
 <div id="case-study-goals" class="section level1">
 <h1>Case Study Goals</h1>
-<p>Goals of this case study are (1) to predict the outcome of the presidential election, (2) to predict whether the US Senate remains in Republican control, (3) to predict the electoral college vote, (4) to predict the outcomes of all NC Congressional elections (the 13 federal Representatives to Congress), and (5) to predict the outcome of the NC Senate election, including characterization of uncertainty in predictions.</p>
-<p>We will present predictions and corresponding uncertainty quantification weekly. In addition, prizes will be given in a number of categories (e.g., most creative useful data source).</p>
+<p>Goals of this case study are (1) to predict the outcome of the
+presidential election, (2) to predict whether the US Senate remains in
+Republican control, (3) to predict the electoral college vote, (4) to
+predict the outcomes of all NC Congressional elections (the 13 federal
+Representatives to Congress), and (5) to predict the outcome of the NC
+Senate election, including characterization of uncertainty in
+predictions.</p>
+<p>We will present predictions and corresponding uncertainty
+quantification weekly. In addition, prizes will be given in a number of
+categories (e.g., most creative useful data source).</p>
 </div>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <ul>
-<li><a href="decks/data/gay_marriage_megapoll.dta">gay_marriage_megapoll.dta</a></li>
-<li><a href="https://dl.ncsbe.gov/?prefix=data/">NC voter files</a> Note these data are processed on Sakai.</li>
-<li><a href="https://cces.gov.harvard.edu/pages/welcome-cooperative-congressional-election-study">Cooperative Congressional Election Study</a></li>
-<li><a href="https://opportunityinsights.org/data/?geographic_level=0&amp;topic=0&amp;paper_id=0#resource-listing">Opportunity Insights Data Library</a></li>
+<li><a
+href="decks/data/gay_marriage_megapoll.dta">gay_marriage_megapoll.dta</a></li>
+<li><a href="https://dl.ncsbe.gov/?prefix=data/">NC voter files</a> Note
+these data are processed on Sakai.</li>
+<li><a
+href="https://cces.gov.harvard.edu/pages/welcome-cooperative-congressional-election-study">Cooperative
+Congressional Election Study</a></li>
+<li><a
+href="https://opportunityinsights.org/data/?geographic_level=0&amp;topic=0&amp;paper_id=0#resource-listing">Opportunity
+Insights Data Library</a></li>
 <li>See data on cluster</li>
 </ul>
 </div>
 <div id="resources" class="section level1">
 <h1>Resources</h1>
 <ul>
-<li><a href="https://www.bbc.com/news/election-us-2020-53785985">BBC’s Simple Guide to the US Election</a></li>
-<li><a href="https://www.datacamp.com/community/blog/election-forecasting-polling">Andy Gelman Interview on Election Forecasting</a> (This is a very interesting interview overall. I suggest listening to it all, but the polling/election modeling component starts about 30 minutes into the interview.)</li>
-<li><a href="https://projects.economist.com/us-2020-forecast/president/how-this-works">Andy Gelman’s Predictive Model for <em>The Economist</em></a></li>
-<li><a href="https://votamatic.org/wp-content/uploads/2013/07/Linzer-JASA13.pdf">Linzer Paper on Forecasting US Presidential Elections</a></li>
-<li><a href="https://ballotpedia.org/United_States_House_of_Representatives_elections_in_North_Carolina,_2020">North Carolina Congressional Elections Fall 2020</a></li>
-<li><a href="https://ballotpedia.org/U.S._House_battlegrounds,_2020">Which districts are viewed as competitive?</a></li>
-<li><a href="https://fivethirtyeight.com/features/registered-voter-polls-will-usually-overrate-democrats/">Why do we care about likely voters?</a></li>
-<li><a href="https://fivethirtyeight.com/politics/elections/">FiveThirtyEight’s election page</a></li>
-<li><a href="https://github.com/fivethirtyeight/data/tree/master/polls">FiveThirtyEight 2020 polling data overview</a></li>
-<li><a href="https://projects.fivethirtyeight.com/polls-page/president_polls.csv">2020 Presidential polls</a></li>
-<li><a href="https://projects.fivethirtyeight.com/polls-page/senate_polls.csv">2020 Senate polls</a></li>
-<li><a href="https://projects.fivethirtyeight.com/polls-page/house_polls.csv">2020 House of Representatives polls</a></li>
-<li><a href="https://github.com/fivethirtyeight/data/tree/master/pollster-ratings">Historic Polling Data: final 3 weeks, 1998-2019</a></li>
-<li><a href="https://www2.census.gov/programs-surveys/popest/datasets/2010-2019/counties/asrh/cc-est2019-alldata-37.csv">2019 NC population data (Census Bureau)</a></li>
-<li><a href="https://www2.census.gov/programs-surveys/popest/technical-documentation/file-layouts/2010-2019/cc-est2019-alldata.pdf">NC population data codebook</a></li>
-<li><a href="https://elections.huffingtonpost.com/pollster">Huffington Post Pollster</a></li>
-<li><a href="https://www.citylab.com/transportation/2017/12/google-street-view-data-demographics-cars-research/547436/">Google Street View and Voting</a></li>
-<li><a href="http://www.thedrive.com/news/16712/trump-supporting-towns-more-likely-to-be-filled-with-pickup-trucks-study-claims">Pickup Trucks and Voting</a></li>
+<li><a href="https://www.bbc.com/news/election-us-2020-53785985">BBC’s
+Simple Guide to the US Election</a></li>
+<li><a
+href="https://www.datacamp.com/community/blog/election-forecasting-polling">Andy
+Gelman Interview on Election Forecasting</a> (This is a very interesting
+interview overall. I suggest listening to it all, but the
+polling/election modeling component starts about 30 minutes into the
+interview.)</li>
+<li><a
+href="https://projects.economist.com/us-2020-forecast/president/how-this-works">Andy
+Gelman’s Predictive Model for <em>The Economist</em></a></li>
+<li><a
+href="https://votamatic.org/wp-content/uploads/2013/07/Linzer-JASA13.pdf">Linzer
+Paper on Forecasting US Presidential Elections</a></li>
+<li><a
+href="https://ballotpedia.org/United_States_House_of_Representatives_elections_in_North_Carolina,_2020">North
+Carolina Congressional Elections Fall 2020</a></li>
+<li><a
+href="https://ballotpedia.org/U.S._House_battlegrounds,_2020">Which
+districts are viewed as competitive?</a></li>
+<li><a
+href="https://fivethirtyeight.com/features/registered-voter-polls-will-usually-overrate-democrats/">Why
+do we care about likely voters?</a></li>
+<li><a
+href="https://fivethirtyeight.com/politics/elections/">FiveThirtyEight’s
+election page</a></li>
+<li><a
+href="https://github.com/fivethirtyeight/data/tree/master/polls">FiveThirtyEight
+2020 polling data overview</a></li>
+<li><a
+href="https://projects.fivethirtyeight.com/polls-page/president_polls.csv">2020
+Presidential polls</a></li>
+<li><a
+href="https://projects.fivethirtyeight.com/polls-page/senate_polls.csv">2020
+Senate polls</a></li>
+<li><a
+href="https://projects.fivethirtyeight.com/polls-page/house_polls.csv">2020
+House of Representatives polls</a></li>
+<li><a
+href="https://github.com/fivethirtyeight/data/tree/master/pollster-ratings">Historic
+Polling Data: final 3 weeks, 1998-2019</a></li>
+<li><a
+href="https://www2.census.gov/programs-surveys/popest/datasets/2010-2019/counties/asrh/cc-est2019-alldata-37.csv">2019
+NC population data (Census Bureau)</a></li>
+<li><a
+href="https://www2.census.gov/programs-surveys/popest/technical-documentation/file-layouts/2010-2019/cc-est2019-alldata.pdf">NC
+population data codebook</a></li>
+<li><a href="https://elections.huffingtonpost.com/pollster">Huffington
+Post Pollster</a></li>
+<li><a
+href="https://www.citylab.com/transportation/2017/12/google-street-view-data-demographics-cars-research/547436/">Google
+Street View and Voting</a></li>
+<li><a
+href="http://www.thedrive.com/news/16712/trump-supporting-towns-more-likely-to-be-filled-with-pickup-trucks-study-claims">Pickup
+Trucks and Voting</a></li>
 </ul>
 </div>
-<div id="video-lectures-see-sakai---these-are-shorter-bytes-of-what-we-covered-in-class" class="section level1">
-<h1>Video Lectures (See Sakai - these are shorter bytes of what we covered in class)</h1>
+<div
+id="video-lectures-see-sakai---these-are-shorter-bytes-of-what-we-covered-in-class"
+class="section level1">
+<h1>Video Lectures (See Sakai - these are shorter bytes of what we
+covered in class)</h1>
 <p>[Matrix Formulation of the Linear Model]</p>
 <p>[Introduction to Multilevel Modeling]</p>
 <p>[Some Light Technical Details About Multilevel Models]</p>
@@ -374,49 +404,114 @@ $(document).ready(function () {
 <li><a href="decks/multilevel.html">Multilevel Models</a></li>
 <li><a href="decks/radoncode.html">Radon Code in One File</a></li>
 <li><a href="decks/cs03_1.html">Basics of Election Prediction</a></li>
-<li><a href="decks/cs03_2.html">Poststratification and Weighting</a></li>
+<li><a href="decks/cs03_2.html">Poststratification and
+Weighting</a></li>
 <li><a href="decks/cs03_3.html">MRP Tutorial</a></li>
-<li><a href="decks/electoralcollege.html">Predicting Electoral College Outcomes (Graham’s Lab 10/5)</a></li>
-<li><a href="decks/glmm_01_deck.html">Random Effects Logistic Models</a></li>
-<li><a href="decks/electionmodellab.html">Election Modeling in Lab</a></li>
+<li><a href="decks/electoralcollege.html">Predicting Electoral College
+Outcomes (Graham’s Lab 10/5)</a></li>
+<li><a href="decks/glmm_01_deck.html">Random Effects Logistic
+Models</a></li>
+<li><a href="decks/electionmodellab.html">Election Modeling in
+Lab</a></li>
 </ul>
 </div>
 <div id="reports" class="section level1">
 <h1>Reports</h1>
 <ul>
-<li><p>Groups: you can select your own group, or I can put you into groups. There are no restrictions on who can be in your group. It must have at least 3 members and no more than 5. Groups will be allocated on a first-come, first-served basis. I reserve the right to add group members to smaller groups if needed (any groups I construct from students without team member preferences will aim to have 4-5 students).</p></li>
-<li><p>Interim report: who votes in NC? Using the NC voter files, identify who votes in NC so that these data can be used in conjunction with surveys and other data in order to predict outcomes of NC congressional elections. Present results in short (&lt;5 min) video presentation to upload. Page limit is 8 pages.</p></li>
-<li><p>Weekly updates on predictions starting 10/16: provide point estimates of the probability of the probability that President Trump is re-elected and the probability the US Senate remains in Republican control; please also provide estimates of the predicted two-party vote share (point and interval estimates) for the 13 NC Congressional elections and the Tillis vs. Cunningham Senate race (point and interval estimates) – have one person do this in Quizzes/Tests.</p></li>
-<li><p>Final report: Items for Final Report (12 page limit) due 8am on Election Day:</p>
+<li><p>Groups: you can select your own group, or I can put you into
+groups. There are no restrictions on who can be in your group. It must
+have at least 3 members and no more than 5. Groups will be allocated on
+a first-come, first-served basis. I reserve the right to add group
+members to smaller groups if needed (any groups I construct from
+students without team member preferences will aim to have 4-5
+students).</p></li>
+<li><p>Interim report: who votes in NC? Using the NC voter files,
+identify who votes in NC so that these data can be used in conjunction
+with surveys and other data in order to predict outcomes of NC
+congressional elections. Present results in short (&lt;5 min) video
+presentation to upload. Page limit is 8 pages.</p></li>
+<li><p>Weekly updates on predictions starting 10/16: provide point
+estimates of the probability of the probability that President Trump is
+re-elected and the probability the US Senate remains in Republican
+control; please also provide estimates of the predicted two-party vote
+share (point and interval estimates) for the 13 NC Congressional
+elections and the Tillis vs. Cunningham Senate race (point and interval
+estimates) – have one person do this in Quizzes/Tests.</p></li>
+<li><p>Final report: Items for Final Report (12 page limit) due 8am on
+Election Day:</p>
 <ul>
-<li>The final report itself should be structured with an introduction, description of methods (e.g., modeling and prediction strategy along with the models themselves), results (e.g., point and interval estimates of the % of votes won by each Congressional candidate, point and interval estimates of electoral college vote share). Discussion should include some evaluation of the relative predictive ability of variables in your models (e.g., maybe you tried to predict voter turnout as a function of pet ownership rates, but maybe pet ownership rates are not at all predictive – so we want to know which data sources you felt were most useful) as well as discussion of strengths and weaknesses of your strategy. Any visualizations should be included (or linked, if they are interactive) in the final report. The final report should contain two appendices, described below.
+<li>The final report itself should be structured with an introduction,
+description of methods (e.g., modeling and prediction strategy along
+with the models themselves), results (e.g., point and interval estimates
+of the % of votes won by each Congressional candidate, point and
+interval estimates of electoral college vote share). Discussion should
+include some evaluation of the relative predictive ability of variables
+in your models (e.g., maybe you tried to predict voter turnout as a
+function of pet ownership rates, but maybe pet ownership rates are not
+at all predictive – so we want to know which data sources you felt were
+most useful) as well as discussion of strengths and weaknesses of your
+strategy. Any visualizations should be included (or linked, if they are
+interactive) in the final report. The final report should contain two
+appendices, described below.
 <ul>
-<li>Appendix A: Numbered list of all models/modeling procedures, with explicit details about model purpose, model structure (models written out using equations!), and resulting estimates from each model (raw output is fine for this appendix). Reproducible code and data should also be uploaded to Sakai.</li>
-<li>Appendix B: List of all data sets/data sources used, along with an explicit mapping from the models in Appendix A to the variables used from Appendix B in each model.</li>
+<li>Appendix A: Numbered list of all models/modeling procedures, with
+explicit details about model purpose, model structure (models written
+out using equations!), and resulting estimates from each model (raw
+output is fine for this appendix). Reproducible code and data should
+also be uploaded to Sakai.</li>
+<li>Appendix B: List of all data sets/data sources used, along with an
+explicit mapping from the models in Appendix A to the variables used
+from Appendix B in each model.</li>
 </ul></li>
 </ul></li>
-<li><p>Presentation after election: discuss what went right and wrong with your modeling and assumptions based on election outcomes (e.g., winners, who voted, etc.)</p></li>
+<li><p>Presentation after election: discuss what went right and wrong
+with your modeling and assumptions based on election outcomes (e.g.,
+winners, who voted, etc.)</p></li>
 </ul>
 </div>
 <div id="assessment" class="section level1">
 <h1>Assessment</h1>
-<p>In addition to the usual grade, a best prediction winner will be chosen, with all due honor and glory, based on the following algorithm developed by students in STA 340 (decision analysis), shown here for the outcome of the 13 NC congressional races. We’ll include the NC senate race in this algorithm as well.</p>
-<p>For a predicted vote share <span class="math inline">\(p\)</span>, truth <span class="math inline">\(\theta\)</span>, and confidence interval <span class="math inline">\(CI\)</span> with bounds <span class="math inline">\(p_\min, p_\max\)</span>:</p>
+<p>In addition to the usual grade, a best prediction winner will be
+chosen, with all due honor and glory, based on the following algorithm
+developed by students in STA 340 (decision analysis), shown here for the
+outcome of the 13 NC congressional races. We’ll include the NC senate
+race in this algorithm as well.</p>
+<p>For a predicted vote share <span class="math inline">\(p\)</span>,
+truth <span class="math inline">\(\theta\)</span>, and confidence
+interval <span class="math inline">\(CI\)</span> with bounds <span
+class="math inline">\(p_\min, p_\max\)</span>:</p>
 <p><span class="math display">\[
 \begin{aligned}
 L(p, \theta) &amp;=
-100\cdot|p-\theta| + I\{\theta\notin CI\}\cdot200\min\{|p-p_\min|,|p-p_\max|\} + 10\cdot|p_\max-p_\min|\\&amp; + I\{0.5\notin CI\}\cdot\big(10\cdot I\{wrong\} - 3\cdot I\{right\}\big)  \\
+100\cdot|p-\theta| + I\{\theta\notin
+CI\}\cdot200\min\{|p-p_\min|,|p-p_\max|\} +
+10\cdot|p_\max-p_\min|\\&amp; + I\{0.5\notin CI\}\cdot\big(10\cdot
+I\{wrong\} - 3\cdot I\{right\}\big)  \\
 S &amp;= -\sum_{i=1}^{13} L(p_i, \theta_i)
 \end{aligned}
 \]</span></p>
-<p>Point estimates within the <span class="math inline">\(CI\)</span> are penalized linearly and outside the <span class="math inline">\(CI\)</span> are penalized linearly with a higher slope. There is an additional penalty for wide confidence intervals, but only at 1/10th (or less) the cost of missing the point estimate.</p>
-<p>The term on the second line of the loss function only comes into play when a confidence interval did not include 0.5. That is, the team was very certain of calling the race for one side or the other. Being very certain and wrong incurs an additional loss. Being very certain and right incurs utility, but with lower magnitude than being wrong. The idea behind this choice is some races should be easy to call and being unambiguously wrong with the confidence interval should hurt more.</p>
+<p>Point estimates within the <span class="math inline">\(CI\)</span>
+are penalized linearly and outside the <span
+class="math inline">\(CI\)</span> are penalized linearly with a higher
+slope. There is an additional penalty for wide confidence intervals, but
+only at 1/10th (or less) the cost of missing the point estimate.</p>
+<p>The term on the second line of the loss function only comes into play
+when a confidence interval did not include 0.5. That is, the team was
+very certain of calling the race for one side or the other. Being very
+certain and wrong incurs an additional loss. Being very certain and
+right incurs utility, but with lower magnitude than being wrong. The
+idea behind this choice is some races should be easy to call and being
+unambiguously wrong with the confidence interval should hurt more.</p>
 <div id="weekly-prediction-update-october-16" class="section level2">
 <h2>Weekly Prediction Update: October 16</h2>
 <ul>
-<li>Estimates for the probability that President Trump wins re-election ranged from 0.004 to 0.49 (median 0.20)</li>
-<li>Estimates for the probability that the Senate remains under Republican control ranged from 0.093 to 0.746 (median 0.43 )</li>
-<li>Estimates for Tillis (vs Cunningham) two-party vote share ranged from 39-64% (median 47.5%) with confidence interval widths ranging from 1 to 28</li>
+<li>Estimates for the probability that President Trump wins re-election
+ranged from 0.004 to 0.49 (median 0.20)</li>
+<li>Estimates for the probability that the Senate remains under
+Republican control ranged from 0.093 to 0.746 (median 0.43 )</li>
+<li>Estimates for Tillis (vs Cunningham) two-party vote share ranged
+from 39-64% (median 47.5%) with confidence interval widths ranging from
+1 to 28</li>
 <li>1st Congressional District of NC: 2/6 teams pick Smith</li>
 <li>2nd District: 5/6 teams pick Ross</li>
 <li>3rd District: 5/6 teams pick Murphy</li>
@@ -428,16 +523,20 @@ S &amp;= -\sum_{i=1}^{13} L(p_i, \theta_i)
 <li>9th District: 3/6 teams pick Bishop</li>
 <li>10th District: all teams pick McHenry</li>
 <li>11th District: all teams pick Cawthorn</li>
-<li>12th District: all teams pick Adams (with varying vote shares – check that ballot!)</li>
+<li>12th District: all teams pick Adams (with varying vote shares –
+check that ballot!)</li>
 <li>13th District: all teams pick Budd</li>
 </ul>
 </div>
 <div id="weekly-prediction-update-october-26" class="section level2">
 <h2>Weekly Prediction Update: October 26</h2>
 <ul>
-<li>Estimates for the probability that President Trump wins re-election ranged from 0.06 to 0.89 (median 0.23)</li>
-<li>Estimates for the probability that the Senate remains under Republican control ranged from 0.17 to 0.82 (median 0.31 )</li>
-<li>Estimates for Tillis (vs Cunningham) two-party vote share ranged from 32-48% (median 46.5%)</li>
+<li>Estimates for the probability that President Trump wins re-election
+ranged from 0.06 to 0.89 (median 0.23)</li>
+<li>Estimates for the probability that the Senate remains under
+Republican control ranged from 0.17 to 0.82 (median 0.31 )</li>
+<li>Estimates for Tillis (vs Cunningham) two-party vote share ranged
+from 32-48% (median 46.5%)</li>
 <li>1st Congressional District of NC: 1/6 teams pick Smith</li>
 <li>2nd District: 5/6 teams pick Ross</li>
 <li>3rd District: 5/6 teams pick Murphy</li>
@@ -449,7 +548,8 @@ S &amp;= -\sum_{i=1}^{13} L(p_i, \theta_i)
 <li>9th District: 3/6 teams pick Bishop</li>
 <li>10th District: 5/6 teams pick McHenry</li>
 <li>11th District: 4/6 teams pick Cawthorn</li>
-<li>12th District: 5/6 teams pick Adams (with varying vote shares – check that ballot!)</li>
+<li>12th District: 5/6 teams pick Adams (with varying vote shares –
+check that ballot!)</li>
 <li>13th District: all teams pick Budd</li>
 </ul>
 </div>
@@ -464,7 +564,7 @@ S &amp;= -\sum_{i=1}^{13} L(p_i, \theta_i)
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -482,7 +582,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

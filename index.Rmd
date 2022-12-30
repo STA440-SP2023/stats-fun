@@ -10,98 +10,102 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ---
-title: "STA 440: Case Studies in the Practice of Statistics"
-description: "Students apply statistical analysis skills to in-depth data analysis projects ranging across diverse application areas. Students practice cutting-edge statistical methods and communicate their results both technically and non-technically via presentations and written reports. Prerequisite: STA 360. QS, W."
+title: "STA 440L: Case Studies in the Practice of Statistics"
+description: "Students apply statistical analysis skills to in-depth data analysis projects ranging across diverse application areas. Students practice cutting-edge statistical methods and communicate their results both technically and non-technically via presentations and written reports. Prerequisite: STA 360L. R, W, QS."
 markup: "mmark"
 ---
 
 
 
-# Welcome to STA440!
+# Welcome to STA440L!
 
 ### Goal of the Course
 
-The goal of STA 440 is to prepare you for work as a practicing statistician. Important skills required of practicing statisticians (in addition to having a great set of tools in the statistics toolbox!) include creativity, critical thinking, teamwork, the ability to identify needed new skills and to learn them with minimal direction, the ability to craft a statistical analysis plan to fit a scientific hypothesis or question, teamwork, and the ability to communicate to a variety of audiences (including other statisticians, experts in areas other than statistics, a supervisor at work, and the general public, among others). 
+The goal of STA440L is to prepare you for work as a practicing statistician. Important skills required of practicing statisticians (in addition to having a great set of tools in the statistics toolbox!) include creativity, critical thinking, teamwork, the ability to identify needed new skills and to learn them with minimal direction, the ability to craft a statistical analysis plan to fit a scientific hypothesis or question, teamwork, and the ability to communicate to a variety of audiences (including other statisticians, experts in areas other than statistics, a supervisor at work, and the general public, among others). 
 
-Lectures will include some new material you may not have seen, as well as material that you have already seen but that is often poorly understood. My goal is for you to be as prepared as possible to tackle real-world problems. This means that questions of interest will typically not be framed in much stati68+stical detail -- part of your job will be to figure out which tools to use to analyze the data. 
+Lectures will include some new material you may not have seen, as well as material that you have already seen but that is often poorly understood. Our goal is for you to be as prepared as possible to tackle real-world problems. This means that questions of interest will typically not be framed in much statistical detail -- part of your job will be to figure out which tools to use to analyze the data. 
 
-Flexibility, work ethic, knowledge of statistical science, pragmatism, the ability to proceed with minimal direction, professionalism, communication skills, and the willingness to try new things are all strong predictors of success in STA 440 (as well as in the working world). Don't worry if you haven't mastered all of these -- we'll work on them in class! 
+Flexibility, work ethic, knowledge of statistical science, pragmatism, the ability to proceed with minimal direction, professionalism, communication skills, and the willingness to try new things are all strong predictors of success in STA440L (as well as in the working world). Don't worry if you haven't mastered all of these -- we'll work on them in class! 
 
 ### Class Meetings
 
-<font color="#6CA0DC"><i class="fas fa-university fa-lg"></i></font> &nbsp; Zoom
 
-<font color="#6CA0DC"><i class="fas fa-calendar-alt fa-lg"></i></font> &nbsp; MWF 10:15 - 11:30 (usually Mondays will be labs, but sometimes lab and lecture will be swapped)
+<font color="#6CA0DC"><i class="fas fa-calendar-alt fa-lg"></i></font> &nbsp; Tu/Th 10:15 - 11:30 in 201 Old Chemistry and F 10:15-11:30 in LSRC A247 (lab/lecture/work days will vary depending on case progress).
 
 
 ### Teaching team and office hours 
 
 
-Note: office hours may vary due to travel and other commitments. Revisions to office hours will be noted via e-mail and on my webpage. 
+Note: office hours may vary due to travel and other commitments. Revisions to office hours will be noted via e-mail and on Sakai. 
 
 | Team member | Office hours | Location |
-| ----------  | -------------------------------------         | ---- |
-| [Professor Amy Herring](https://stat.duke.edu/people/amy-h-herring)  <a href="mailto:amy.herring@duke.edu" title="email"><i class="fa fa-envelope"></i></a> &nbsp;  | Fridays 2-3pm Eastern Time | Zoom (see Sakai for link) |
- [TA David Buch](https://davidbuch.github.io)  <a href="mailto:david.buch@duke.edu" title="email"><i class="fa fa-envelope"></i></a> &nbsp;  | Wednesdays 8-9pm Eastern Time | Zoom (see Sakai for link) |
- [TA Graham Tierney](https://g-tierney.github.io)  <a href="mailto:graham.tierney@duke.edu" title="email"><i class="fa fa-envelope"></i></a> &nbsp; | Mondays 12-1pm Eastern Time | Zoom (see Sakai for link) |
+| ----------  | -------------------------| ---- |
+| [Professor Amy Herring](https://stat.duke.edu/people/amy-h-herring)  <a href="mailto:amy.herring@duke.edu" title="email"><i class="fa fa-envelope"></i></a> &nbsp;  | Fridays 2-3pm Eastern Time | 208 Old Chemistry Building |
+| [Dr. Sam Berchuck](https://sites.duke.edu/sib2/)  <a href="mailto:sib2@duke.edu" title="email"><i class="fa fa-envelope"></i></a> &nbsp;  | By request Jan/Feb, XX in March | TBA |
+| [TA Jennifer Kampe](https://scholars.duke.edu/person/jennifer.kampe)  <a href="mailto:jennifer.kampe@duke.edu" title="email"><i class="fa fa-envelope"></i></a> &nbsp;  | TBA | TBA |
+| [TA John Miller](https://scholars.duke.edu/person/john.joshua.miller)  <a href="mailto:john.joshua.miller@duke.edu" title="email"><i class="fa fa-envelope"></i></a> &nbsp; | TBA | TBA |
+|  [TA Youran Wu](https://scholars.duke.edu/person/youran.wu)  <a href="mailto:youran.wu@duke.edu" title="email"><i class="fa fa-envelope"></i></a> &nbsp; | TBA | TBA | 
+| [TA Alessandro Zito](https://scholars.duke.edu/person/alessandro.zito)  <a href="mailto:alessandro.zito@duke.edu" title="email"><i class="fa fa-envelope"></i></a> &nbsp; | TBA | TBA |
  
                   
 
 
 ### Materials
 
-You should have access to a laptop and bring it to every class, fully charged. Texts and readings will be assigned as needed. The instructor and TA's will support computation in R and RStudio. Students are free to use any software they wish as long as reproducibility requirements are met (e.g., you could knit from R markdown).
+You should have access to a laptop and bring it to every class, fully charged. Texts and readings will be assigned as needed. The instructor and TA's will support computation in R/Quarto. Students are free to use any software they wish as long as reproducibility requirements are met (e.g., you could knit without having to install new software).
 
 
 ### Topics and Important Dates
 
-STA 440 contains a mixture of short lecture, lab, and work sessions at the usual class and lab times. Frequent mini-assignments will be provided in class and lab to check mastery and identify areas for additional focus.
+STA 440 contains a mixture of short lecture, lab, and work sessions at the usual class and lab times. 
 
-Note: this schedule is approximate and is likely to be modified as the course progresses. Lab sessions will be swapped with lectures due to course timing as needed. All course and lab sessions (10:15-11:30am MWF) will be recorded. Assignments are due at 10am ET unless otherwise specified. 
+Note: this schedule is approximate and is likely to be modified as the course progresses. Lab sessions will be swapped with lectures due to course timing as needed.  Assignments are due at 10am ET unless otherwise specified. 
 
 
 
 |Date           |Topic                      |Deliverables     |
 | ----------    | ---------------------------         | --------------- |
-| August 17     | Welcome and Introductions; Case Study 1: Lifespan of World Leaders; Survival Analysis        |     |
-| August 19     | How to Write a Model; Interaction; Discrimination Project    |    Getting to Know You Videos  |
-| August 21     |  Discrimination Project; Survival Analysis; Individual Project Q&A     |        |
-| August 24    |  Lab: MCMC  |  Popes Individual Assignment    |
-| August 26  | Survival Analysis; Structure of a Data Analysis Report; Writing about Data |  |79*.
-| August 28   | Work Day: Case Study 1 | Project Proposals |
-| August 31  |  Lab: Text Editors; Logging in to the Duke Compute Cluster; Meetings about Project Proposals | Case Study 1  |
-| September 2  | Responding to Reviews; Meetings about Project Proposals  |  Case Study 1 Peer Reviews  |
-| September 4  | Report Writing: Introductions, Describing Data |  |
-| September 7  | Lab: Running Jobs on the Duke Compute Cluster |    |
-| September 9  | Case Study 2: Detecting Stress Using Wearables | Case Study 1 Response and Revision, Peer Evals, Reviewer Evals  |
-| September 11  | Back to ANOVA: Design a Model |   |
-| September 14  | Lab: Brinnae Bent, Wearables Expert | Project Introduction, Data Description, EDA |
-| September 16  | Multilevel Models |  |
-| September 18  |  Project Work Day | Project Peer Reviews |
-| September 21  |  Lab     |   |
-| September 23     | Writing a Statistical Analysis Plan |   | 
-| September 25     | Writing a Statistical Analysis Plan |  |
-| September 28    | Lab: CS2 and Project Q&A  |   |
-| September 30   | Case Study 3: Election Prediction; Poststratification and Weighting  | Case Study 2 Due |
-| October 2   |  "Mr. P"; US Election System | Case Study 2 Peer Reviews; Midsemester grades (my deliverable)  |
-| October 5    |  Forecasting US Presidential Elections; Linzer Model |   |
-| October 7    | Forecasting US Presidential Elections; Multilevel Logistic Models |  |
-| October 9    |  | Case Study 2 Response and Revision  |
-| October 12    | Forecasting Models |   | 
-| October 14    |  |  |
-| October 16   |  Project Presentations |  First Predictions Due   | 
-| October 19    | Project Presentations | Project Methods, Analysis Plan, and Preliminary Results (DUE AT 6AM ET)  | 
-| October 21    | Project Presentations | Project Peer Reviews (due 10am ET)  |
-| October 23   | Project Presentations | Case Study 3: Who Votes in NC? (MOVED TO 6pm 10/25) |
-| October 26    | Project Presentations |  Updated Predictions | 
-| October 28   | Project Presentations |  |
-| October 30   | Project Presentations |  |
-| November 2   | Project Presentations  | Case Study 3 due 8AM on November 3 (NO EXTENSIONS) |
-| November 4   | Case Study 3 Models; Highs and Lows Presentations  | |
-| November 6   | Case Study 3 Models; Highs and Lows Presentations |  |
-| November 9   | Lab: Brainstorm Project Challenges | Individual Project Due |
-| November 11   | Class: Brainstorm Project Challenges | Project Peer Reviews  | 
-| November 13   | Data Science Ethics Discussion  | Read 2 Data Ethics Papers on Sakai  |
-| November 16   | Class: Last Minute Project Challenges | Project Response and Revision Due |
-| November 19   |  | Last Day to Submit Project Revision Without Late Penalty |
+| January 12    | Welcome and Introductions; Course Structure; Case Study 1 Introduced; Survival Analysis   |     |
+| January 13    | Survival Analysis    |     |
+| January 17     | Dr. Mine Çetinkaya-Rundel: Quarto for Scientific Writing      |   Getting to Know You Videos      |
+| January 19    |  Structure of a Data Analysis Report; Writing about Data   |      |
+| January 20  | Peer Reviewing Scientific Manuscripts |  |
+| January 24   | Case 1 Collaborative Review | Case 1 \& Reviews |
+| January 26  | Responding to Reviews \& Project Meetings  |    |
+| January 27  |  Case 1 Work Day \& Project Meetings |  |
+| January 31  | Case Study 2 Introduced | Case 1 Revision and Response to Reviews \& Peer Evals   |
+| February 2  | Categorical Data Models: Logistic and Multinomial Regression |    |
+| February 3  | Linear Discriminant Analysis and Naive Bayes Classification |  Project: Aims, Introduction, and EDA  |
+| February 7  | Variable Subset Selection |   |
+| February 9  | Case 2 Topic |   |
+| February 10  | Lab  |  |
+| February 14  | Writing a Statistical Analysis Plan |  |
+| February 16  | Case/Project Work Day |  |
+| February 17  | Lab |   | 
+| February 21  |  Case 2 Collaborative Review     |  Case 2 \& Reviews |
+| February 23  | Case 2 Work Day |  |
+| February 24   | Project Work Day |  |
+| February 28   | Case Study 3 Introduced  | Case 2 Revision and Response to Reviews \& Peer Evals |
+| March 2   |  Spatial Statistics |  |
+| March 3    |  Lab | Project Methods, Analysis Plan, \& Preliminary Results (with Revisions)   |
+| March 7    | Spatial Statistics |  |
+| March 9    | Visual Design, Writing about Visuals, R Tricks |   |
+| March 10  | Lab: Project Work Day | Project Peer Reviews  | 
+| March 21   | Case 3 Topic |  |
+| March 23   | Project Work Day |    | 
+| March 24   | Case 3 Collaborative Review | Case 3 \& Reviews | 
+| March 28   | Scientific Presentations |   |
+| March 30   | Case 3 Work Day |   |
+| March 31   | Project Work Day | Case 3 Revision and Response to Reviews \& Peer Evals  |
+| April 4  | Project Work Day |  |
+| April 6  | Project Presentations  | Project Submission    | 
+| April 7  | Project Presentations |   | 
+| April 11   | Project Presentations |  |
+| April 13  | Project Presentations | Project Peer Reviews |
+| April 14  | Project Presentations  |  |
+| April 18   | Project Presentations  | |
+| April 20  | Project Presentations |  |
+| April 21   | Project Presentations |  |
+| April 25  | Wrap-Up |  Project Revision and Response to Reviews | 
+
 
