@@ -12,7 +12,7 @@ library(DiagrammeR)
 
 ### Health & wellness
 
-If you find that anything is affecting your well-being or academic success and you find it difficult to complete your work, please let me and your Academic Dean know as soon as possible. We are happy to work with you to make sure you succeed in STA 440. You may also find additional information regarding personal emergencies <a href="<a href="https://trinity.duke.edu/undergraduate/academic-policies/personal-emergencies">here</a>.
+If you find that anything is affecting your well-being or academic success and you find it difficult to complete your work, please let me and your Academic Dean know as soon as possible. We are happy to work with you to make sure you succeed in STA 440. You may also find additional information regarding personal emergencies [here](https://trinity.duke.edu/undergraduate/academic-policies/personal-emergencies).
 
 
 ### Diversity, inclusiveness, and accessibility
@@ -23,7 +23,7 @@ It is my goal for our learning environment to facilitate learning and intellectu
   
   - If you have a name and/or set of pronouns that differ from those that appear in your official Duke records, please let me know.
   - We are constantly learning more about diverse perspectives and identities. If something occurred in class that made you feel uncomfortable, please talk to me about it. 
-  - Duke University is committed to providing equal access to students with documented disabilities. Students with disabilities may contact the <a href="<a href="https://access.duke.edu/students">Student Disability Access Office (SDAO)</a> to ensure access to this course and to the program. There you can engage in a confidential conversation about the process for requesting reasonable accommodations both in the classroom and in clinical settings. 
+  - Duke University is committed to providing equal access to students with documented disabilities. Students with disabilities may contact the [Student Disability Access Office](https://access.duke.edu/students) to ensure access to this course and to the program. There you can engage in a confidential conversation about the process for requesting reasonable accommodations both in the classroom and in clinical settings. 
   
 
 ### Academic integrity
@@ -38,17 +38,17 @@ To uphold the Duke Community Standard:
 - I will conduct myself honorably in all my endeavors; and
 - I will act if the Standard is compromised.
 
-Cheating or plagiarism on assignments, lying about an illness or absence and other forms of academic dishonesty are a breach of trust with classmates and faculty, violate the <a href="https://trinity.duke.edu/undergraduate/academic-policies/community-standard-student-conduct">Duke Community Standard</a>, and will not be tolerated. Such incidences will result in a 0 grade.  Additionally, there may be penalties to your final class grade along with being reported to the <a href="https://studentaffairs.duke.edu/conduct/services/university-judicial-board">University Judicial Board</a>.
+Cheating or plagiarism on assignments, lying about an illness or absence and other forms of academic dishonesty are a breach of trust with classmates and faculty, violate the [Duke Community Standard](https://trinity.duke.edu/undergraduate/academic-policies/community-standard-student-conduct), and will not be tolerated. Such incidences will result in a 0 grade.  Additionally, there may be penalties to your final class grade along with being reported to the Conduct Board.
 
-Please review the <a href="https://registrar.duke.edu/university-bulletins/duke-community-standard">Duke Community Standard in Practice</a>. 
+Please review the [Duke Community Standard in Practice](https://registrar.duke.edu/university-bulletins/duke-community-standard). 
 
 - Occasionally datasets we are privileged to use in class are confidential and cannot be distributed more broadly. Further dissemination of such datasets, made available on Sakai, will be considered a violation of the Duke Community Standard. If you are unsure whether you can use a dataset for purposes beyond class, please ask me.
 
-- Much of the work assigned in class is collaborative. The individual case study must be completed independently. Group case studies are to be completed by groups. For other assignments, while you may talk about strategies for completing them with other students in the class, the work you submit must be your own individual work.
+- Much of the work assigned in class is collaborative. The individual case study must be completed independently. Group case studies are to be completed by groups and must represent the group's own work. For other assignments, while you may talk about strategies for completing them with other students in the class, the work you submit must be your own individual work.
 
 - Important note: do not share your course materials with other students after completion of this course. Doing so will be considered a violation of the Duke Community Standard.
 
-**Referencing code:** The web contains an enormous volume of code that you may find useful. You are welcome to make use of any online resources (e.g. StackOverflow), but you must explicitly cite your sources. Any recycled code that is discovered and is not explicitly cited will be treated as plagiarism. On the individual case study you may not directly share code with another student in this class, and on team assignments you may not share code with another team in this class (you are welcome to discuss the problems together and ask for advice, but you may not send or make use of code from another team). 
+**Referencing code:** The web contains an enormous volume of code that you may find useful. You are welcome to make use of any online resources (e.g. StackOverflow), but you must explicitly cite your sources (for code and otherwise). Any recycled or auto-generated code that is discovered and is not explicitly cited will be treated as plagiarism. On the individual case study you may not directly share code with another student in this class, and on team assignments you may not directly share code with another team in this class (you are welcome to discuss the problems together and ask for advice, or make suggestions in peer review, but you may not send or copy code from another team). 
 
 ### Course components
 

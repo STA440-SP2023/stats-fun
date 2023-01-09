@@ -9,7 +9,7 @@ navbar:
   - text: Policies
     href: policies.html
   - text: Time to Loan Default
-    href: Kiva.html
+    href: CaseStudy1_Kiva/Kiva.html
   - text: Lepidoptera Prediction
     href: detectstress.html
   - text: Modeling the Visual Field
