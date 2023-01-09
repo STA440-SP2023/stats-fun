@@ -21,22 +21,22 @@ The Kiva 2012 database provides a collection of information on a random sample o
 
 # Learning Objectives
 
--   gain proficiency linking records between multiple large data sets
--   develop skills for the analysis of panel data
--   learn methods for handling time to event data
+-   Gain proficiency linking records between multiple large data sets
+-   Develop skills for the analysis of panel data
+-   Learn methods for handling time to event data
 
 # Case Study Goals
 
- - Quantify relationships between various sociodemographic and geographic factors and risk of default
-  - Quantify relationships between various sociodemographic and geographic factors and time to default (often censored)
+ - Quantify relationships between various sociodemographic and geographic factors and risk of default during the period 2005-2012
+  - Quantify relationships between various sociodemographic and geographic factors and time to default (often censored) during the period 2005-2012
  - Help inform potential investors by estimating the probability of default
 
 
 
 # Data
 
--   Data for this case study are available on the STA 440L container as well as on Sakai. Note: you may access the the active Kiva API if you would like to explore more recent data
--   Additional data which provides regional or macroeconomic context may be included at your discretion
+-   Data for this case study are available on the STA 440L container as well as on Sakai. Note: you may access the the active Kiva API if you would like to explore more recent data, however your analysis must address the 2005-2012 data provided
+-   Additional data which provides regional or macroeconomic context may be included at your discretion; databases of potential interest are linked in the Resources section below
 
 # Assignments and Report
 
