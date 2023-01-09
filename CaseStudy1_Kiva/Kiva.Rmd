@@ -33,12 +33,11 @@ The Kiva 2012 database provides a collection of information on loans provided fr
 
 
 
-
 # Data
 
 -   Data for this case study are available on the STA 440L container as well as on Sakai
 
-# Assignments and Reports: UPDATE
+# Assignments and Report
 
 -   Report and reproducible code (Group assignment due 1/24): produce a 8 page (maximum) report that clearly addresses the case study goals. This report should follow the format of a standard scientific report and should include sections for the introduction, methods, results, and discussion. The methods section should clearly identify the approach to model selection and evaluation, and the results section should clearly specify the final model selected, along with evidence the model provides a good fit to the data. Code should be fully reproducible. Code run time should be clearly specified at the head of the file.
 - Peer review of reports will occur during the class on 1/24. During this class you will use the peer review rubric provided to provide constructive feedback on the other group's report you have been assigned.
@@ -46,6 +45,11 @@ The Kiva 2012 database provides a collection of information on loans provided fr
 
 # Resources
 
+[Overview of Microfinance as an Economic Development Intervention](https://documents1.worldbank.org/curated/en/107171511360386561/pdf/WPS8252.pdf)
+
+[The Peer-to-Peer Lending Model: How Kiva Works](https://www.kiva.org/about/how)
+
+[In Depth Look at Default via a Case Study from Bangladesh](https://go.exlibris.link/wS3B81DF)
 
 
 # Lecture Notes
