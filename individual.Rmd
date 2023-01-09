@@ -27,12 +27,18 @@ library(tidyverse)
 Students seeking interesting datasets may wish to consider one or more of the following resources. Students may provide their own data, with the understanding that these data should not have been analyzed previously as part of a course assignment or internship (if you would like to take a prior analysis to the next level, please provide the full prior analysis write-up with your proposal for evaluation).
 
   - <a href="http://derekogle.com/fishR/packages#packages-of-data">fishR</a> : this is a collection of freshwater fisheries datasets
-  - <a href="https://cornelllabofornithology.github.io/auk/">auk</a>: R packaage for downloading and reading the eBird data (spatio-temporal big data with interesting reporting biases)
+  - <a href="https://cornelllabofornithology.github.io/auk/">auk</a>: R package for downloading and reading eBird data (spatio-temporal big data with interesting reporting biases)
   - <a href="https://www.fisheries.noaa.gov/alaska/commercial-fishing/alaska-groundfish-bottom-trawl-survey-data">Alaska Fish Surveys</a>: Alaska Groundfish Bottom Trawl Survey Data (spatio-temporal data involving changing ocean temperatures and species abundance)
-  - One of many COVID datasets
-    - <a href="https://covidseverity.com/">COVID</a>: County and hospital-level data from Bin Yu's group
-    - <a href="https://github.com/MIDS-at-Duke/duke-social-distancing-survey">Social Distancing</a>: Survey on social distancing in NC
-    - <a href="https://github.com/DukeStatSci/covid19-data">More COVID</a>: Repository from DataFest 2020
+  - <a href="https://www.zooniverse.org/">Zooniverse</a>: Variety of cool citizen science projects (squirrels!)
+  - <a href="https://www.e-butterfly.org/">eButterfly</a>: Can't get enough Lepidoptera?  Here's more!
+    - <a href="https://www.cdc.gov/nchs/data_access/vitalstatsonline.htm">eButterfly</a>:  CDC Vital Statistics Data
+        - <a href="https://guides.lib.berkeley.edu/publichealth/healthstatistics/rawdata">Berkeley Health Data Library</a>:  Variety of interesting health data worth exploring
+                - <a href="https://dataverse.harvard.edu">Harvard Dataverse</a>:  Public data repository for a variety of studies
+        
+        
+    
+    
+  
 
 
 
@@ -45,12 +51,12 @@ Students seeking interesting datasets may wish to consider one or more of the fo
 
 # Reports 
 
-- A proposal is due August 28 at 10am EDT. The proposal can be no more than 3 pages (11 point font or larger -- adhere to this requirement throughout) in length. The proposal should mirror the helpful [Sacred Heart Guidelines](https://libguides.usc.edu/writingguide/researchproposal), though note that guide is intended for much longer proposals. A two-minute (no more) video should also be uploaded explaining your idea.  Pages past 3 or content past 2 minutes will be treated as ineligible for grading. Note that in later submissions, someone else needs to reproduce your work -- so the data needs to be made available to other students.
-- Submission I of the individual project is due at 10am EDT on September 14.  This part should include your introduction and description of the data, including exploratory data analysis, and can be no more than 4 pages in length. Feedback will be provided by peers and the instructional team. 
-- Submission II of the individual project is due at 6am EDT on October 19. This part should build on submission I, adding the methods section and preliminary results, and can be no more than 6 pages in length. (You are welcome to reallocate space -- that is, I anticipate that you will need more than 2 pages for methods and preliminary results.) Reproducible code/data should also be submitted. Feedback will be provided by peers and the instructional team. Students who also submit a comprehensive response to reviews from Submission I along with edits incorporated in the (new) document are eligible to receive up to 50% of the deducted points back from Submission I.
-- Each student will present the project in class in October to get feedback and suggestions from classmates.
-- Submission III of the individual project is due at 10am EST on November 9. This part should build on prior submissions, adding the final results and discussion, and should be the complete report of  no more than 12 pages. Accompanying this report should be a 5 minute video presentation explaining the project and results, reproducible code, and data. Feedback will be provided by peers and the instructional team. Students who also submit a comprehensive response to reviews from Submission II along with edits incorporated in the (new) document are eligible to receive up to 50% of the deducted points (excluding reproducibility deductions) back from Submission II. 
-- The final submission is due on November 16 and will consist of (1) the final report, and (2) a point-by-point response to the feedback provided by peers and the instructional team, with any edits to the report noted. Based on the point-by-point response and revisions, you are eligible to receive up to 50% of the deducted points (excluding reproducibility deductions) back from Submission III. (NOTE: a three-day grace period, with no late point deduction, will be applied to the final submission. Submissions received November 20 or later will be penalized.)
+- Submission I: Aims, Introduction, and EDA, is due February 3 at 10am EDT. The submission can be no more than 3 pages (11 point font or larger -- adhere to this requirement throughout) in length. Pages past 3 will be treated as ineligible for grading. Note that in later submissions, someone else needs to reproduce your work -- so the data needs to be made available to other students.
+- Submission II: Project Methods, Analysis Plan, \& Preliminary Results is due at 10am EDT on March 3.  This part should include the prior submission and be no more than 8 pages in length (same font requirement). Reproducible code/data should also be submitted. Feedback will be provided by peers and the instructional team. A comprehensive response to the reviews obtained on Submission I (with corresponding edits to your report) can be submitted to earn up to 50% of the points deducted.
+- Submission III of the individual project is due at 10am EDT on April 6. This should be a final report (though revisions are allowed), with a 12 page limit. (Note you are welcome at any stage to reallocate space as long as the basic ideas still come through.) Reproducible code/data should also be submitted. Feedback will be provided by peers and the instructional team. Students who also submit a comprehensive response to reviews from Submission II along with edits incorporated in the (new) document are eligible to receive up to 50% of the deducted points back from Submission II (this does not include reproducibility points).
+- Each student will present the project in class in April to get feedback and suggestions from classmates.
+- Final revisions of the individual project (a final report and comprehensive reponse to reviews) are due at 10am EST on April 25. This should be the complete report of  no more than 12 pages.  Students are eligible to receive up to 50% of the deducted points (excluding reproducibility deductions) back from Submission III. 
+
 
 
 

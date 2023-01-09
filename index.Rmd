@@ -86,12 +86,12 @@ Note: this schedule is approximate and is likely to be modified as the course pr
 | February 23  | Case 2 Work Day |  |
 | February 24   | Project Work Day |  |
 | February 28   | Case Study 3 Introduced  | Case 2 Revision and Response to Reviews \& Peer Evals |
-| March 2   |  Spatial Statistics |  |
-| March 3    |  Lab | Project Methods, Analysis Plan, \& Preliminary Results (with Revisions)   |
-| March 7    | Spatial Statistics |  |
+| March 2   |  Spatial Statistics: Areal Data |  |
+| March 3    |  Lab: CAR Models | Project Methods, Analysis Plan, \& Preliminary Results (with Revisions)   |
+| March 7    | Point-Referenced Spatial Statistics |  |
 | March 9    | Visual Design, Writing about Visuals, R Tricks |   |
 | March 10  | Lab: Project Work Day | Project Peer Reviews  | 
-| March 21   | Case 3 Topic |  |
+| March 21   | Additional Topics in Spatial Statistics |  |
 | March 23   | Project Work Day |    | 
 | March 24   | Case 3 Collaborative Review | Case 3 \& Reviews | 
 | March 28   | Scientific Presentations |   |
@@ -100,8 +100,8 @@ Note: this schedule is approximate and is likely to be modified as the course pr
 | April 4  | Project Work Day |  |
 | April 6  | Project Presentations  | Project Submission    | 
 | April 7  | Project Presentations |   | 
-| April 11   | Project Presentations |  |
-| April 13  | Project Presentations | Project Peer Reviews |
+| April 11   | Project Presentations | Project Peer Reviews |
+| April 13  | Project Presentations |  |
 | April 14  | Project Presentations  |  |
 | April 18   | Project Presentations  | |
 | April 20  | Project Presentations |  |

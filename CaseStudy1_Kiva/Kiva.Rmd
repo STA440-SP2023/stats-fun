@@ -15,66 +15,41 @@ library(tidyverse)
 
 ![From astridtravel.com/kiva](images/Kiva_lady.jpg)
 
-Microfinance is the provision of banking services to individuals excluded from traditional credit markets, typically due to a lack of collateral. The goal of microfinance is to enable low-income individuals to undertake small investments towards starting or improving a business in hopes. Kiva is a San Francisco based microfinance institution which connects online lenders to entrepreneurs in 77 countries following the peer-to-peer lending model. While Kiva opeartes as a nonprofit and aims to "expand financial access to help underserved communities thrive", default, or nonrepayment of loans threatens both the sustainability of Kiva's charitable enterprise and the stability of the lives Kiva aims to improve.
+Microfinance is the provision of banking services to individuals excluded from traditional credit markets, typically due to a lack of collateral. The goal of microfinance is to enable low-income individuals to undertake small investments towards starting or improving a business in hopes. [Kiva](https://www.kiva.org/pgtmp/home) is a San Francisco based microfinance institution which connects online lenders to entrepreneurs in 77 countries following the peer-to-peer lending model. While Kiva operates as a nonprofit and aims to "expand financial access to help underserved communities thrive", default, or nonrepayment of loans, threatens both the sustainability of Kiva's charitable enterprise and the stability of the lives Kiva aims to improve.
 
-The Kiva 2012 database provides a collection of information on loans provided from 2005-2012 which can be used to explore the factors influencing loan default.
+The Kiva 2012 database provides a collection of information on loans provided from 2005-2012, which can be used to explore the factors influencing loan default.
 
 # Learning Objectives
 
 -   gain proficiency linking records between multiple large data sets
 -   develop skills for the analysis of panel data
--   SOMETHING ELSE?
+-   learn methods for handling time to event data
 
 # Case Study Goals
 
-COPIED FROM THE SENSOR CASE STUDY: UPDATE TO RELATE TO COVARIATES IMPACTING LOAN REPAYMENT
+-   Quantify relationships between various sociodemographic and geographic factors and risk of default
 
--   Determine whether sensor data are useful in discriminating between stress and amusement conditions
--   If sensor data are useful in discriminating between stress and amusement, describe how (e.g., is higher blood pressure related to a greater likelihood of stress vs amusement)
--   Determine which types of sensor data are most useful in discriminating between stress and amusement, alone or in combination
--   Determine whether we can detect stress (vs amusement) only using the wrist-worn wearable
--   Quantify the heterogeneity across individuals in the response to stress versus amusement
 
-# Data: UPDATE - HOW DO WE WANT TO PROVIDE ACCESS TO THE LARGE FILES?
+# Data
 
--   Data for this case study are available on the UCI Machine Learning Repository site for the [Wearable Stress and Affect Detection data](https://archive.ics.uci.edu/ml/datasets/WESAD+%28Wearable+Stress+and+Affect+Detection%29).
+-   Data for this case study are available on the STA 440L container as well as on Sakai
 
 # Assignments and Reports: UPDATE
 
--   Report and reproducible code (Group assignment due 1/XX): produce a 8 page (maximum) report that clearly addresses the case study goals. This report should follow the format of a standard scientific report and should include sections for the introduction, methods, results, and discussion. The methods section should clearly identify the approach to model selection and evaluation, and the results section should clearly specify the final model selected, along with evidence the model provides a good fit to the data. Code should be fully reproducible. Code run time should be clearly specified at the head of the file.
+-   Report and reproducible code (Group assignment due 1/24): produce a 8 page (maximum) report that clearly addresses the case study goals. This report should follow the format of a standard scientific report and should include sections for the introduction, methods, results, and discussion. The methods section should clearly identify the approach to model selection and evaluation, and the results section should clearly specify the final model selected, along with evidence the model provides a good fit to the data. Code should be fully reproducible. Code run time should be clearly specified at the head of the file.
+- Peer review of reports will occur during the class on 1/24. During this class you will use the peer review rubric provided to provide constructive feedback on the other group's report you have been assigned.
+- Revised report and response to reviews (Group assignment due 1/31): groups may submit revised reports and must submit a point-by-point response to the review comments provided.
 
--   Reproducibility criteria: provide an .R file that runs on the cluster and provides the following numbers, which reviewers will check for reproducibility: (1) classification accuracy for the first goal; (2) classification accuracy for the fourth goal; and (3) quantification of heterogeneity across individuals for the fifth goal. Please ensure your .R file is well-documented with comments that point out where this code appears, and where the output is printed.
+# Resources
 
--   Peer review of reports (Individual assignment due 1/XX): using the peer review rubric provided, provide constructive feedback on the other group's report you have been assigned
 
--   Revised report and response to reviews (Group assignment due 1/XX): groups may submit revised reports and must submit a point-by-point response to the review comments provided
 
-# Resources: ADD RESOURCES HERE
+# Lecture Notes
 
-[Git and GitHub on the DCC](decks/gitdcc.html)
+[Introduction to Survival Analysis](../decks/survival.html)
 
-[Physiology of Stress](https://samples.jblearning.com/0763740411/Ch%202_Seaward_Managing%20Stress_5e.pdf)
+[Accelerated Failure Time Models](../decks/survival_aft.html)
 
-[Schmidt et al, Introducing WESAD, a Multimodal Dataset for Wearable Stress and Affect Detection](https://doi.org/10.1145/3242969.3242985)
+[Proportional Hazards Models](../decks/survival_cox.html)
 
-[WESAD Data](https://archive.ics.uci.edu/ml/datasets/WESAD%20%28Wearable%20Stress%20and%20Affect%20Detection%29)
 
-[Help Dealing with Data](https://github.com/brinnaebent/Examples_WESAD)
-
-[Help Visualizing these Data](https://github.com/Big-Ideas-Lab/DBDP/tree/master/DigitalBiomarkers-ExploratoryDataAnalysis/MissingDataAnalysis)
-
-[Using the Duke Computing Cluster](https://rc.duke.edu/dcc/dcc-user-guide/#toc_0)
-
-# Video Lectures (See Sakai) - ARE WE REMOVING THESE
-
-[Predicting Stress from Wearable Sensors]
-
-[Dealing with File Types]
-
-[Alignment of Data]
-
-[Data Considerations]
-
-[Validation of Sensors]
-
-[Common Pitfalls to Avoid]
