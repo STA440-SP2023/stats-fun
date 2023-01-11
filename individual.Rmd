@@ -31,11 +31,14 @@ Students seeking interesting datasets may wish to consider one or more of the fo
   - <a href="https://www.fisheries.noaa.gov/alaska/commercial-fishing/alaska-groundfish-bottom-trawl-survey-data">Alaska Fish Surveys</a>: Alaska Groundfish Bottom Trawl Survey Data (spatio-temporal data involving changing ocean temperatures and species abundance)
   - <a href="https://www.zooniverse.org/">Zooniverse</a>: Variety of cool citizen science projects (squirrels!)
   - <a href="https://www.e-butterfly.org/">eButterfly</a>: Can't get enough Lepidoptera?  Here's more!
-    - <a href="https://www.cdc.gov/nchs/data_access/vitalstatsonline.htm">eButterfly</a>:  CDC Vital Statistics Data
-        - <a href="https://guides.lib.berkeley.edu/publichealth/healthstatistics/rawdata">Berkeley Health Data Library</a>:  Variety of interesting health data worth exploring
-                - <a href="https://dataverse.harvard.edu">Harvard Dataverse</a>:  Public data repository for a variety of studies
+  - <a href="https://www.cdc.gov/nchs/data_access/vitalstatsonline.htm">CDC Vital Statistics Data</a>:  All US births and deaths
+  - <a href="https://guides.lib.berkeley.edu/publichealth/healthstatistics/rawdata">Berkeley Health Data Library</a>:  Variety of interesting health data worth exploring
+  - <a href="https://dataverse.harvard.edu">Harvard Dataverse</a>:  Public data repository for a variety of studies
+  - <a href=https://www.economicsnetwork.ac.uk/data_sets">The Economics Network</a>:  Economic data freely available online
+  - <a href=https://fred.stlouisfed.org">FRED</a>:  Economic data from the St. Louis Fed
         
         
+ 
     
     
   
