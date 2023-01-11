@@ -97,6 +97,9 @@ to account for *new* families? How does that change your answer?
 
 # Resources
 
+[Overview of taxonomy and taxonomic classification](https://geo.libretexts.org/Courses/University_of_California_Davis/GEL_098-16%3A_Geobiology_(Sumner)/Text/4%3A_Tracing_the_History_of_Evolution/4.3%3A_The_Levels_of_Classification)
+
+
 [Video: end-to-end DNA barcoding procedure](https://www.youtube.com/watch?v=zcd3QYngHX0&ab_channel=iBOLConsortium)
 
 [PNAS commentary on DNA barcoding](https://www.pnas.org/doi/10.1073/pnas.0800476105#:~:text=DNA%20barcoding%20aims%20to%20use,1)
