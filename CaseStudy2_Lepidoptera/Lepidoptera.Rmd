@@ -1,0 +1,116 @@
+---
+title: "Lepidoptera"
+output: html_document
+---
+
+---
+title: "Case Study 2: classifying DNA barcodes"
+---
+
+```{r, echo=FALSE, include=FALSE}
+library(kableExtra)
+library(knitr)
+library(tidyverse)
+```
+![From https://www.boldsystems.org](images/Lepidoptera.png)
+
+![](images/barcoding.png) 
+
+
+DNA barcoding is the practice of classifying DNA sequences sampled from an environment
+into a taxonomy, which is a nested sequence of tags spanned across 6 levels (phylum, class,
+order, family, genus and species). As seen in the picture above, the process is
+performed across various steps.
+
+1. Collection of biologic material from the environment
+2. DNA sequencing through PCR processing methods
+3. Alignment of the obtained DNA. Alignment ensures that all the sequences are all of
+the same length, and the locations are meaningfully comparable. 
+4. Annotation. This means that we assign a taxonomic name to the sequence.
+
+To show a concrete example, copy and paste the following DNA sequence into 
+the Barcode of Life project (BOLD) identification engine [here](https://www.boldsystems.org/index.php/IDS_OpenIdEngine):
+
+```R
+ACTTTATATTTTATTTTTGGAATTTGAGCAGGTATAGTAGGAACATCTCTTAGCCTTATTATTCGAACAGAACTAGGTAA
+TCCAGGGTCTTTAATTGGAGATGATCAAATTTATAATACTATTGTTACAGCTCATGCTTTTATCATAATTTTTTTTATAG
+TTATACCTATTATAATTGGAGGATTTGGAAATTGACTTATTCCTCTTATACTTGGGGCCCCTGACATAGCTTTCCCTCGA
+ATAAATAATATAAGATTTTGACTTTTACCTCCCTCCTTAATACTACTAATTTCAAGTAGTATCGTTGAAAACGGAGCAGG
+AACAGGATGAACAGTTTATCCCCCTCTTTCATCTAATATTGCTCATAGAGGATCTTCTGTTGATTTAGCAATTTTTTCCT
+TACATTTAGCTGGAATTTCCTCTATTTTAGGAGCTATTAATTTTATTACAACAATTATTAATATACGAATTAATAATATA
+AATTATGATCAAATACCTTTATTTGTTTGAGCTGTAGGAATTACAGCTTTATTATTATTACTTTCTCTTCCTGTATTAGC
+TGGAGCAATTACCATACTTCTTACAGATCGAAATTTAAATACTTCATTTTTTGATCCTGCAGGAGGAGGAGATCCTATTT
+TATACCAACATTTATTT
+```
+
+The taxonomy of the DNA sequence should be returned. Which species is identified
+by the DNA sequence? With which level of confidence?
+
+In this case study, a researcher from a Finnish lab has given you 3000 aligned DNA sequences
+collected by capturing butterflies (technically, all specimen belong to the order of
+*Lepidoptera*) in a nearby forest. Even though they he can confidently place the
+DNA sequences into the order of Lepidoptera, they would like to know more about
+the **family** of the specimen collected, since this was not possible to recognize through
+morphology. To fulfill this task, you are also given a historical dataset of 7000
+annotated DNA sequences belonging to the order of Lepidoptera for which the Family
+is known. Your job is to build a classification model using this dataset and then
+to annotate the 3000 DNA sequences wit a family. In doing this, it is important
+that you introduce a measure of how certain your final annotation is. You also need to answer 
+to the following questions
+
+- How would you summarize information on DNA sequences?
+- Is the whole DNA sequence important for doing classification? 
+- Are there loci along the sequences that are particularly important for classification?
+- Are there some irrelevant ones? 
+
+The last two points can be answered through variable selection methods. 
+
+**EXTRA POINTS - ** Most of the times, taxonomic classification has an issue: 
+the DNA sequence might be from a new specimen that is from a family that is not observed
+in the training set. How would take care of such a situation? Can you modify your model
+to account for *new* families? How does that change your answer?
+
+
+# Learning Objectives
+
+-   Learning about classification methods, such as logistic regression, multinomial
+    regression, Naive Bayes and (if time allows) more complex ML methods. 
+-   Learning how to evaluate a classification model
+-   Develop skills to handle categorical predictors
+
+
+# Case Study Goals
+
+ - Quantify biodiversity at the family level for the given test sequences
+ - Learning how to summarize and play with DNA-type data
+
+
+# Data
+
+-   Data for this case study are available on the STA 440L container as well as on Sakai
+
+# Assignments and Reports: UPDATE
+
+-   Report and reproducible code (Group assignment due **XXX**): produce a 8 page (maximum) report that clearly addresses the case study goals. This report should follow the format of a standard scientific report and should include sections for the introduction, methods, results, and discussion. The methods section should clearly identify the approach to model selection and evaluation, and the results section should clearly specify the final model selected, along with evidence the model provides a good fit to the data. Code should be fully reproducible. Code run time should be clearly specified at the head of the file.
+- Peer review of reports will occur during the class on **XXX**. During this class you will use the peer review rubric provided to provide constructive feedback on the other group's report you have been assigned.
+- Revised report and response to reviews (Group assignment due **XXX**): groups may submit revised reports and must submit a point-by-point response to the review comments provided.
+
+# Resources
+
+[Video: end-to-end DNA barcoding procedure](https://www.youtube.com/watch?v=zcd3QYngHX0&ab_channel=iBOLConsortium)
+
+[PNAS commentary on DNA barcoding](https://www.pnas.org/doi/10.1073/pnas.0800476105#:~:text=DNA%20barcoding%20aims%20to%20use,1)
+
+[Barcode of Life project](https://www.boldsystems.org/)
+
+
+# Lecture Notes
+
+[Introduction to logistic and multinomial regression](../decks/logistic.html)
+
+[Naive Bayes Classifiers](../decks/Naive_Bayes.html)
+
+[Evaluating classification: accuracy, precision and recall, ROC and AUROC](../decks/.html)
+
+
+
