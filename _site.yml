@@ -11,7 +11,7 @@ navbar:
   - text: Time to Loan Default
     href: CaseStudy1_Kiva/Kiva.html
   - text: Lepidoptera Prediction
-    href: detectstress.html
+    href: CaseStudy2_Lepidoptera/Lepidoptera.html
   - text: Modeling the Visual Field
     href: CaseStudy3_Glaucoma/Glaucoma.html
   - text: Individual Project
