@@ -27,22 +27,29 @@ The Kiva 2012 database provides a collection of information on a random sample o
 
 # Case Study Goals
 
- - Quantify relationships between various sociodemographic and geographic factors and risk of default during the period 2005-2012
-  - Quantify relationships between various sociodemographic and geographic factors and time to default (often censored) during the period 2005-2012
- - Help inform potential investors by estimating the probability of default
-
-
+-   Quantify relationships between various sociodemographic and geographic factors and risk of default during the period 2005-2012
+-   Quantify relationships between various sociodemographic and geographic factors and time to default (often censored) during the period 2005-2012
+-   Help inform potential investors by estimating the probability of default
 
 # Data
 
--   Data for this case study are available on the STA 440L container as well as on Sakai. Note: you may access the the active Kiva API if you would like to explore more recent data, however your analysis must address the 2005-2012 data provided
+-   Data for this case study are available on the STA 440L container as well as on Sakai. Note: you may access the the active Kiva API if you would like to explore more recent data, however your analysis must address the 2005-2012 data provided, which includes the following key data sets:
+    -   *loans_clean.csv*: 97,183 records summarizing information for each loan and associated borrowers
+
+    -   *lenders_clean.csv*: 125,580 records containing primarily information about the lenders and their motivations
+
+    -   *loan_schedule.csv:* 1,328,739 records detailing the agreed upon loan repayment schedule for each loan
+
+    -   *loan_repayments.csv*: 756,214 records detailing realized loan repayments
+
+    -   additional files providing partial data dictionaries
 -   Additional data which provides regional or macroeconomic context may be included at your discretion; databases of potential interest are linked in the Resources section below
 
 # Assignments and Report
 
 -   Report and reproducible code (Group assignment due 1/24): produce a 8 page (maximum) report that clearly addresses the case study goals. This report should follow the format of a standard scientific report and should include sections for the introduction, methods, results, and discussion. The methods section should clearly identify the approach to model selection and evaluation, and the results section should clearly specify the final model selected, along with evidence the model provides a good fit to the data. Code should be fully reproducible. Code run time should be clearly specified at the head of the file.
-- Peer review of reports will occur during the class on 1/24. During this class you will use the peer review rubric provided to provide constructive feedback on the other group's report you have been assigned.
-- Revised report and response to reviews (Group assignment due 1/31): groups may submit revised reports and must submit a point-by-point response to the review comments provided.
+-   Peer review of reports will occur during the class on 1/24. During this class you will use the peer review rubric provided to provide constructive feedback on the other group's report you have been assigned.
+-   Revised report and response to reviews (Group assignment due 1/31): groups may submit revised reports and must submit a point-by-point response to the review comments provided.
 
 # Resources
 
@@ -56,7 +63,6 @@ The Kiva 2012 database provides a collection of information on a random sample o
 
 [International Economic and Financial Time Series from Federal Reserve Economic Data (FRED)](https://fred.stlouisfed.org/categories)
 
-
 # Lecture Notes
 
 [Introduction to Survival Analysis](../decks/survival.html)
@@ -64,5 +70,3 @@ The Kiva 2012 database provides a collection of information on a random sample o
 [Accelerated Failure Time Models](../decks/survival_aft.html)
 
 [Proportional Hazards Models](../decks/survival_cox.html)
-
-
