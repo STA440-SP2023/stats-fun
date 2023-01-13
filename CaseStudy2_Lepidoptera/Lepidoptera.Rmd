@@ -46,29 +46,23 @@ TATACCAACATTTATTT
 The taxonomy of the DNA sequence should be returned. Which species is identified
 by the DNA sequence? With which level of confidence?
 
+
 In this case study, a researcher from a Finnish lab has given you 3000 aligned DNA sequences
 collected by capturing butterflies (technically, all specimen belong to the order of
 *Lepidoptera*) in a nearby forest. Even though they he can confidently place the
 DNA sequences into the order of Lepidoptera, they would like to know more about
-the **family** of the specimen collected, since this was not possible to recognize through
-morphology. To fulfill this task, you are also given a historical dataset of 7000
-annotated DNA sequences belonging to the order of Lepidoptera for which the Family
-is known. Your job is to build a classification model using this dataset and then
-to annotate the 3000 DNA sequences wit a family. In doing this, it is important
-that you introduce a measure of how certain your final annotation is. You also need to answer 
-to the following questions
+the **family** and th **genus** of the specimen collected, since this was not possible
+to recognize through morphology. To fulfill this task, you are also given a historical dataset of 7000
+annotated DNA sequences belonging to the order of Lepidoptera for which both family and genus
+are known. Your job is to build a classification model using this dataset and then
+to annotate the 3000 DNA sequences. In doing this, it is important
+that you introduce a measure of how certain your final annotation is. 
 
-- How would you summarize information on DNA sequences?
-- Is the whole DNA sequence important for doing classification? 
-- Are there loci along the sequences that are particularly important for classification?
-- Are there some irrelevant ones? 
-
-The last two points can be answered through variable selection methods. 
 
 **EXTRA POINTS - ** Most of the times, taxonomic classification has an issue: 
-the DNA sequence might be from a new specimen that is from a family that is not observed
-in the training set. How would take care of such a situation? Can you modify your model
-to account for *new* families? How does that change your answer?
+the DNA sequence might be from a new specimen that is from a family or a genus 
+that is not observed in the training set. How would take care of such a situation?
+Can you modify your model to account for *new* families? How does that change your answer?
 
 
 # Learning Objectives
@@ -83,6 +77,11 @@ to account for *new* families? How does that change your answer?
 
  - Quantify biodiversity at the family level for the given test sequences
  - Learning how to summarize and play with DNA-type data
+ - Make sure you address the following questions (possibly through variable selection methods):
+    -- How would you summarize information on DNA sequences?
+    -- Is the whole DNA sequence important for doing classification? 
+    -- Are there loci along the sequences that are particularly important for classification?
+    -- Are there some irrelevant ones? 
 
 
 # Data
