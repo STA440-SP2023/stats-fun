@@ -70,3 +70,11 @@ The Kiva 2012 database provides a collection of information on a random sample o
 [Accelerated Failure Time Models](../decks/survival_aft.html)
 
 [Proportional Hazards Models](../decks/survival_cox.html)
+
+(Versions for simple annotation)
+
+[Introduction to Survival Analysis](../decks/survival_new.html)
+
+[Accelerated Failure Time Models](../decks/survival_aft_new.html)
+
+[Proportional Hazards Models](../decks/survival_cox_new.html)

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Proportional Hazards Models</title>
+    <meta charset="utf-8" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="css/slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Proportional Hazards Models
+### <br> Prof. Amy Herring
+
+---
+
+
+
+
+
+layout: true
+  
+&lt;div class="my-footer"&gt;
+&lt;span&gt;
+&lt;a href="https://sta-198-glhlth-298-fall-2022.github.io/website/" target="_blank"&gt;Back to website&lt;/a&gt;
+&lt;/span&gt;
+&lt;/div&gt; 
+
+---
+
+
+
+
+## Lung Cancer Data: Survival Probabilities
+
+
+```r
+library(survminer)
+ggsurvplot(survfit(SurvObj ~ Sex, data = lung2), 
+     xlab = "Days", ylab = "Est. Survival Probability", 
+     ylim = c(0, 1),
+     conf.int = T, censor = F, 
+     legend.labs = c("Male", "Female"))
+```
+
+&lt;img src="survival_cox_new_files/figure-html/survprob-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Lung Cancer Data: Probabilities of Death
+
+
+```r
+ggsurvplot(survfit(SurvObj ~ Sex, data = lung2), 
+     xlab = "Days", ylab = "Est. Event Probability", 
+     ylim = c(0, 1),
+     conf.int = T, censor = F, fun = "event", 
+     legend.labs = c("Male", "Female"))
+```
+
+&lt;img src="survival_cox_new_files/figure-html/cumprob-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Proportional Hazards Model
+
+`\begin{align*}
+\lambda(t) &amp;= \lambda_0(t)\exp\left(\beta_1x_1 + \beta_2x_2 + \cdots + \beta_px_p \right)
+\end{align*}`
+
+where the **baseline hazard** is assumed to have some distribution 
+(or maybe not!...more on that in just a bit). 
+
+Covariates in a PH model have a multiplicative effect on *hazards*. For
+instance, if `\(\beta_k = 0.4\)`, then `\(\exp(\beta_k) \approx 1.5\)`. Holding all else 
+equal, an individual with covariate `\(x_k\)` one unit greater than another is 
+expected to have approximately 1.5 times the *hazard* of the event than the
+other.
+
+
+Would you rather have a higher linear predictor or a lower linear predictor
+in a PH model? How does this compare to the AFT model?
+
+---
+
+## Proportional hazards
+
+&lt;img src="survival_cox_new_files/figure-html/unnamed-chunk-2-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## The Cox proportional hazards model
+
+`\begin{align*}
+\lambda(t) &amp;= \lambda_0(t)\exp\left(\beta_1x_1 + \beta_2x_2 + \cdots + \beta_px_p \right)
+\end{align*}`
+
+In a parametric survival model (such as ones we've seen), the survival times
+are assumed to follow a specific distribution, which is a fairly strong
+assumption.
+
+
+Often we only care about the `\(\beta\)` terms and not so much the 
+`\(\lambda_0\)`. Using the concept of partial likelihood, Cox (1972) found that we 
+can separate inference for the `\(\beta\)` terms from `\(\lambda_0\)`. 
+
+The Cox model is a **semiparametric** survival model; `\(\lambda_0(t)\)` is left 
+completely unspecified, with no assumptions made on its shape. (A
+semi-parametric version of the AFT model also exists, but it isn't popular).
+
+---
+
+## The Cox proportional hazards model
+
+- By far the most commonly used regression model for survival data
+- Attractive interpretations using hazard ratios
+- Can be extended to accommodate time-varying covariates, recurrent events, etc.
+- Fewer assumptions than fully parametric models, but still requires PH 
+assumption
+- Can compare nested models by using partial likelihood ratio statistic, which
+has asymptotic `\(\chi^2\)` distribution (df = difference in number of parameters)
+
+---
+
+## Fitting the Cox PH model
+
+
+```r
+cox.fit &lt;- coxph(SurvObj ~ Sex, 
+                    data = lung2)
+summary(cox.fit)
+```
+
+```
+## Call:
+## coxph(formula = SurvObj ~ Sex, data = lung2)
+## 
+##   n= 228, number of events= 165 
+## 
+##              coef exp(coef) se(coef)      z Pr(&gt;|z|)   
+## SexFemale -0.5310    0.5880   0.1672 -3.176  0.00149 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+##           exp(coef) exp(-coef) lower .95 upper .95
+## SexFemale     0.588      1.701    0.4237     0.816
+## 
+## Concordance= 0.579  (se = 0.021 )
+## Likelihood ratio test= 10.63  on 1 df,   p=0.001
+## Wald test            = 10.09  on 1 df,   p=0.001
+## Score (logrank) test = 10.33  on 1 df,   p=0.001
+```
+
+How might we interpret this coefficient? How does it compare to those from our previous
+models?
+
+
+---
+
+## Checking proportional hazards assumption
+
+One way to check the proportional hazards assumption is to plot **log-log survival curves**.  The log-log survival curve is a transformation of the estimated Kaplan-Meier survival curve by taking the natural log of an estimated survival probability twice. If the proportional hazards assumption is satisfied, we expect to have roughly parallel lines.
+
+---
+
+## Checking PH for Sex
+
+
+```r
+km_sex &lt;- survfit(SurvObj ~ Sex, data = lung2)
+
+plot(km_sex, fun = "cloglog", xlab = "Time (in days) using log",
+     ylab = "log-log survival", main = "log-log curves by sex") 
+```
+
+&lt;img src="survival_cox_new_files/figure-html/checkph-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+## Additional Covariates
+
+In either the proportional hazards or accelerated failure time framework, it is straightforward to incorporate additional covariates.   Interpretations are similar to those in other regression models with multiple predictors. We will add the continuous Karnovsky performance score, rated by the patient on a scale of 0 (worst) to 100 (best), to the model.
+
+---
+
+## Additional Covariates
+
+
+```r
+cox.kar.fit &lt;- coxph(SurvObj ~ Sex+pat.karno, 
+                    data = lung2)
+```
+
+---
+
+
+```r
+summary(cox.kar.fit)
+```
+
+```
+## Call:
+## coxph(formula = SurvObj ~ Sex + pat.karno, data = lung2)
+## 
+##   n= 225, number of events= 162 
+##    (3 observations deleted due to missingness)
+## 
+##                coef exp(coef)  se(coef)      z Pr(&gt;|z|)    
+## SexFemale -0.526176  0.590860  0.168830 -3.117 0.001830 ** 
+## pat.karno -0.020150  0.980051  0.005613 -3.590 0.000331 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+##           exp(coef) exp(-coef) lower .95 upper .95
+## SexFemale    0.5909      1.692    0.4244    0.8226
+## pat.karno    0.9801      1.020    0.9693    0.9909
+## 
+## Concordance= 0.636  (se = 0.024 )
+## Likelihood ratio test= 22.71  on 2 df,   p=1e-05
+## Wald test            = 22.22  on 2 df,   p=1e-05
+## Score (logrank) test = 22.66  on 2 df,   p=1e-05
+```
+
+How do you interpret the results?
+
+---
+
+## Diagnostics
+
+To assess PH assumption, we can also examine **Schoenfeld residuals**. 
+Intuitively, each Schoenfeld residual is the difference between the observed
+covariate and the expected covariate for each observed failure, conditioned on
+the risk set at that time.
+
+In plotting Schoenfeld residuals vs. survival times, we expect to see them
+randomly distributed around 0.
+
+---
+
+## Schoenfeld residuals
+
+
+```r
+library(survminer)
+ggcoxdiagnostics(cox.kar.fit, type = "schoenfeld")
+```
+
+&lt;img src="survival_cox_new_files/figure-html/sr-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Schoenfeld residuals
+
+What causes the banding in the plots?  
+
+
+```r
+table(lung2$Sex)
+```
+
+```
+## 
+##   Male Female 
+##    138     90
+```
+
+```r
+table(lung2$pat.karno)
+```
+
+```
+## 
+##  30  40  50  60  70  80  90 100 
+##   2   2   4  30  41  51  60  35
+```
+
+---
+
+## Deviance residuals
+
+**Martingale residuals** are based on the difference between observed number 
+of events up until time `\(Y_i\)` and the expected count based on the fitted model.
+
+**Deviance residuals** are a normalized transformation of the martingale
+residuals that correct their skewness. They should be randomly distributed 
+around mean 0 with a variance of 1.
+
+In practice, these residuals are useful for finding potential outliers: negative
+values "lived longer than expected" and positive values "died too soon."
+
+---
+
+## Deviance residual plot
+
+
+```r
+ggcoxdiagnostics(cox.kar.fit, type = "deviance", linear.predictions = F)
+```
+
+&lt;img src="survival_cox_new_files/figure-html/unnamed-chunk-3-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightLines": true,
+"highlightStyle": "solarized-light",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
