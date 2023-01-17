@@ -1,8 +1,14 @@
 ---
 title: "Quarto document from class 1/17"
+# format: revealjs very cool makes slides
 format: html
 editor: visual
+execute: 
+  echo: false 
+bibliography: references.bib
 ---
+
+# Part 1 - Intro
 
 ## Quarto
 
@@ -26,6 +32,10 @@ When you click the **Render** button a document will be generated that includes 
 1 + 1
 ```
 
+# Part 2 - Methods
+
+## Some methods
+
 You can add options to executable code like this
 
 ```{r}
@@ -34,3 +44,38 @@ You can add options to executable code like this
 ```
 
 The `echo: false` option disables the printing of code (only output is displayed).
+
+## Some more methods
+
+```{r}
+#| label: fig-scatterplot-cars
+#| fig-width: 5
+#| fig-asp: 0.618
+#| fig-alt: "Scatterplot of cars dataset showing positive correlation"
+#| fig-cap: |
+#|   Scatterplot
+plot(cars)
+```
+
+@fig-scatterplot-cars shows a scatterplot of the cars dataset
+
+Now adding a table
+
+```{r}
+
+head(cars) |>
+  knitr::kable()
+```
+
+Very cool package `gt` for tables in html. For pdf, maybe kableExtra is preferred.
+
+```{r}
+#| label: tbl-cars
+#| tbl-cap: Pretty gt table
+head(cars) |>
+  gt::gt()
+```
+
+@tbl-cars is the gt version of the head of the cars data set. This is from [@shapiro2017]
+
+## References

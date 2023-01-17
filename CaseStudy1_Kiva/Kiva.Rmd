@@ -78,3 +78,5 @@ The Kiva 2012 database provides a collection of information on a random sample o
 [Accelerated Failure Time Models](../decks/survival_aft_new.html)
 
 [Proportional Hazards Models](../decks/survival_cox_new.html)
+
+[Quarto from Class](../Quartofromclass.html)
