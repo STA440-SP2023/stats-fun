@@ -71,6 +71,12 @@ The Kiva 2012 database provides a collection of information on a random sample o
 
 [Proportional Hazards Models](../decks/survival_cox.html)
 
+[Quarto from Class](../Quartofromclass.html)
+
+[Reviewing a Paper](../decks/reviewpaper.html)
+
+[Revising a Paper](../decks/revisepaper.html)
+
 (Versions for simple annotation)
 
 [Introduction to Survival Analysis](../decks/survival_new.html)
@@ -80,3 +86,8 @@ The Kiva 2012 database provides a collection of information on a random sample o
 [Proportional Hazards Models](../decks/survival_cox_new.html)
 
 [Quarto from Class](../Quartofromclass.html)
+
+[Reviewing a Paper](../decks/reviewpaper_ann.html)
+
+
+[Revising a Paper](../decks/revisepaper_ann.html)

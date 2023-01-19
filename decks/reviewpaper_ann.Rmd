@@ -1,0 +1,172 @@
+---
+title: "Reviewing a Statistical Manuscript"
+date: "<br> Prof. Amy Herring"
+output:
+  xaringan::moon_reader:
+    css: 
+      - css/xaringan-themer.css
+      - css/slides.css
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightLines: true
+      highlightStyle: solarized-light
+      countIncrementalSlides: false
+---
+
+```{r child = "../setup.Rmd"}
+```
+  
+## How to Review a Statistical Manuscript
+
+Shortly you'll give feedback on another team's case study. A critical part of life as a scientist, whether in academia, industry, the business world, government, an NGO, or elsewhere, is how to learn how to provide critical feedback and suggestions regarding someone else's work.
+
+Several resources (some from journals, some from universities) are linked on Sakai to help with the review.
+
+---
+
+## The Basic Process
+
+1. Read the case study. You should already be familiar with the goals and aims of the case. 
+
+2. Provide **constructive** feedback to the authors, following the rubric provided on Sakai. You should not feel compelled to fix any issues you perceive, but you should point them out.
+
+---
+
+
+## The Write-Up
+
+Our reviews will be provided using the rubric document on Sakai.  For each category, first list major flaws (e.g., conclusion is not supported by evidence provided; major errors in analysis), then minor flaws. 
+
+---
+
+
+## Clarity of Hypotheses and Goals
+
+Does the report make clear the primary questions the research addresses and how they are tied to the case study goals?  If not, explain what is not clear.
+
+---
+
+
+## Analysis Matched to Research Questions
+
+Does the analysis described allow the team to address the research questions directly?  If not, what aspects of the research questions remain to be addressed?
+
+Is it clear what approach and model were used to evaluate hypotheses of interest? If not, what requires clarification?
+
+---
+
+
+## Presentation and Interpretation of Results
+
+Are results clearly and logically presented?  Are all interpretations supported by the analysis results?
+As a potential investor, do you have a better understanding of how to assess the probability a given borrower will default? Do you understand the relationships between factors of interest and risk of default during the period under study, and do you understand any uncertainty around those estimated relationships?  Do you understand the relationships between factors of interest and time to default during the period under study, and do you understand the amount of uncertainty around those estimates?  If not, point out problem areas.  If you identify any errors in the analysis report, draw attention to them.
+
+---
+
+
+## Conclusions
+
+Are conclusions drawn consistent with the evidence and arguments presented in the data analysis?  Do these conclusions address the main questions?  Are any claims made that are not supported by evidence?
+
+---
+
+
+## Aids to Interpretation
+
+Are any tables and figures clear, effective, and informative?  Should any be eliminated, or are any new tables or figures needed?
+
+---
+
+
+## Analysis Checking and Evaluation
+
+Do you believe the results?	Is the model appropriately validated?  What type of diagnostic methods were used to check any modeling assumptions, and are you satisfied the assumptions of the model are valid? Has any sensitivity analysis been done, and are the results reasonable?  Should any additional sensitivity analyses been conducted? 
+
+
+---
+
+
+## Reproducibility
+
+Self-explanatory!  You should be able to clone the repo and easily run on the container with no kinks. 
+
+---
+
+
+## Readability
+
+Is the paper professionally presented and easy to read? Any annoying issues, such as too-small font (even in figures), poor grammar, or other distracting aspects?  
+
+---
+
+
+## Strengths and Limitations
+
+
+What are the strengths and limitations of the analysis and data?  Are they clearly acknowledged and presented in the manuscript?
+
+---
+
+
+## Tone of the Report
+
+*Review for others as you would have others review for you*
+
+- Be supportive and honest
+  - "This paragraph confuses me because…"
+
+- Be specific
+  - "It appears that the estimated hazard ratios were interpreted as if they were coefficient estimates from a linear regression model"
+  
+
+---
+
+
+## Tone of the Report
+
+*Review for others as you would have others review for you*
+
+- Don't edit the report yourself
+  - You're not there to proofread, or to fix a model!  Just draw the attention of the authors to details, e.g. "the residual plot appears to indicate major violations of model assumptions that are not addressed"
+  
+- Focus on the paper, not the team members
+  - You don't want this to be personal, concentrate on the work
+
+  
+---
+
+
+## Tone of the Report
+
+*Review for others as you would have others review for you*
+
+- Use plenty of “I” statements to de-personalize your feedback (rather than “You” statements, which can make people uncomfortable) 
+  - Not "you need to check the modeling assumptions"
+  - Instead "I did not see evidence that the modeling assumptions were checked"
+  
+- Give suggestions, not commands
+  - Not "you need to check the modeling assumptions"
+  - Instead "I would have more confidence in the results if the modeling assumptions were verified"
+  
+---
+
+
+## Tone of the Report
+
+*Review for others as you would have others review for you*
+
+Most importantly, don't let errors slide or be afraid to give honest feedback. You're working to improve the final product for your classmates, your company, etc. 
+  
+
+  
+  
+  
+
+
+
+
+
+
+
+
