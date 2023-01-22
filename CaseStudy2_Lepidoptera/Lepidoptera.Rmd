@@ -50,15 +50,15 @@ The taxonomy of the DNA sequence should be returned (tap the [Species page butto
 Which species is identified by the DNA sequence? With which level of confidence?
 
 
-In this case study, a researcher from a Finnish lab has given you 5000 aligned
+In this case study, a researcher from a Finnish lab has given you 7000 aligned
 DNA sequences collected by capturing butterflies (technically, all specimen belong
 to the order of *Lepidoptera*) in a nearby forest. Even though they he can
 confidently place the DNA sequences into the order of Lepidoptera, they would
 like to know more about the taxonomy of the specimen collected, since this was
 not possible to recognize through morphology. To fulfill this task, you are also
-given a historical dataset of 30000 annotated DNA sequences for which annotations
+given a historical dataset of 40000 annotated DNA sequences for which annotations
 have been confidently established. Your job is to build a classification model using
-this dataset and then to annotate the 5000 DNA sequence at the *family* and at the *genus* levels.
+this dataset and then to annotate the 7000 DNA sequence at the *family* and at the *genus* levels.
 In doing this, it is important that you introduce a measure of how uncertain your
 final annotation is. 
 
