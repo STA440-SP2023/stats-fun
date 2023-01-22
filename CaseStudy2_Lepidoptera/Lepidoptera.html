@@ -403,28 +403,21 @@ identified by the DNA sequence? With which level of confidence?</p>
 (technically, all specimen belong to the order of <em>Lepidoptera</em>)
 in a nearby forest. Even though they he can confidently place the DNA
 sequences into the order of Lepidoptera, they would like to know more
-about the <strong>family</strong> of the specimen collected, since this
-was not possible to recognize through morphology. To fulfill this task,
-you are also given a historical dataset of 7000 annotated DNA sequences
-belonging to the order of Lepidoptera for which the Family is known.
-Your job is to build a classification model using this dataset and then
-to annotate the 3000 DNA sequences wit a family. In doing this, it is
+about the taxonomy of the specimen collected, since this was not
+possible to recognize through morphology. To fulfill this task, you are
+also given a historical dataset of 7000 annotated DNA sequences
+belonging to the order of Lepidoptera for which annotations are
+established. Your job is to build a classification model using this
+dataset and then to annotate the 3000 DNA sequence at the
+<em>family</em> and at the <em>genus</em> levels. In doing this, it is
 important that you introduce a measure of how certain your final
-annotation is. You also need to answer to the following questions</p>
-<ul>
-<li>How would you summarize information on DNA sequences?</li>
-<li>Is the whole DNA sequence important for doing classification?</li>
-<li>Are there loci along the sequences that are particularly important
-for classification?</li>
-<li>Are there some irrelevant ones?</li>
-</ul>
-<p>The last two points can be answered through variable selection
-methods.</p>
+annotation is.</p>
 <p><strong>EXTRA POINTS - </strong> Most of the times, taxonomic
 classification has an issue: the DNA sequence might be from a new
-specimen that is from a family that is not observed in the training set.
-How would take care of such a situation? Can you modify your model to
-account for <em>new</em> families? How does that change your answer?</p>
+specimen that is from a family or a genus that is not observed in the
+training set. How would take care of such a situation? Can you modify
+your model to account for <em>new</em> families? How does that change
+your answer?</p>
 <div id="learning-objectives" class="section level1">
 <h1>Learning Objectives</h1>
 <ul>
@@ -442,6 +435,12 @@ methods.</li>
 sequences</li>
 <li>Learning how to summarize and play with DNA-type data</li>
 </ul>
+<p>Make sure you address the following questions (possibly through
+variable selection methods): - How would you summarize information on
+DNA sequences? - Is the whole DNA sequence important for doing
+classification? - Are there loci along the sequences that are
+particularly important for classification? - Are there some irrelevant
+ones?</p>
 </div>
 <div id="data" class="section level1">
 <h1>Data</h1>

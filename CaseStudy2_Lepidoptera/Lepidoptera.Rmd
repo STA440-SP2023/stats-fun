@@ -32,32 +32,35 @@ To show a concrete example, copy and paste the following DNA sequence into
 the Barcode of Life project (BOLD) identification engine [here](https://www.boldsystems.org/index.php/IDS_OpenIdEngine):
 
 ```R
-ACTTTATATTTTATTTTTGGAATTTGAGCAGGTATAGTAGGAACATCTCTTAGCCTTATTATTCGAACAGAACTAGGTAA
-TCCAGGGTCTTTAATTGGAGATGATCAAATTTATAATACTATTGTTACAGCTCATGCTTTTATCATAATTTTTTTTATAG
-TTATACCTATTATAATTGGAGGATTTGGAAATTGACTTATTCCTCTTATACTTGGGGCCCCTGACATAGCTTTCCCTCGA
-ATAAATAATATAAGATTTTGACTTTTACCTCCCTCCTTAATACTACTAATTTCAAGTAGTATCGTTGAAAACGGAGCAGG
-AACAGGATGAACAGTTTATCCCCCTCTTTCATCTAATATTGCTCATAGAGGATCTTCTGTTGATTTAGCAATTTTTTCCT
-TACATTTAGCTGGAATTTCCTCTATTTTAGGAGCTATTAATTTTATTACAACAATTATTAATATACGAATTAATAATATA
-AATTATGATCAAATACCTTTATTTGTTTGAGCTGTAGGAATTACAGCTTTATTATTATTACTTTCTCTTCCTGTATTAGC
-TGGAGCAATTACCATACTTCTTACAGATCGAAATTTAAATACTTCATTTTTTGATCCTGCAGGAGGAGGAGATCCTATTT
-TATACCAACATTTATTT
+---------------------------------------ACTTTATATTTTATTTTTGGAGTATGAGCAGGAATAATTGG
+AACTTCTTTA---AGTTTAATAATTCGTACAGAATTAGGTAACCCTGGGTCACTAATTGGAGAT---GATCAAATTTATA
+ATACTATTGTTACAGCTCATGCTTTTATTATAATTTTTTTTATAGTTATACCAATTATAATTGGAGGATTTGGTAATTGA
+TTAATTCCCTTAATA---TTAGGAGCCCCTGATATAGCTTTCCCACGTATAAATAATATAAGATTTTGATTATTACCCCC
+ATCATTAACTTTATTAATTTCTAGAAGTATTGTTGAAAATGGAGCAGGAACAGGATGAACAGTTTACCCCCCTCTTTCCT
+CTAATATTGCCCATAGAGGATCTTCTGTTGATTTA---GCTATTTTTTCTCTACATCTTGCAGGAATTTCCTCCATCCTC
+GGAGCAATTAACTTTATTACAACAATTATCAATATACGAATTAATAATATATCATTTGATCAAATACCTTTATTTGTATG
+AGCAGTAGGAATTACTGCTTTATTATTATTATTATCATTACCGGTTTTAGCTGGT---GCAATTACTATATTATTAACTG
+ATCGAAATTTAAATACCTCTTTTTTTGACCCTGCTGGCGGAGGAGACCCAATTCTTTACCAACATTTA------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+---------------------
 ```
 
-The taxonomy of the DNA sequence should be returned. Which species is identified
-by the DNA sequence? With which level of confidence?
+The taxonomy of the DNA sequence should be returned (tap the [Species page button](https://www.boldsystems.org/index.php/Taxbrowser_Taxonpage?taxid=70536)).
+Which species is identified by the DNA sequence? With which level of confidence?
 
 
-In this case study, a researcher from a Finnish lab has given you 3000 aligned DNA sequences
-collected by capturing butterflies (technically, all specimen belong to the order of
-*Lepidoptera*) in a nearby forest. Even though they he can confidently place the
-DNA sequences into the order of Lepidoptera, they would like to know more about
-the **family** and th **genus** of the specimen collected, since this was not possible
-to recognize through morphology. To fulfill this task, you are also given a historical dataset of 7000
-annotated DNA sequences belonging to the order of Lepidoptera for which both family and genus
-are known. Your job is to build a classification model using this dataset and then
-to annotate the 3000 DNA sequences. In doing this, it is important
-that you introduce a measure of how certain your final annotation is. 
-
+In this case study, a researcher from a Finnish lab has given you 5000 aligned
+DNA sequences collected by capturing butterflies (technically, all specimen belong
+to the order of *Lepidoptera*) in a nearby forest. Even though they he can
+confidently place the DNA sequences into the order of Lepidoptera, they would
+like to know more about the taxonomy of the specimen collected, since this was
+not possible to recognize through morphology. To fulfill this task, you are also
+given a historical dataset of 30000 annotated DNA sequences for which annotations
+have been confidently established. Your job is to build a classification model using
+this dataset and then to annotate the 5000 DNA sequence at the *family* and at the *genus* levels.
+In doing this, it is important that you introduce a measure of how uncertain your
+final annotation is. 
 
 **EXTRA POINTS - ** Most of the times, taxonomic classification has an issue: 
 the DNA sequence might be from a new specimen that is from a family or a genus 
@@ -69,30 +72,38 @@ Can you modify your model to account for *new* families? How does that change yo
 
 -   Learning about classification methods, such as logistic regression, multinomial
     regression, Naive Bayes and (if time allows) more complex ML methods. 
--   Learning how to evaluate a classification model
+-   Learning how to evaluate a classification model (accuracy, ROC curves, MCC)
 -   Develop skills to handle categorical predictors
 
 
 # Case Study Goals
 
- - Quantify biodiversity at the family level for the given test sequences
  - Learning how to summarize and play with DNA-type data
- - Make sure you address the following questions (possibly through variable selection methods):
-    -- How would you summarize information on DNA sequences?
-    -- Is the whole DNA sequence important for doing classification? 
-    -- Are there loci along the sequences that are particularly important for classification?
-    -- Are there some irrelevant ones? 
-
+ - Summarise information on a given biodiversity
+ - Building multi-level classifiers for complex tasks
+ 
+Make sure you address the following questions (variable selection methods can be used):
+  - How would you summarize information on DNA sequences?
+  - How can we use DNA sequences as predictors?
+  - Is the whole DNA sequence important for doing classification? 
+  - Are there loci along the sequences that are particularly important for classification?
+  - Are there some irrelevant ones? 
 
 # Data
 
--   Data for this case study are available on the STA 440L container as well as on Sakai
+Data for this case study are available on the STA 440L container as well as on Sakai.
+There are two datasets:
+ - *Lepidoptera_library.csv*: a dataset of 40000 DNA sequences and their annotations. You can ignore the species column, since we are interested in only family and genus
+ - *test_sequences.csv*: 7000 test DNA sequences. No affiliation is reported, so your job is
+ to predict both genus and species, and also to verify if some DNA sequences can be
+ reconducted to "new" species (if you want extra points).
+
 
 # Assignments and Reports: UPDATE
 
--   Report and reproducible code (Group assignment due **XXX**): produce a 8 page (maximum) report that clearly addresses the case study goals. This report should follow the format of a standard scientific report and should include sections for the introduction, methods, results, and discussion. The methods section should clearly identify the approach to model selection and evaluation, and the results section should clearly specify the final model selected, along with evidence the model provides a good fit to the data. Code should be fully reproducible. Code run time should be clearly specified at the head of the file.
-- Peer review of reports will occur during the class on **XXX**. During this class you will use the peer review rubric provided to provide constructive feedback on the other group's report you have been assigned.
-- Revised report and response to reviews (Group assignment due **XXX**): groups may submit revised reports and must submit a point-by-point response to the review comments provided.
+-   Report and reproducible code (Group assignment due February 28): produce a 8 page (maximum) report that clearly addresses the case study goals. This report should follow the format of a standard scientific report and should include sections for the introduction, methods, results, and discussion. The methods section should clearly identify the approach to model selection and evaluation, and the results section should clearly specify the final model selected, along with evidence the model provides a good fit to the data. Code should be fully reproducible. Code run time should be clearly specified at the head of the file.
+- Peer review of reports will occur during the class on February 21. During this class you will use the peer review rubric provided to provide constructive feedback on the other group's report you have been assigned.
+- Revised report and response to reviews (Group assignment due February 28): groups may submit revised reports and must submit a point-by-point response to the review comments provided.
 
 # Resources
 
@@ -105,6 +116,7 @@ Can you modify your model to account for *new* families? How does that change yo
 
 [Barcode of Life project](https://www.boldsystems.org/)
 
+[Multinomial regression via glmnet](https://glmnet.stanford.edu/articles/glmnet.html)
 
 # Lecture Notes
 
