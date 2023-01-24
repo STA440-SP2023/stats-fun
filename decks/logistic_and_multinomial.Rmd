@@ -1,0 +1,293 @@
+---
+title: "Logistic and Multinomial regression"
+date: "<br> Alessandro Zito"
+output:
+  xaringan::moon_reader:
+    css: 
+      - css/xaringan-themer.css
+      - css/slides.css
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightLines: true
+      highlightStyle: solarized-light
+      countIncrementalSlides: false
+---
+
+```{r child = "../setup.Rmd"}
+```
+
+
+
+### Overview of classification methods
+
+Classification is one of the fundamental tasks in Statistics and Machine Learning.
+We are surrounded by classifiers in our daily work activity and leisure time.
+
+For example...
+- Which emails go in the *spam folder*?
+- Will your resume/cover letter be read by a recruiter given the language you used?
+- Will you be extended a loan, given your credit score?
+- What type of Instagram posts will you be most likely to like?
+
+Classification is a *supervised* task: we first train our model on a training set
+(where the response variable is know), and use it to predict the most likely value
+associated to test covariates (where the response is unknown).
+
+When doing classification, we have to make sure we avoid *overfitting*, since perfect
+prediction in the training set will likely lead to bad predictions in the test set. 
+For this reason, most of the model parameters are tuned via *cross-validation*. 
+
+---
+### Examples of classification algorithms
+
+There is a rich literature on classification algorithms.
+
+ - Logistic regression (for binary 0 - 1 classification)
+ - Multinomial regression (for multiclass classification)
+ - Naive Bayes and linear discriminant analysis
+ - Decision trees (CART)
+ - Random forests 
+ - k-nearest neighbors
+ - Large margin classifiers such as Support Vector Machine. 
+ - Gradient boosting (xgboost)
+ - Neural nets
+ - Bayesian methods such as BART
+ 
+In this series of lectures, we are going to focus mostly on the 
+first three algorithms. Feel free to dig and ask about other methods, or even to
+implements them to double check your model. 
+ 
+---
+
+### Case study 2: classification of DNA sequences
+
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics("../CaseStudy2_Lepidoptera/images/barcoding.png")
+```
+
+
+In this case study, we will deal with DNA barcoding, which is the practice of 
+classifying DNA sequences into a taxonomy.
+
+You will train your algorithm on a set of 40000 DNA sequences, and later predict
+the taxonomy of 7000 test sequences.
+
+Some test sequences might belong to Families and Genuses that have not been observed
+in the test. How can you deal with this situation? (Extra points!)
+
+---
+
+### Logistic regression
+
+Logistic regression is the first basic classifier. Let $y_i \in \{0, 1\}$ for
+$i = 1, \ldots, n$ observations, and let $\mathbf{x}_i$ indicate a set of covariates
+(features in the Machine learning literature). 
+
+Outcome $y_i = 1$ can indicate, for example, a spam email, while $y_i = 0$ is not 
+a spam.  The covariates $\mathbf{x}_i$ can contain the type of words in the body of the email.
+
+We assume the following model:
+
+$$
+y_i \mid \pi_i \stackrel{\text{ind}}{\sim} Bernoulli(\pi_i), \qquad
+\log \frac{\pi_i}{1 - \pi_i} = \frac{P(y_i = 1\mid \mathbf{x}_i, \beta_0, \boldsymbol{\beta})}{P(y_i = 0\mid \mathbf{x}_i, \beta_0, \boldsymbol{\beta})}= \beta_0 + \mathbf{x}_i^\top \boldsymbol{\beta}.
+$$
+
+The parameter $\pi_i$ is the probability of observing $y_i = 1$. We model the 
+*log-odds* as a linear function of the covariates.
+
+To train logistic regression, we have to find an estimate for $\beta_0$ and
+$\boldsymbol{\beta}$. We do this through the following minimization problem
+
+
+$$(\hat{\beta}_0, \hat{\boldsymbol{\beta}}) = \arg \min_{(\beta_0, \boldsymbol{\beta})} - \sum_{i = 1}^n y_i(\beta_0 + \mathbf{x}_i^\top \boldsymbol{\beta}) + \log(1 + e^{\beta_0 + \mathbf{x}_i^\top \boldsymbol{\beta}})$$
+
+
+Is it easy? Well, yes! We can use the Newton-Rapson algorithm! This is built naturally in 
+R with the function `glm(, family = "binomial")`, or via the package
+`glmnet`. Usually, the second is used in classification as it is designed
+to include a LASSO penalty (useful for varible selection). See [here](https://glmnet.stanford.edu/articles/glmnet.html)
+
+---
+
+### Logistic regression in R
+
+One standard way it to implement logistic regression is via the package `glmnet`.
+Let's use it to predict the type of cancer (Malignant or Benign) given results from a
+biopsy. 
+
+```{r, include=FALSE}
+library(tidyverse)
+```
+
+```{r}
+# Load the dataset
+library(mlbench)
+data("BreastCancer")
+BreastCancer <- BreastCancer %>% drop_na()
+# Explore the variables
+dim(BreastCancer)
+knitr::kable(BreastCancer %>% sample_n(4))
+```
+
+---
+
+### Logistic regression in R
+
+Let's preprocess the data to use them in glmnet. 
+
+```{r}
+# Preprocess the data
+n <- nrow(BreastCancer)
+y <- 1*(BreastCancer$Class == "malignant")  # Make the variable binary.
+X <- BreastCancer %>% 
+  dplyr::select(-Id, -Class) %>%
+  mutate_if(is.factor, as.numeric)  # Turn all variables into numeric to make our life easier
+
+```
+
+We need to split our dataset
+at random first. We use 70% of the observation as training, and the remaining 
+part as test.
+
+```{r}
+# Randomly take 30% of the data as test set
+set.seed(10)    # Remember to set a seed for reproducibility
+id_test <- sample(1:n, size = round(n * 0.3))
+y_train <- y[-id_test]; y_test <- y[id_test]
+X_train <- X[-id_test, ]; X_test <- X[id_test, ]
+```
+
+---
+### Logistic regression in R
+
+We are now ready to test our model. We set `lambda = 0` since for now we are 
+not interested in the lasso penalty. Let's also consider just the first 2 covariates.
+```{r}
+library(glmnet)
+logit_fit <- glmnet(x = X_train[, 1:2], y = y_train,
+                    family = "binomial",
+                    lambda = 0, 
+                    standardize = FALSE)
+# Coefficients
+t(logit_fit$beta)
+```
+
+How do we interpret the coefficients? In this case, 1-unit increase in ``Cell.size`
+multiplies the odds of malignant cell by `exp(1.40) = 4.06`. Increase!
+
+---
+### Prediction with logistic regression
+
+The logistic regression returns the estimated probability of detecting a malignant tumor: $\hat{\pi}_i = \frac{e^{\hat{\beta_0} + \mathbf{x}_i^\top\hat{\boldsymbol{\beta}}}}{1+ e^{\hat{\beta_0} + \mathbf{x}_i^\top\hat{\boldsymbol{\beta}}}}$
+```{r}
+# Prediction (in sample)
+pi_hat <- c(predict(logit_fit, newx = as.matrix(X_train)[, 1:2], type = "response"))
+head(pi_hat, 5)
+```
+
+How do we determine if the tumor is malignant or not? We need a decision rule. 
+We select a threshold, usually $\tau=0.5$, so that
+
+$$
+\hat{y}_i = 
+\begin{cases}
+1 &\text{if} \quad \hat{\pi}_i \geq \tau\\
+0 &\text{if} \quad \hat{\pi}_i < \tau
+\end{cases}
+$$
+and use it to evaluate the in-sample accuracy.
+```{r}
+y_hat <- 1*(pi_hat >= 0.5)
+mean(y_train == y_hat)  # Quite good!
+```
+
+---
+### Prediction with logistic regression
+
+Can we improve on our model? Yes! let's include all the covariates, for example.
+```{r}
+# New model will all the covariates
+logit_fit_all <- glmnet(x = X_train, y = y_train,
+                        family = "binomial", lambda = 0, standardize = FALSE)
+# Prediction
+pi_hat_all<- c(predict(logit_fit_all, newx = as.matrix(X_train), type = "response"))
+
+# In-sample accuracy
+y_hat_all <- 1*(pi_hat_all >= 0.5)
+mean(y_train == y_hat_all) 
+```
+
+We improved on in-sample accuracy! 
+
+
+
+---
+### Is our model good? 
+One very useful tool to compare models is the ROC curve. How
+does our prediction change as we vary our threshold $\tau$?
+
+ - *Sensitivity*: probability of a positive test result, conditioned on the
+ individual truly being positive.
+ - *Specificity*: probability of a negative test result, conditioned on the
+ individual truly being negative.
+ 
+
+```{r}
+# Function to compute sensitivity and specificity
+computeSensSpec <- function(tau, pi_hat, y_train) {
+ y_hat <- 1*(pi_hat >= tau)
+ out <- y_hat == y_train
+ return(c("Sensitivity" = mean(out[y_train == 1]),
+   "Specificity" = mean(out[y_train == 0])))
+}
+computeSensSpec <- Vectorize(computeSensSpec, vectorize.args = "tau")
+
+# Calculate sensitivity and specificity of our model
+tau <- seq(0, 1, length.out  = 101)
+ROC <- data.frame(t(computeSensSpec(tau,pi_hat, y_train)), "Model" = "Two covariates")
+ROC_all <- data.frame(t(computeSensSpec(tau,pi_hat_all, y_train)), "Model" = "All covariates")
+```
+
+The ROC plots 1 - Specificity against Sensitivity. The more it is closer to 
+the top left corner, the better the model is!
+---
+### ROC curves
+
+```{r, , out.width="50%"}
+# Plot the ROC curve
+ggplot(data = rbind(ROC, ROC_all),
+       aes(x = 1 - Specificity, y = Sensitivity, color = Model)) +
+  geom_line(aes(linetype = Model)) + geom_point() +
+  theme_bw() + theme(aspect.ratio = 1) 
+```
+
+---
+
+### Finally, we are ready to test the model out of sample!
+
+The last step is to check our model out-of-sample.
+```{r}
+# Prediction for model 1
+pi_hat_test <- c(predict(logit_fit, newx = as.matrix(X_test[, 1:2]), type = "response"))
+mean(y_test == 1*(pi_hat_test >= 0.5))
+
+# Prediction for model 2
+pi_hat_test_all <- c(predict(logit_fit_all, newx = as.matrix(X_test), type = "response"))
+mean(y_test == 1*(pi_hat_test_all >= 0.5))
+```
+
+The model with all covariates performs slightly better. 
+
+---
+
+## From binary classes to... multiclass! Multinomial regression
+
+
+
+
+
+---
+
+

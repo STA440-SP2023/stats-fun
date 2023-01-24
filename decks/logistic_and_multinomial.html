@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Logistic and Multinomial regression</title>
+    <meta charset="utf-8" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="css/slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Logistic and Multinomial regression
+]
+.date[
+### <br> Alessandro Zito
+]
+
+---
+
+
+
+
+
+layout: true
+  
+&lt;div class="my-footer"&gt;
+&lt;span&gt;
+&lt;a href="https://STA440-SP2023.github.io/stats-fun/" target="_blank"&gt;Back to website&lt;/a&gt;
+&lt;/span&gt;
+&lt;/div&gt; 
+
+---
+
+
+
+### Overview of classification methods
+
+Classification is one of the fundamental tasks in Statistics and Machine Learning.
+We are surrounded by classifiers in our daily work activity and leisure time.
+
+For example...
+- Which emails go in the *spam folder*?
+- Will your resume/cover letter be read by a recruiter given the language you used?
+- Will you be extended a loan, given your credit score?
+- What type of Instagram posts will you be most likely to like?
+
+Classification is a *supervised* task: we first train our model on a training set
+(where the response variable is know), and use it to predict the most likely value
+associated to test covariates (where the response is unknown).
+
+When doing classification, we have to make sure we avoid *overfitting*, since perfect
+prediction in the training set will likely lead to bad predictions in the test set. 
+For this reason, most of the model parameters are tuned via *cross-validation*. 
+
+---
+### Examples of classification algorithms
+
+There is a rich literature on classification algorithms.
+
+ - Logistic regression (for binary 0 - 1 classification)
+ - Multinomial regression (for multiclass classification)
+ - Naive Bayes and linear discriminant analysis
+ - Decision trees (CART)
+ - Random forests 
+ - k-nearest neighbors
+ - Large margin classifiers such as Support Vector Machine. 
+ - Gradient boosting (xgboost)
+ - Neural nets
+ - Bayesian methods such as BART
+ 
+In this series of lectures, we are going to focus mostly on the 
+first three algorithms. Feel free to dig and ask about other methods, or even to
+implements them to double check your model. 
+ 
+---
+
+### Case study 2: classification of DNA sequences
+
+&lt;img src="../CaseStudy2_Lepidoptera/images/barcoding.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+
+In this case study, we will deal with DNA barcoding, which is the practice of 
+classifying DNA sequences into a taxonomy.
+
+You will train your algorithm on a set of 40000 DNA sequences, and later predict
+the taxonomy of 7000 test sequences.
+
+Some test sequences might belong to Families and Genuses that have not been observed
+in the test. How can you deal with this situation? (Extra points!)
+
+---
+
+### Logistic regression
+
+Logistic regression is the first basic classifier. Let `\(y_i \in \{0, 1\}\)` for
+`\(i = 1, \ldots, n\)` observations, and let `\(\mathbf{x}_i\)` indicate a set of covariates
+(features in the Machine learning literature). 
+
+Outcome `\(y_i = 1\)` can indicate, for example, a spam email, while `\(y_i = 0\)` is not 
+a spam.  The covariates `\(\mathbf{x}_i\)` can contain the type of words in the body of the email.
+
+We assume the following model:
+
+$$
+y_i \mid \pi_i \stackrel{\text{ind}}{\sim} Bernoulli(\pi_i), \qquad
+\log \frac{\pi_i}{1 - \pi_i} = \frac{P(y_i = 1\mid \mathbf{x}_i, \beta_0, \boldsymbol{\beta})}{P(y_i = 0\mid \mathbf{x}_i, \beta_0, \boldsymbol{\beta})}= \beta_0 + \mathbf{x}_i^\top \boldsymbol{\beta}.
+$$
+
+The parameter `\(\pi_i\)` is the probability of observing `\(y_i = 1\)`. We model the 
+*log-odds* as a linear function of the covariates.
+
+To train logistic regression, we have to find an estimate for `\(\beta_0\)` and
+`\(\boldsymbol{\beta}\)`. We do this through the following minimization problem
+
+
+`$$(\hat{\beta}_0, \hat{\boldsymbol{\beta}}) = \arg \min_{(\beta_0, \boldsymbol{\beta})} - \sum_{i = 1}^n y_i(\beta_0 + \mathbf{x}_i^\top \boldsymbol{\beta}) + \log(1 + e^{\beta_0 + \mathbf{x}_i^\top \boldsymbol{\beta}})$$`
+
+
+Is it easy? Well, yes! We can use the Newton-Rapson algorithm! This is built naturally in 
+R with the function `glm(, family = "binomial")`, or via the package
+`glmnet`. Usually, the second is used in classification as it is designed
+to include a LASSO penalty (useful for varible selection). See [here](https://glmnet.stanford.edu/articles/glmnet.html)
+
+---
+
+### Logistic regression in R
+
+One standard way it to implement logistic regression is via the package `glmnet`.
+Let's use it to predict the type of cancer (Malignant or Benign) given results from a
+biopsy. 
+
+
+
+
+```r
+# Load the dataset
+library(mlbench)
+data("BreastCancer")
+BreastCancer &lt;- BreastCancer %&gt;% drop_na()
+# Explore the variables
+dim(BreastCancer)
+```
+
+```
+## [1] 683  11
+```
+
+```r
+knitr::kable(BreastCancer %&gt;% sample_n(4))
+```
+
+
+
+|    |Id      |Cl.thickness |Cell.size |Cell.shape |Marg.adhesion |Epith.c.size |Bare.nuclei |Bl.cromatin |Normal.nucleoli |Mitoses |Class     |
+|:---|:-------|:------------|:---------|:----------|:-------------|:------------|:-----------|:-----------|:---------------|:-------|:---------|
+|294 |601265  |10           |4         |4          |6             |2            |10          |2           |3               |1       |malignant |
+|103 |1167471 |4            |1         |2          |1             |2            |1           |3           |1               |1       |benign    |
+|639 |1277792 |4            |1         |1          |1             |2            |1           |1           |1               |1       |benign    |
+|661 |1339781 |1            |1         |1          |1             |2            |1           |2           |1               |1       |benign    |
+
+---
+
+### Logistic regression in R
+
+Let's preprocess the data to use them in glmnet. 
+
+
+```r
+# Preprocess the data
+n &lt;- nrow(BreastCancer)
+y &lt;- 1*(BreastCancer$Class == "malignant")  # Make the variable binary.
+X &lt;- BreastCancer %&gt;% 
+  dplyr::select(-Id, -Class) %&gt;%
+  mutate_if(is.factor, as.numeric)  # Turn all variables into numeric to make our life easier
+```
+
+We need to split our dataset
+at random first. We use 70% of the observation as training, and the remaining 
+part as test.
+
+
+```r
+# Randomly take 30% of the data as test set
+set.seed(10)    # Remember to set a seed for reproducibility
+id_test &lt;- sample(1:n, size = round(n * 0.3))
+y_train &lt;- y[-id_test]; y_test &lt;- y[id_test]
+X_train &lt;- X[-id_test, ]; X_test &lt;- X[id_test, ]
+```
+
+---
+### Logistic regression in R
+
+We are now ready to test our model. We set `lambda = 0` since for now we are 
+not interested in the lasso penalty. Let's also consider just the first 2 covariates.
+
+```r
+library(glmnet)
+logit_fit &lt;- glmnet(x = X_train[, 1:2], y = y_train,
+                    family = "binomial",
+                    lambda = 0, 
+                    standardize = FALSE)
+# Coefficients
+t(logit_fit$beta)
+```
+
+```
+## 1 x 2 sparse Matrix of class "dgCMatrix"
+##    Cl.thickness Cell.size
+## s0     0.636808  1.404734
+```
+
+How do we interpret the coefficients? In this case, 1-unit increase in ``Cell.size`
+multiplies the odds of malignant cell by `exp(1.40) = 4.06`. Increase!
+
+---
+### Prediction with logistic regression
+
+The logistic regression returns the estimated probability of detecting a malignant tumor: `\(\hat{\pi}_i = \frac{e^{\hat{\beta_0} + \mathbf{x}_i^\top\hat{\boldsymbol{\beta}}}}{1+ e^{\hat{\beta_0} + \mathbf{x}_i^\top\hat{\boldsymbol{\beta}}}}\)`
+
+```r
+# Prediction (in sample)
+pi_hat &lt;- c(predict(logit_fit, newx = as.matrix(X_train)[, 1:2], type = "response"))
+head(pi_hat, 5)
+```
+
+```
+## [1] 0.04351899 0.75475543 0.01257140 0.02350236 0.99998949
+```
+
+How do we determine if the tumor is malignant or not? We need a decision rule. 
+We select a threshold, usually `\(\tau=0.5\)`, so that
+
+$$
+\hat{y}_i = 
+`\begin{cases}
+1 &amp;\text{if} \quad \hat{\pi}_i \geq \tau\\
+0 &amp;\text{if} \quad \hat{\pi}_i &lt; \tau
+\end{cases}`
+$$
+and use it to evaluate the in-sample accuracy.
+
+```r
+y_hat &lt;- 1*(pi_hat &gt;= 0.5)
+mean(y_train == y_hat)  # Quite good!
+```
+
+```
+## [1] 0.9518828
+```
+
+---
+### Prediction with logistic regression
+
+Can we improve on our model? Yes! let's include all the covariates, for example.
+
+```r
+# New model will all the covariates
+logit_fit_all &lt;- glmnet(x = X_train, y = y_train,
+                        family = "binomial", lambda = 0, standardize = FALSE)
+# Prediction
+pi_hat_all&lt;- c(predict(logit_fit_all, newx = as.matrix(X_train), type = "response"))
+
+# In-sample accuracy
+y_hat_all &lt;- 1*(pi_hat_all &gt;= 0.5)
+mean(y_train == y_hat_all) 
+```
+
+```
+## [1] 0.9811715
+```
+
+We improved on in-sample accuracy! 
+
+
+
+---
+### Is our model good? 
+One very useful tool to compare models is the ROC curve. How
+does our prediction change as we vary our threshold `\(\tau\)`?
+
+ - *Sensitivity*: probability of a positive test result, conditioned on the
+ individual truly being positive.
+ - *Specificity*: probability of a negative test result, conditioned on the
+ individual truly being negative.
+ 
+
+
+```r
+# Function to compute sensitivity and specificity
+computeSensSpec &lt;- function(tau, pi_hat, y_train) {
+ y_hat &lt;- 1*(pi_hat &gt;= tau)
+ out &lt;- y_hat == y_train
+ return(c("Sensitivity" = mean(out[y_train == 1]),
+   "Specificity" = mean(out[y_train == 0])))
+}
+computeSensSpec &lt;- Vectorize(computeSensSpec, vectorize.args = "tau")
+
+# Calculate sensitivity and specificity of our model
+tau &lt;- seq(0, 1, length.out  = 101)
+ROC &lt;- data.frame(t(computeSensSpec(tau,pi_hat, y_train)), "Model" = "Two covariates")
+ROC_all &lt;- data.frame(t(computeSensSpec(tau,pi_hat_all, y_train)), "Model" = "All covariates")
+```
+
+The ROC plots 1 - Specificity against Sensitivity. The more it is closer to 
+the top left corner, the better the model is!
+---
+### ROC curves
+
+
+```r
+# Plot the ROC curve
+ggplot(data = rbind(ROC, ROC_all),
+       aes(x = 1 - Specificity, y = Sensitivity, color = Model)) +
+  geom_line(aes(linetype = Model)) + geom_point() +
+  theme_bw() + theme(aspect.ratio = 1) 
+```
+
+&lt;img src="logistic_and_multinomial_files/figure-html/unnamed-chunk-12-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Finally, we are ready to test the model out of sample!
+
+The last step is to check our model out-of-sample.
+
+```r
+# Prediction for model 1
+pi_hat_test &lt;- c(predict(logit_fit, newx = as.matrix(X_test[, 1:2]), type = "response"))
+mean(y_test == 1*(pi_hat_test &gt;= 0.5))
+```
+
+```
+## [1] 0.9268293
+```
+
+```r
+# Prediction for model 2
+pi_hat_test_all &lt;- c(predict(logit_fit_all, newx = as.matrix(X_test), type = "response"))
+mean(y_test == 1*(pi_hat_test_all &gt;= 0.5))
+```
+
+```
+## [1] 0.9463415
+```
+
+The model with all covariates performs slightly better. 
+
+---
+
+## From binary classes to... multiclass! Multinomial regression
+
+
+
+
+
+---
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightLines": true,
+"highlightStyle": "solarized-light",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

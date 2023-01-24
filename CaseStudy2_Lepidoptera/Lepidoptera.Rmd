@@ -120,11 +120,11 @@ There are two datasets:
 
 # Lecture Notes
 
-[Introduction to logistic and multinomial regression](../decks/logistic.html)
+[Introduction to logistic and multinomial regression](../decks/logistic_and_multinomial.html)
 
 [Naive Bayes Classifiers](../decks/Naive_Bayes.html)
 
-[Evaluating classification: accuracy, precision and recall, ROC and AUROC](../decks/.html)
+[Variable Selection and the Lasso](../decks/.lassohtml)
 
 
 

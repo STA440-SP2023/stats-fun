@@ -387,31 +387,34 @@ sequence.</li>
 </ol>
 <p>To show a concrete example, copy and paste the following DNA sequence
 into the Barcode of Life project (BOLD) identification engine <a href="https://www.boldsystems.org/index.php/IDS_OpenIdEngine">here</a>:</p>
-<pre class="r"><code>ACTTTATATTTTATTTTTGGAATTTGAGCAGGTATAGTAGGAACATCTCTTAGCCTTATTATTCGAACAGAACTAGGTAA
-TCCAGGGTCTTTAATTGGAGATGATCAAATTTATAATACTATTGTTACAGCTCATGCTTTTATCATAATTTTTTTTATAG
-TTATACCTATTATAATTGGAGGATTTGGAAATTGACTTATTCCTCTTATACTTGGGGCCCCTGACATAGCTTTCCCTCGA
-ATAAATAATATAAGATTTTGACTTTTACCTCCCTCCTTAATACTACTAATTTCAAGTAGTATCGTTGAAAACGGAGCAGG
-AACAGGATGAACAGTTTATCCCCCTCTTTCATCTAATATTGCTCATAGAGGATCTTCTGTTGATTTAGCAATTTTTTCCT
-TACATTTAGCTGGAATTTCCTCTATTTTAGGAGCTATTAATTTTATTACAACAATTATTAATATACGAATTAATAATATA
-AATTATGATCAAATACCTTTATTTGTTTGAGCTGTAGGAATTACAGCTTTATTATTATTACTTTCTCTTCCTGTATTAGC
-TGGAGCAATTACCATACTTCTTACAGATCGAAATTTAAATACTTCATTTTTTGATCCTGCAGGAGGAGGAGATCCTATTT
-TATACCAACATTTATTT</code></pre>
-<p>The taxonomy of the DNA sequence should be returned. Which species is
-identified by the DNA sequence? With which level of confidence?</p>
+<pre class="r"><code>---------------------------------------ACTTTATATTTTATTTTTGGAGTATGAGCAGGAATAATTGG
+AACTTCTTTA---AGTTTAATAATTCGTACAGAATTAGGTAACCCTGGGTCACTAATTGGAGAT---GATCAAATTTATA
+ATACTATTGTTACAGCTCATGCTTTTATTATAATTTTTTTTATAGTTATACCAATTATAATTGGAGGATTTGGTAATTGA
+TTAATTCCCTTAATA---TTAGGAGCCCCTGATATAGCTTTCCCACGTATAAATAATATAAGATTTTGATTATTACCCCC
+ATCATTAACTTTATTAATTTCTAGAAGTATTGTTGAAAATGGAGCAGGAACAGGATGAACAGTTTACCCCCCTCTTTCCT
+CTAATATTGCCCATAGAGGATCTTCTGTTGATTTA---GCTATTTTTTCTCTACATCTTGCAGGAATTTCCTCCATCCTC
+GGAGCAATTAACTTTATTACAACAATTATCAATATACGAATTAATAATATATCATTTGATCAAATACCTTTATTTGTATG
+AGCAGTAGGAATTACTGCTTTATTATTATTATTATCATTACCGGTTTTAGCTGGT---GCAATTACTATATTATTAACTG
+ATCGAAATTTAAATACCTCTTTTTTTGACCCTGCTGGCGGAGGAGACCCAATTCTTTACCAACATTTA------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+---------------------</code></pre>
+<p>The taxonomy of the DNA sequence should be returned (tap the <a href="https://www.boldsystems.org/index.php/Taxbrowser_Taxonpage?taxid=70536">Species
+page button</a>). Which species is identified by the DNA sequence? With
+which level of confidence?</p>
 <p>In this case study, a researcher from a Finnish lab has given you
-3000 aligned DNA sequences collected by capturing butterflies
+7000 aligned DNA sequences collected by capturing butterflies
 (technically, all specimen belong to the order of <em>Lepidoptera</em>)
 in a nearby forest. Even though they he can confidently place the DNA
 sequences into the order of Lepidoptera, they would like to know more
 about the taxonomy of the specimen collected, since this was not
 possible to recognize through morphology. To fulfill this task, you are
-also given a historical dataset of 7000 annotated DNA sequences
-belonging to the order of Lepidoptera for which annotations are
-established. Your job is to build a classification model using this
-dataset and then to annotate the 3000 DNA sequence at the
-<em>family</em> and at the <em>genus</em> levels. In doing this, it is
-important that you introduce a measure of how certain your final
-annotation is.</p>
+also given a historical dataset of 40000 annotated DNA sequences for
+which annotations have been confidently established. Your job is to
+build a classification model using this dataset and then to annotate the
+7000 DNA sequence at the <em>family</em> and at the <em>genus</em>
+levels. In doing this, it is important that you introduce a measure of
+how uncertain your final annotation is.</p>
 <p><strong>EXTRA POINTS - </strong> Most of the times, taxonomic
 classification has an issue: the DNA sequence might be from a new
 specimen that is from a family or a genus that is not observed in the
@@ -424,51 +427,56 @@ your answer?</p>
 <li>Learning about classification methods, such as logistic regression,
 multinomial regression, Naive Bayes and (if time allows) more complex ML
 methods.</li>
-<li>Learning how to evaluate a classification model</li>
+<li>Learning how to evaluate a classification model (accuracy, ROC
+curves, MCC)</li>
 <li>Develop skills to handle categorical predictors</li>
 </ul>
 </div>
 <div id="case-study-goals" class="section level1">
 <h1>Case Study Goals</h1>
 <ul>
-<li>Quantify biodiversity at the family level for the given test
-sequences</li>
 <li>Learning how to summarize and play with DNA-type data</li>
+<li>Summarise information on a given biodiversity</li>
+<li>Building multi-level classifiers for complex tasks</li>
 </ul>
-<p>Make sure you address the following questions (possibly through
-variable selection methods): - How would you summarize information on
-DNA sequences? - Is the whole DNA sequence important for doing
-classification? - Are there loci along the sequences that are
-particularly important for classification? - Are there some irrelevant
-ones?</p>
+<p>Make sure you address the following questions (variable selection
+methods can be used): - How would you summarize information on DNA
+sequences? - How can we use DNA sequences as predictors? - Is the whole
+DNA sequence important for doing classification? - Are there loci along
+the sequences that are particularly important for classification? - Are
+there some irrelevant ones?</p>
 </div>
 <div id="data" class="section level1">
 <h1>Data</h1>
-<ul>
-<li>Data for this case study are available on the STA 440L container as
-well as on Sakai</li>
-</ul>
+<p>Data for this case study are available on the STA 440L container as
+well as on Sakai. There are two datasets: -
+<em>Lepidoptera_library.csv</em>: a dataset of 40000 DNA sequences and
+their annotations. You can ignore the species column, since we are
+interested in only family and genus - <em>test_sequences.csv</em>: 7000
+test DNA sequences. No affiliation is reported, so your job is to
+predict both genus and species, and also to verify if some DNA sequences
+can be reconducted to “new” species (if you want extra points).</p>
 </div>
 <div id="assignments-and-reports-update" class="section level1">
 <h1>Assignments and Reports: UPDATE</h1>
 <ul>
-<li>Report and reproducible code (Group assignment due
-<strong>XXX</strong>): produce a 8 page (maximum) report that clearly
-addresses the case study goals. This report should follow the format of
-a standard scientific report and should include sections for the
-introduction, methods, results, and discussion. The methods section
-should clearly identify the approach to model selection and evaluation,
-and the results section should clearly specify the final model selected,
-along with evidence the model provides a good fit to the data. Code
-should be fully reproducible. Code run time should be clearly specified
-at the head of the file.</li>
-<li>Peer review of reports will occur during the class on
-<strong>XXX</strong>. During this class you will use the peer review
-rubric provided to provide constructive feedback on the other group’s
-report you have been assigned.</li>
+<li>Report and reproducible code (Group assignment due February 28):
+produce a 8 page (maximum) report that clearly addresses the case study
+goals. This report should follow the format of a standard scientific
+report and should include sections for the introduction, methods,
+results, and discussion. The methods section should clearly identify the
+approach to model selection and evaluation, and the results section
+should clearly specify the final model selected, along with evidence the
+model provides a good fit to the data. Code should be fully
+reproducible. Code run time should be clearly specified at the head of
+the file.</li>
+<li>Peer review of reports will occur during the class on February 21.
+During this class you will use the peer review rubric provided to
+provide constructive feedback on the other group’s report you have been
+assigned.</li>
 <li>Revised report and response to reviews (Group assignment due
-<strong>XXX</strong>): groups may submit revised reports and must submit
-a point-by-point response to the review comments provided.</li>
+February 28): groups may submit revised reports and must submit a
+point-by-point response to the review comments provided.</li>
 </ul>
 </div>
 <div id="resources" class="section level1">
@@ -481,14 +489,16 @@ end-to-end DNA barcoding procedure</a></p>
 commentary on DNA barcoding</a></p>
 <p><a href="https://www.boldsystems.org/">Barcode of Life
 project</a></p>
+<p><a href="https://glmnet.stanford.edu/articles/glmnet.html">Multinomial
+regression via glmnet</a></p>
 </div>
 <div id="lecture-notes" class="section level1">
 <h1>Lecture Notes</h1>
-<p><a href="../decks/logistic.html">Introduction to logistic and
-multinomial regression</a></p>
+<p><a href="../decks/logistic_and_multinomial.html">Introduction to
+logistic and multinomial regression</a></p>
 <p><a href="../decks/Naive_Bayes.html">Naive Bayes Classifiers</a></p>
-<p><a href="../decks/.html">Evaluating classification: accuracy,
-precision and recall, ROC and AUROC</a></p>
+<p><a href="../decks/.lassohtml">Variable Selection and the
+Lasso</a></p>
 </div>
 
 
