@@ -354,10 +354,24 @@ The model with all covariates performs slightly better.
 
 ---
 
-## From binary classes to... multiclass! Multinomial regression
+### From binary classes to... multiclass! Multinomial regression
 
+The logistic regression is used only when we have two classes. What if (like in this
+case study) we have to predict multiple classes? 
 
+The generalization of the binomial distribution is the *multinomial*. Suppose that 
+our variable is  divided into `\(K\)` categories: `\(y_i \in\{1, \ldots, K\}\)`. Then, 
+we can assume the following model.
 
+`$$y_i \mid \pi_{i,1}, \ldots, \pi_{i,K} \stackrel{\text{iid}}{\sim} Multinomial(\pi_{i,1}, \ldots, \pi_{i,K}),
+\qquad \pi_{i, k} = P(y_i = k\mid \mathbf{x}_i, \beta_{0}, \boldsymbol{\beta}) = \frac{e^{ \beta_{0, k} +  \mathbf{x}_i^\top\boldsymbol{\beta}_{k}}}{\sum_{j=1}^K e^{ \beta_{0, j} + \mathbf{x}_i^\top\boldsymbol{\beta}_{j}}}$$`
+
+In other words, each category has its own set of coefficients, evaluated with respect 
+to a baseline category (usually the last).
+
+`$$\log\frac{P(y_i = k\mid \mathbf{x}_i, \beta_{0}, \boldsymbol{\beta})}{P(y_i = K\mid \mathbf{x}_i, \beta_{0}, \boldsymbol{\beta})} = \beta_{0, k} + \mathbf{x}_i^\top\boldsymbol{\beta}_{k}$$`
+
+This guarantees identifiability if the parameters.
 
 
 ---

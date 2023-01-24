@@ -65,7 +65,9 @@ final annotation is.
 **EXTRA POINTS - ** Most of the times, taxonomic classification has an issue: 
 the DNA sequence might be from a new specimen that is from a family or a genus 
 that is not observed in the training set. How would take care of such a situation?
-Can you modify your model to account for *new* families? How does that change your answer?
+Can you modify your model to account for *new* families or new genues?
+How does that change your answer?
+
 
 
 # Learning Objectives
@@ -74,20 +76,21 @@ Can you modify your model to account for *new* families? How does that change yo
     regression, Naive Bayes and (if time allows) more complex ML methods. 
 -   Learning how to evaluate a classification model (accuracy, ROC curves, MCC)
 -   Develop skills to handle categorical predictors
+-   Learning how to summarize and play with DNA-type data
 
 
 # Case Study Goals
-
- - Learning how to summarize and play with DNA-type data
- - Summarise information on a given biodiversity
- - Building multi-level classifiers for complex tasks
  
+For each test DNA sequence, predict the Family and the Genus and provide a measure
+for the confidence in your prediction (e.g. best probability). When you build your model,
+make sure to first validate is on a validatio set (eg. 30%) of your training data first. 
+
+
 Make sure you address the following questions (variable selection methods can be used):
-  - How would you summarize information on DNA sequences?
-  - How can we use DNA sequences as predictors?
+  - How accurate are your in-sample predictions at the family and at the genus levels?
+  - What about the validation set(s)?
   - Is the whole DNA sequence important for doing classification? 
-  - Are there loci along the sequences that are particularly important for classification?
-  - Are there some irrelevant ones? 
+  - Which loci along the sequences are particularly important for classification?
 
 # Data
 
@@ -98,12 +101,22 @@ There are two datasets:
  to predict both genus and species, and also to verify if some DNA sequences can be
  reconducted to "new" species (if you want extra points).
 
+The DNA sequence is constructed so that loci are comparable. However, alignenment comes
+with some problems. For example, some loci will not have the classic *A*, *C*, *G* and *T*
+letters, but might have alignemnt gaps *-* or other [special characters](https://en.wikipedia.org/wiki/Nucleic_acid_notation). It is up to you 
+how to deal with these terms, as long as you justify yorur choice. 
+
 
 # Assignments and Reports: UPDATE
 
 -   Report and reproducible code (Group assignment due February 28): produce a 8 page (maximum) report that clearly addresses the case study goals. This report should follow the format of a standard scientific report and should include sections for the introduction, methods, results, and discussion. The methods section should clearly identify the approach to model selection and evaluation, and the results section should clearly specify the final model selected, along with evidence the model provides a good fit to the data. Code should be fully reproducible. Code run time should be clearly specified at the head of the file.
 - Peer review of reports will occur during the class on February 21. During this class you will use the peer review rubric provided to provide constructive feedback on the other group's report you have been assigned.
 - Revised report and response to reviews (Group assignment due February 28): groups may submit revised reports and must submit a point-by-point response to the review comments provided.
+
+# Submission guidlines
+
+Submit a dataset of the prediction in Github, following the format available in the 
+template file. 
 
 # Resources
 
