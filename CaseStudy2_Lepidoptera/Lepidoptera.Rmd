@@ -87,16 +87,22 @@ make sure to first validate on a validation set (eg. 30%) of your training data.
 
 
 Make sure you address the following questions (variable selection methods can be used):
+
   - How accurate are your in-sample predictions at the family and at the genus levels?
+  
   - What about in the validation set(s)?
+  
   - Is the whole DNA sequence important for doing classification? 
+  
   - Which loci along the sequences are particularly important for classification?
 
 # Data
 
 Data for this case study are available on the STA 440L container as well as on Sakai.
 There are two datasets:
+
  - *Lepidoptera_library.csv*: a dataset of 40000 DNA sequences and their annotations. You can ignore the species column, since we are interested in only family and genus
+ 
  - *test_sequences.csv*: 7000 test DNA sequences. No affiliation is reported, so your job is
  to predict both family and genus, and also to verify if some DNA sequences correspond to "new" species (if you want extra points).
 
@@ -136,7 +142,7 @@ template file, in addition to code and your reproducible report.
 
 [Naive Bayes Classifiers](../decks/Naive_Bayes.html)
 
-[Variable Selection and the Lasso](../decks/.lassohtml)
+[Variable Selection and the Lasso](../decks/lass.ohtml)
 
 
 
