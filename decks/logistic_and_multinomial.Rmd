@@ -59,6 +59,23 @@ first three algorithms. Feel free to dig and ask about other methods, or even to
 implements them to double check your model. 
  
 ---
+### End-to-end classification pipeline
+
+Classification requires the following steps
+
+ 1. Data pre-processing (very important!)
+ 2. Model design
+ 3. Train the model on the training set
+ 4. Tune the hyperparameters of the model on a held-out validation set (or equivalent, cross validate)
+ 5. When we are satisfied with the performance in cross validation, retrain the model
+    on the full dataset, and predict the test set.
+ 6. Report the predictions
+ 
+**Important**: you never touch the test set. Training or tuning hypeparameters
+in on the test set is dangerous, since your model will generalize poorly. 
+
+
+---
 
 ### Case study 2: classification of DNA sequences
 
@@ -75,6 +92,29 @@ the taxonomy of 7000 test sequences.
 
 Some test sequences might belong to Families and Genuses that have not been observed
 in the test. How can you deal with this situation? (Extra points!)
+
+---
+
+### An example of taxonomic classification
+
+Plug in this DNA sequence into the Barcode of Life project (BOLD) identification engine [here](https://www.boldsystems.org/index.php/IDS_OpenIdEngine)
+ 
+```R
+---------------------------------------ACTTTATATTTTATTTTTGGAGTATGAGCAGGAATAATTGG
+AACTTCTTTA---AGTTTAATAATTCGTACAGAATTAGGTAACCCTGGGTCACTAATTGGAGAT---GATCAAATTTATA
+ATACTATTGTTACAGCTCATGCTTTTATTATAATTTTTTTTATAGTTATACCAATTATAATTGGAGGATTTGGTAATTGA
+TTAATTCCCTTAATA---TTAGGAGCCCCTGATATAGCTTTCCCACGTATAAATAATATAAGATTTTGATTATTACCCCC
+ATCATTAACTTTATTAATTTCTAGAAGTATTGTTGAAAATGGAGCAGGAACAGGATGAACAGTTTACCCCCCTCTTTCCT
+CTAATATTGCCCATAGAGGATCTTCTGTTGATTTA---GCTATTTTTTCTCTACATCTTGCAGGAATTTCCTCCATCCTC
+GGAGCAATTAACTTTATTACAACAATTATCAATATACGAATTAATAATATATCATTTGATCAAATACCTTTATTTGTATG
+AGCAGTAGGAATTACTGCTTTATTATTATTATTATCATTACCGGTTTTAGCTGGT---GCAATTACTATATTATTAACTG
+ATCGAAATTTAAATACCTCTTTTTTTGACCCTGCTGGCGGAGGAGACCCAATTCTTTACCAACATTTA------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+---------------------
+```
+
+Which species is identified by the DNA sequence? With which level of confidence?
 
 ---
 
@@ -282,26 +322,75 @@ The model with all covariates performs slightly better.
 
 ---
 
-### From binary classes to... multiclass! Multinomial regression
+### From binary classes to... multiclass!
 
 The logistic regression is used only when we have two classes. What if (like in this
 case study) we have to predict multiple classes? 
 
 The generalization of the binomial distribution is the *multinomial*. Suppose that 
-our variable is  divided into $K$ categories: $y_i \in\{1, \ldots, K\}$. Then, 
-we can assume the following model.
+our variable is  divided into $K$ categories: $y_i \in\{1, \ldots, K\}$. Each observation
+has again its own covariates $\mathbf{x}_i$.
+
+Here is an example from a (almost abused) dataset...
+
+```{r}
+data("SparseExample")
+data("iris")
+iris <- iris %>% drop_na()
+knitr::kable(head(iris,5))
+```
+
+---
+### Multinomial regression
+
+The multinomial regression assumes the following model:
 
 $$y_i \mid \pi_{i,1}, \ldots, \pi_{i,K} \stackrel{\text{iid}}{\sim} Multinomial(\pi_{i,1}, \ldots, \pi_{i,K}),
 \qquad \pi_{i, k} = P(y_i = k\mid \mathbf{x}_i, \beta_{0}, \boldsymbol{\beta}) = \frac{e^{ \beta_{0, k} +  \mathbf{x}_i^\top\boldsymbol{\beta}_{k}}}{\sum_{j=1}^K e^{ \beta_{0, j} + \mathbf{x}_i^\top\boldsymbol{\beta}_{j}}}$$
 
-In other words, each category has its own set of coefficients, evaluated with respect 
-to a baseline category (usually the last).
+In other words, each category has its own set of coefficients. Usually, one class is
+dropped for identifiability reasons (but not in `glmnet`). 
 
-$$\log\frac{P(y_i = k\mid \mathbf{x}_i, \beta_{0}, \boldsymbol{\beta})}{P(y_i = K\mid \mathbf{x}_i, \beta_{0}, \boldsymbol{\beta})} = \beta_{0, k} + \mathbf{x}_i^\top\boldsymbol{\beta}_{k}$$
-
-This guarantees identifiability if the parameters.
-
+```{r}
+# Fit the multinomial regression
+set.seed(10)
+test_id <- sample(1:nrow(iris), size = 0.3 * nrow(iris))
+fit_multi <- glmnet(x = as.matrix(iris[-test_id, 1:4]), lambda = 0,
+                    y = iris$Species[-test_id], family = "multinomial")
+# Print the coefficient
+knitr::kable(as.matrix(cbind(fit_multi$a0,  t(do.call("cbind", fit_multi$beta)))))
+```
 
 ---
+### Prediction
+Once the coefficient of each category have been estimated, all we need to do is to classify!
+We are going to pick the method with the highest classification probability. 
+
+$$\hat{y}_i = \arg \max_{k = 1, \ldots, K} \hat{\pi}_i$$
+
+
+```{r}
+# In sample prediction
+pred <- c(predict(fit_multi, newx = as.matrix(iris[-test_id, 1:4]), type = "class"))
+mean(iris$Species[-test_id] == pred) # Accuracy
+
+# Out-of-sample prediction
+pred_test <- c(predict(fit_multi, newx = as.matrix(iris[test_id, 1:4]), type = "class"))
+mean(iris$Species[test_id] == pred_test) # Accuracy
+
+```
+
+---
+### Next lectures
+
+**Question for you**: how can we generalize the ROC curve for multiple categories?
+
+In the next lecture, we will cover also
+
+ - Naive Bayes Classification with `library(e1071)`
+ - Variable selection via LASSO and cross-validation
+
+
+
 
 
