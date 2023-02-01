@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Linear Discriminant analysis and Naive Bayes classification</title>
+    <meta charset="utf-8" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="css/slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Linear Discriminant analysis and Naive Bayes classification
+]
+.date[
+### <br> Alessandro Zito
+]
+
+---
+
+
+
+
+
+layout: true
+  
+&lt;div class="my-footer"&gt;
+&lt;span&gt;
+&lt;a href="https://STA440-SP2023.github.io/stats-fun/" target="_blank"&gt;Back to website&lt;/a&gt;
+&lt;/span&gt;
+&lt;/div&gt; 
+
+---
+
+
+### Introduction to LDA: Bayes rule
+Multi-class classification methods such as the multinomial logistic regression sometimes
+may fail when the classes are well separated according to the data. This is mostly due to the `\(\beta\)` coefficients in the  likelihood. 
+
+A famous alternative when we have multiple classes is to rely on what is known as **Linear discriminant analysis** (LDA) and its extensions like quadratic discriminant analysis (QDA). The algorithm is a generalization of Fisher's linear discriminant. 
+
+LDA relies on Bayes rule. Suppose that we have `\(y \in\{1, \ldots, K\}\)` classes and each observation has a covariate vector  `\(\mathbf{x} \in\mathbb{R}^p\)`. From Bayes rule, we have that
+
+`$$\mathbb{P}(y = k \mid \mathbf{x}) = \frac{\pi_k \times p(\mathbf{x} \mid y = k) }{\sum_{j = 1}^K \pi_j \times p(\mathbf{x} \mid y = j)}, \quad \pi_k = \mathbb{P}(y = k),$$`
+
+where `\(\pi_k\)` is a prior probability of class `\(k\)` and `\(p(\mathbf{x} \mid y = k)\)` is the 
+likelihood that models the covariates conditional on the class. Usually,  `\(\pi_k = n_k/n\)`, where `\(n_k\)` is the number of observations within class `\(k\)` in the training set.
+
+We then predict the class that has the highest posterior probability, usually ignoring 
+the denominator and expressing everything in log term:
+
+$$
+\hat{y} = \arg\max_{k \in \{1, \ldots, K\}} \log \pi_k + \log{p(\mathbf{x} \mid y = k)} 
+$$
+
+---
+### Linear, quadratic and regularized discriminant analysis 
+
+Discriminant analysis seeks for a  **partition the input space** that provides the 
+best separation among the labels, and assigns to each region the most likely label. 
+
+The method arises when we have **multivariate continuous data**. In this case, the 
+likelihood component is modelled as a **multivariate normal**:
+
+`$$p(\mathbf{x} \mid y = k) = \frac{1}{(2\pi)^{p/2}|\boldsymbol{\Omega}|^{1/2}} \exp\left\{ -\frac{1}{2} (\mathbf{x}  - \boldsymbol{\mu}_k)^\top\boldsymbol{\Omega}^{-1}(\mathbf{x}  - \boldsymbol{\mu}_k)\right\}$$`
+
+where `\(\boldsymbol{\mu}_k\)` is the mean vector of class `\(k\)` and `\(\boldsymbol{\Omega}\)` is 
+a variance/covariance matrix. In particular
+
+- If `\(\boldsymbol{\Omega} = \boldsymbol{\Sigma}\)`, where `\(\boldsymbol{\Sigma}\)` is the *global*
+variance-covariance matrix, we have **LDA**
+- If `\(\boldsymbol{\Omega} = \boldsymbol{\Sigma}_k\)` where `\(\boldsymbol{\Sigma}_k\)` is the *class-specific* variance-covariance matrix, we have quadratic discriminant analysis or **QDA**
+- If `\(\boldsymbol{\Omega} = \alpha\boldsymbol{\Sigma}_k + (1-\alpha)\boldsymbol{\Sigma}\)` we have **regularized** discriminant analysis, and the parameter `\(\alpha\)` is tuned via cross-validation.
+
+Estimation of the parameters is straightforward!
+
+- Mean: `\(\hat{\boldsymbol{\mu}}_k = \frac{1}{n_k}\sum_{i: y_i = k} \mathbf{x}_i\)`
+- Global variance-covariance matrix: `\(\boldsymbol{\Sigma} = \frac{1}{N-K}\sum_{k = 1}^K\sum_{i: y_i = k} (\mathbf{x}  - \hat{\boldsymbol{\mu}}_k)(\mathbf{x}  - \hat{\boldsymbol{\mu}}_k)^\top\)`
+
+and similarly for `\(\boldsymbol{\Sigma}_k\)`. 
+---
+### LDA in practice: package `MASS`
+
+LDA established decision boundaries in the plot. For derivations, see Chapter 4.3 in 
+The Elements of Statistical Learning. 
+&lt;img src="LDA_plot.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+We run it via the package  `MASS` using the usual `iris` dataset. 
+
+
+
+
+```r
+# Split the iris data between training and test
+set.seed(10); test_id &lt;- sample(1:nrow(iris), size = round(.4*nrow(iris)))
+data_train &lt;- iris[-test_id, ]
+data_test &lt;- iris[test_id, ]
+
+# Run LDA and QDA
+library(MASS)
+linear &lt;- MASS::lda(Species ~ .,data = data_train)
+quadratic &lt;- MASS::qda(Species ~ .,data = data_train)
+```
+---
+### In- and out-of-sample predictions
+
+```r
+# In sample
+linear_pred &lt;- predict(linear)$class  # This is the class, but you can also retrieve posterior probabilities
+quadratic_pred &lt;- predict(quadratic)$class
+# out of sample
+linear_pred_test &lt;- predict(linear, newdata = data_test)$class
+quadratic_pred_test &lt;- predict(quadratic, newdata = data_test)$class
+
+# Accuracies
+tab &lt;- cbind(c("LDA", "QDA"),
+      round(c(mean(linear_pred == data_train$Species),
+        mean(quadratic_pred == data_train$Species)), 3),
+      round(c(mean(linear_pred_test == data_test$Species),
+        mean(quadratic_pred_test == data_test$Species)),3))
+colnames(tab) &lt;- c("method", "Training", "Test")
+tab
+```
+
+```
+##      method Training Test   
+## [1,] "LDA"  "0.978"  "0.983"
+## [2,] "QDA"  "0.978"  "0.983"
+```
+
+In such a small dataset, there is very little difference in the prediction.
+
+---
+### Naive Bayes
+
+Naive Bayes is similar to LDA, bu can apply also when we have categorical features.
+We assume that the likelihood is a product of independent univariate kernels. We treat covariates as independent. We can write this as
+
+$$
+ p(\mathbf{x} \mid y = k) = \prod_{j = 1}^p p(x_i \mid y = k).
+$$
+The advantage of this approach is that we can be really flexible. For example, the 
+individual kernels can be univariate normals (this is the case when `\(\boldsymbol{\Omega} = \text{diag}\{\sigma^2_1, \ldots, \sigma^2_p\}\)`). Alternatively, suppose that we have
+categorical predictors like
+
+`$$x_j \in \{ 1,2,3,4\}, \quad j = 1, \ldots, p.$$`
+
+Then, we could model the kernel as a multinomial:
+`$$p(\mathbf{x} \mid y = k) = \prod_{j = 1}^p \prod_{g = 1}^4\theta_{j,g}^{1(x_j = g)}$$`
+where `\(\theta_{j, g}\)` is the probability of detecting category `\(g\)` for variable `\(j\)`. Estimation is simple: just calculate the proportion of each category 1,2,3,4 for each variable and for each class (maybe adding Laplace smoothing to avoid zero counts). **Can this be of any use for the case study? :)** For examples of kernels, see this [Python reference](https://scikit-learn.org/stable/modules/naive_bayes.html)
+---
+### Naive Bayes in practice
+
+We use Naive Bayes via `library(e1071)`.
+
+
+```r
+library(e1071)
+# Naive Bayes with normal continuous predictors
+nBayes &lt;- naiveBayes(Species ~ ., data = data_train)
+nBayes$tables$Sepal.Length  # Mean and variance for the normal distribution of covariate 1
+```
+
+```
+##             Sepal.Length
+## Y                [,1]      [,2]
+##   setosa     4.991429 0.3293232
+##   versicolor 5.941935 0.5408476
+##   virginica  6.641667 0.7008794
+```
+
+```r
+# Predict!
+tab &lt;- rbind(tab, c("Naive Bayes",
+      round(mean(predict(nBayes, newdata = data_train) == data_train$Species), 3), 
+      round(mean(predict(nBayes, newdata = data_test) == data_test$Species), 3)))
+tab
+```
+
+```
+##      method        Training Test   
+## [1,] "LDA"         "0.978"  "0.983"
+## [2,] "QDA"         "0.978"  "0.983"
+## [3,] "Naive Bayes" "0.956"  "0.967"
+```
+
+
+---
+
+### Next steps
+
+Prediction in the last case does not work as well as the LDA, becuase Naive bayes is 
+a simpler model
+
+However, under a lot of predictors, Naive Bayes can be very helpful!
+
+Also, we can use it with categorical covariates very simply. This is automatic in the package `library(e1071)`.
+
+Next lecture, shrinkage method and the LASSO!
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightLines": true,
+"highlightStyle": "solarized-light",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

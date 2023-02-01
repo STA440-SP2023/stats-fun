@@ -140,9 +140,9 @@ template file, in addition to code and your reproducible report.
 
 [Introduction to logistic and multinomial regression](../decks/logistic_and_multinomial.html)
 
-[Naive Bayes Classifiers](../decks/Naive_Bayes.html) (yet to come)
+[Naive Bayes Classifiers](../decks/LDA_naiveBayes.html) 
 
-[Variable Selection and the Lasso](../decks/lass.ohtml)(yet to come)
+[Variable Selection and the Lasso](../decks/lasso.html)(yet to come)
 
 
 

@@ -334,7 +334,6 @@ has again its own covariates $\mathbf{x}_i$.
 Here is an example from a (almost abused) dataset...
 
 ```{r}
-data("SparseExample")
 data("iris")
 iris <- iris %>% drop_na()
 knitr::kable(head(iris,5))
