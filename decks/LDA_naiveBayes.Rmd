@@ -1,0 +1,44 @@
+---
+title: "Linear Discriminant analysis and Naive Bayes classification"
+date: "<br> Alessandro Zito"
+output:
+  xaringan::moon_reader:
+    css: 
+      - css/xaringan-themer.css
+      - css/slides.css
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightLines: true
+      highlightStyle: solarized-light
+      countIncrementalSlides: false
+---
+
+```{r child = "../setup.Rmd"}
+```
+
+### Bayes rule
+
+
+---
+### Linear discriminant analysis 
+
+---
+### LDA in practice
+
+---
+### Naive Bayes
+
+---
+### LDA vs Logistic regression
+
+
+---
+### Naive Bayes in practice
+
+
+
+---
+
+
+

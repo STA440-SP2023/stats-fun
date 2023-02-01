@@ -88,19 +88,20 @@ make sure to first validate on a validation set (eg. 30%) of your training data.
 
 Make sure you address the following questions (variable selection methods can be used):
 
-  - How accurate are your in-sample predictions at the family and at the genus levels?
+  -  How accurate are your in-sample predictions at the family and at the genus levels?
   
-  - What about in the validation set(s)?
+  -  What about in the validation set(s)?
   
-  - Is the whole DNA sequence important for doing classification? 
+  -  Is the whole DNA sequence important for doing classification? 
   
-  - Which loci along the sequences are particularly important for classification?
+  -  Which loci along the sequences are particularly important for classification?
 
 # Data
 
 Data for this case study are available on the STA 440L container as well as on Sakai.
 There are two datasets:
 
+ - *Lepidoptera_library.csv*: a dataset of 40000 DNA sequences and their annotations. You can ignore the species column, since we are interested in only family and genus
  
  - *test_sequences.csv*: 7000 test DNA sequences. No affiliation is reported, so your job is
  to predict both family and genus, and also to verify if some DNA sequences correspond to "new" species (if you want extra points).
@@ -111,15 +112,15 @@ letters, but might have alignemnt gaps *-* or other [special characters](https:/
 how to deal with these terms, as long as you justify yorur choice. 
 
 
-# Assignments and Reports: 
+# Assignments and Reports: UPDATE
 
--   Report and reproducible code (Group assignment due February 21): produce a 8 page (maximum) report that clearly addresses the case study goals. The first page of the report should include the team number and names of all team members. This report should follow the format of a standard scientific report and should include sections for the introduction, methods, results, and discussion. The methods section should clearly identify the approach to model selection and evaluation, and the results section should clearly specify the final model selected, along with evidence the model provides a good fit to the data. Code should be fully reproducible. Code run time should be clearly specified at the head of the file.
+-   Report and reproducible code (Group assignment due February 28): produce a 8 page (maximum) report that clearly addresses the case study goals. The first page of the report should include the team number and names of all team members. This report should follow the format of a standard scientific report and should include sections for the introduction, methods, results, and discussion. The methods section should clearly identify the approach to model selection and evaluation, and the results section should clearly specify the final model selected, along with evidence the model provides a good fit to the data. Code should be fully reproducible. Code run time should be clearly specified at the head of the file.
 - Peer review of reports will occur during the class on February 21. During this class you will use the peer review rubric provided to provide constructive feedback on the other group's report you have been assigned.
 - Revised report and response to reviews (Group assignment due February 28): groups may submit revised reports and must submit a point-by-point response to the review comments provided.
 
 # Submission guidlines
 
-Submit a data set of the predictions in Github, following the format available in the 
+Submit a dataset of the prediction in Github, following the format available in the 
 template file, in addition to code and your reproducible report. 
 
 # Resources
@@ -139,9 +140,15 @@ template file, in addition to code and your reproducible report.
 
 [Introduction to logistic and multinomial regression](../decks/logistic_and_multinomial.html)
 
-[Naive Bayes Classifiers](../decks/Naive_Bayes.html)
+[Naive Bayes Classifiers](../decks/Naive_Bayes.html) (yet to come)
 
-[Variable Selection and the Lasso](../decks/lass.ohtml)
+[Variable Selection and the Lasso](../decks/lass.ohtml)(yet to come)
 
 
+
+# Some useful R packages to deal with DNA sequences
+
+[ape](https://cran.r-project.org/web/packages/ape/ape.pdf)
+
+[kmer](https://www.rdocumentation.org/packages/kmer/versions/1.1.2)
 

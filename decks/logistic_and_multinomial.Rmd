@@ -1,5 +1,5 @@
 ---
-title: "Logistic and Multinomial regression"
+title: "Welcome to Case Study 2"
 date: "<br> Alessandro Zito"
 output:
   xaringan::moon_reader:
