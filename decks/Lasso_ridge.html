@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Variable selection: Lasso and ridge regression</title>
+    <meta charset="utf-8" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="css/xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="css/slides.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Variable selection: Lasso and ridge regression
+]
+.date[
+### <br> Alessandro Zito
+]
+
+---
+
+
+
+
+
+layout: true
+  
+&lt;div class="my-footer"&gt;
+&lt;span&gt;
+&lt;a href="https://STA440-SP2023.github.io/stats-fun/" target="_blank"&gt;Back to website&lt;/a&gt;
+&lt;/span&gt;
+&lt;/div&gt; 
+
+---
+
+
+
+
+### Fitting linear models
+
+Linear regression is an amazing tool for inference and prediction. However, the simplest
+linear model may suffer when the number of predictors increases a lot. This is 
+because there is not a unique way to **exclude** certain covariates.
+
+Recall that the linear model optimization problem is the following: given a set of covariates
+`\(\mathbf{X} \in \mathbb{R}^p\)` and a dependent variable `\(\mathbf{y} \in \mathbb{R}\)`, we want to find
+the linear combination of the covariates that minimizes the sum of square residuals:
+
+`$$\hat{\boldsymbol{\beta}} = \arg \min_{\beta} \ (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^\top(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}),$$`
+
+and the solution is the classic OLS estimator `\(\hat{\boldsymbol{\beta}} = (\mathbf{X}^\top  \mathbf{X})^{-1}\mathbf{X}^\top \mathbf{y}\)`.
+
+If we want to exclude some covariates, we have the classic **subset selection methods**:
+find the best set of predictors among all possible alternatives. If we want to include for example
+only `\(k\)` predictors, the total number of models we need to evaluate (either in terms of lowest
+residual sum of squares or highers `\(R^2\)` is `\(p!/[k!(p-k)!]\)`). Too much, if we consider all possible `\(k\)`.
+
+Alternatives that do not consider all the possibilities are 
+
+- Forward stepwise selection: start from a null model, add recursively one predictor and then pick the best model with cross validation.
+- Backward stepwise selection: start from the full model, and then recursively exclude predictors.
+
+
+---
+### Alternative: shrinkage!
+
+A convenient alternative instead is provided by **ridge** and **lasso** regression, that is, we want to control for both the bias and the variance of the estimation procedure.
+Both methods return **shrinkage** estimators: the resulting optimal coefficients 
+are pulled towards zero. In particular, ridge regression solves the following minimization problem
+
+`$$\hat{\boldsymbol{\beta}} = \arg \min_{\beta} \ (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^\top(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) + \lambda||\boldsymbol{\beta}||_2^2,$$`
+
+where `\(||\boldsymbol{\beta}||_2^2 = \sum_{j=1}^p \beta_j^2.\)` Here, `\(\lambda\)` is a 
+shrinkage parameter that we tune via *cross-validation*. In particular, `\(\lambda\)` incorporates a 
+**penalty** in our model: if the size of the coefficients is too high, then we will have a 
+greater penalty.
+
+The solution for ridge is famously available in closed form, and is
+
+$$
+\hat{\boldsymbol{\beta}}_{ridge} = (\mathbf{X}^\top  \mathbf{X} + \lambda \mathbf{I}_p)^{-1}\mathbf{X}^\top \mathbf{y}
+$$
+Two important notes:
+
+- Ridge coefficient are pulled to 0, but are never set equal to zero under
+a reasonable penalty (*soft penalty*): **no variable selection!**
+- While OLS estimates are scale equivariant (eg. multiplying predictors by a constant
+leads to a scaling of the estimates by the inverse of such a constant). Instead, **ridge regression is not
+equivariant**. We need to standardize the predictors before regression.
+
+
+---
+### Lasso regression
+
+If we want to incorporate a *hard penalty* and do variable selection, instead, we rely on *lasso*.  
+
+`$$\hat{\boldsymbol{\beta}} = \arg \min_{\beta} \ (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^\top(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) + \lambda||\boldsymbol{\beta}||_1^2,$$`
+where `\(||\boldsymbol{\beta}||_1^2 = \sum_{j=1}^p |\beta_j|.\)` The absolute value
+forces excessively high coefficients to be put to 0. 
+
+Unfortunately, the lasso solution is not available in closed form. Ro solve it, we rely on 
+various algorithms such as the LARS (Lasso-modified least angle regression) or
+a pariwise coordinate optimization, optimizing successively over each `\(\beta_j\)`.
+
+We do not cover the algorithms here. Refer to Chapters 3.4.4 and 3.8.6 of THe Elements 
+of Statistical Learning if you are interested. 
+
+
+What if we want to include both shrinkage and variable selection? **Elastic net!**
+
+`$$\hat{\boldsymbol{\beta}} = \arg \min_{\beta} \ (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^\top(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) + \lambda[\alpha||\boldsymbol{\beta}||_2^2 +  (1-\alpha)||\boldsymbol{\beta}||_1],$$`
+
+and `\(\alpha \in [0, 1]\)` is another tuning parameter.
+---
+### Ridge and Lasso in pictures
+
+Ridge and Lasso have a famous dual optimization problem. For example, in the Lasso case we have
+$$
+\arg\min_\beta (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^\top(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})  \quad \text{sub} \quad ||\boldsymbol{\beta}||_1\leq \tau.
+$$
+In other words, the `\(\lambda\)` coefficient is just the Lagrange multiplier for this 
+optimization problem: for every `\(\lambda\)` there exists a `\(\tau\)` and vice-versa, so the two problems are equivalent. 
+
+&lt;img src="LassoRidgePlot.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+### Lasso and Ridge for logistic regression
+
+For logistic regression, the idea is basically the same as the standard linear regression case,
+with the caveat that a solution is not availble in closed form. 
+
+Letting `\(y_i  \in \{0, 1\}\)`, we optimize the following:
+
+`$$\arg \min_{(\beta_0, \boldsymbol{\beta})} = - \left\{\sum_{i = 1}^n y_i(\beta_0 + \mathbf{x}_i^\top \boldsymbol{\beta}) + \log(1 + e^{\beta_0 + \mathbf{x}_i^\top \boldsymbol{\beta}}) \right\} + \lambda||\boldsymbol{\beta}||_1.$$`
+
+The shrinkage and the variable selection properties remain the same!
+
+Again, we tune `\(\lambda\)` via cross-validation. For example, 10fold is good way of doing it. 
+
+All of these methods are applied via the package `glmnet`. By default, the package 
+runs lasso for a grid of 100 values for `\(\lambda\)`. The ridge penalty is specified by letting the parameter `\(\alpha = 0\)`. If this is set between 0 and 1, we have the elastic net penalty. 
+
+
+---
+### Lasso and Ridge in practice via `glmnet`
+
+
+```r
+# Load the package to perform ridge and lasso
+library(glmnet)
+# Load the dataset 
+data("iris")
+# Let's add noise covariates and see if the model is able to exclude them
+y &lt;- as.factor(iris$Species)
+x &lt;- iris[, 1:4]
+X &lt;- cbind(x, matrix(rnorm(nrow(x)*8), ncol= 8))
+
+# Run glmnet (via the default cross validation methods)
+fit &lt;- cv.glmnet(x = as.matrix(X), y = y, nfolds = 10, family = "multinomial")
+```
+---
+### Cross validation and the lasso
+Recall that the multinomial deviance is specified as `\(-2\sum_{i=1}^n\log \hat{\pi}_{i_j}\)`,
+where `\(\hat{\pi}_{i_j}\)` is the predicted probability of class `\(j\)` for observation `\(i\)`.
+
+
+
+```r
+# Check the multinomial deviance for the model to select the best lamda
+plot(fit)
+```
+
+&lt;img src="Lasso_ridge_files/figure-html/unnamed-chunk-5-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+---
+### Predict with glmnet
+
+
+```r
+# Do prediction with the best lambda
+pred &lt;- predict(fit,newx = as.matrix(X), s = "lambda.min", type="class")
+table(pred, y)
+```
+
+```
+##             y
+## pred         setosa versicolor virginica
+##   setosa         50          0         0
+##   versicolor      0         50         0
+##   virginica       0          0        50
+```
+
+
+Let's look at the coefficients for the best `\(\lambda\)`. 
+
+```r
+# Re-estimate the model with the best lambda. This in not necessary, since this model
+# is already present in fit
+fit_best &lt;- glmnet(x = as.matrix(X), y = y, family = "multinomial", lambda = fit$lambda.min)
+fit_best$beta
+```
+
+```
+## $setosa
+## 12 x 1 sparse Matrix of class "dgCMatrix"
+##                     s0
+## Sepal.Length  .       
+## Sepal.Width   2.730895
+## Petal.Length -3.287708
+## Petal.Width  -1.302060
+## 1             .       
+## 2             .       
+## 3             .       
+## 4             .       
+## 5             .       
+## 6             .       
+## 7             .       
+## 8             .       
+## 
+## $versicolor
+## 12 x 1 sparse Matrix of class "dgCMatrix"
+##                       s0
+## Sepal.Length  0.05332265
+## Sepal.Width   .         
+## Petal.Length  .         
+## Petal.Width   .         
+## 1             .         
+## 2             .         
+## 3             0.01568204
+## 4             0.06572844
+## 5            -0.04947394
+## 6             .         
+## 7             .         
+## 8            -0.25569753
+## 
+## $virginica
+## 12 x 1 sparse Matrix of class "dgCMatrix"
+##                      s0
+## Sepal.Length  .        
+## Sepal.Width  -3.8906888
+## Petal.Length  4.2759684
+## Petal.Width  12.3280548
+## 1             .        
+## 2             0.4061098
+## 3            -0.1251015
+## 4            -0.9410975
+## 5             .        
+## 6             1.6014410
+## 7             .        
+## 8             .
+```
+
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightLines": true,
+"highlightStyle": "solarized-light",
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
