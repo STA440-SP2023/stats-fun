@@ -142,7 +142,7 @@ template file, in addition to code and your reproducible report.
 
 [Naive Bayes Classifiers](../decks/LDA_naiveBayes.html) 
 
-[Variable Selection and the Lasso](../decks/lasso.html)(yet to come)
+[Variable Selection and the Lasso](../decks/Lasso_ridge.html)
 
 
 
