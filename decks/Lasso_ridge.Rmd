@@ -161,16 +161,15 @@ plot(fit)
 ```{r}
 # Do prediction with the best lambda
 pred <- predict(fit,newx = as.matrix(X), s = "lambda.min", type="class")
-table(pred, y)
 ```
-
 
 Let's look at the coefficients for the best $\lambda$. 
 ```{r}
 # Re-estimate the model with the best lambda. This in not necessary, since this model
 # is already present in fit
 fit_best <- glmnet(x = as.matrix(X), y = y, family = "multinomial", lambda = fit$lambda.min)
-fit_best$beta
+coeffs <- do.call("cbind", fit_best$beta)
+colnames(coeffs) <- names(fit_best$beta); coeffs
 ```
 
 

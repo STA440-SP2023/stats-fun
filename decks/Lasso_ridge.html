@@ -183,17 +183,7 @@ plot(fit)
 ```r
 # Do prediction with the best lambda
 pred &lt;- predict(fit,newx = as.matrix(X), s = "lambda.min", type="class")
-table(pred, y)
 ```
-
-```
-##             y
-## pred         setosa versicolor virginica
-##   setosa         50          0         0
-##   versicolor      0         50         0
-##   virginica       0          0        50
-```
-
 
 Let's look at the coefficients for the best `\(\lambda\)`. 
 
@@ -201,57 +191,25 @@ Let's look at the coefficients for the best `\(\lambda\)`.
 # Re-estimate the model with the best lambda. This in not necessary, since this model
 # is already present in fit
 fit_best &lt;- glmnet(x = as.matrix(X), y = y, family = "multinomial", lambda = fit$lambda.min)
-fit_best$beta
+coeffs &lt;- do.call("cbind", fit_best$beta)
+colnames(coeffs) &lt;- names(fit_best$beta); coeffs
 ```
 
 ```
-## $setosa
-## 12 x 1 sparse Matrix of class "dgCMatrix"
-##                     s0
-## Sepal.Length  .       
-## Sepal.Width   2.730895
-## Petal.Length -3.287708
-## Petal.Width  -1.302060
-## 1             .       
-## 2             .       
-## 3             .       
-## 4             .       
-## 5             .       
-## 6             .       
-## 7             .       
-## 8             .       
-## 
-## $versicolor
-## 12 x 1 sparse Matrix of class "dgCMatrix"
-##                       s0
-## Sepal.Length  0.05332265
-## Sepal.Width   .         
-## Petal.Length  .         
-## Petal.Width   .         
-## 1             .         
-## 2             .         
-## 3             0.01568204
-## 4             0.06572844
-## 5            -0.04947394
-## 6             .         
-## 7             .         
-## 8            -0.25569753
-## 
-## $virginica
-## 12 x 1 sparse Matrix of class "dgCMatrix"
-##                      s0
-## Sepal.Length  .        
-## Sepal.Width  -3.8906888
-## Petal.Length  4.2759684
-## Petal.Width  12.3280548
-## 1             .        
-## 2             0.4061098
-## 3            -0.1251015
-## 4            -0.9410975
-## 5             .        
-## 6             1.6014410
-## 7             .        
-## 8             .
+## 12 x 3 sparse Matrix of class "dgCMatrix"
+##                 setosa  versicolor  virginica
+## Sepal.Length  .         0.05332265  .        
+## Sepal.Width   2.730895  .          -3.8906888
+## Petal.Length -3.287708  .           4.2759684
+## Petal.Width  -1.302060  .          12.3280548
+## 1             .         .           .        
+## 2             .         .           0.4061098
+## 3             .         0.01568204 -0.1251015
+## 4             .         0.06572844 -0.9410975
+## 5             .        -0.04947394  .        
+## 6             .         .           1.6014410
+## 7             .         .           .        
+## 8             .        -0.25569753  .
 ```
 
 
