@@ -1,183 +1,189 @@
 ---
-title: "Variable selection: Lasso and ridge regression"
-date: "<br> Alessandro Zito"
-output:
-  xaringan::moon_reader:
-    css: 
-      - css/xaringan-themer.css
-      - css/slides.css
-    lib_dir: libs
-    nature:
-      ratio: "16:9"
-      highlightLines: true
-      highlightStyle: solarized-light
-      countIncrementalSlides: false
+title: "Case Study 1: Statistical Myths"
+output: 
+  revealjs::revealjs_presentation:
+    theme: night
+    highlight: espresso
+    center: true
+    transition: none
+    fig_caption: true
+    reveal_options:
+      progress: true
+      slideNumber: true
 ---
 
-```{r child = "../setup.Rmd"}
-```
 
 ```{r, include=FALSE}
 library(tidyverse)
+library(kableExtra)
 ```
 
 
-### Fitting linear models
+### Myth 1: Predictor Correlation is a Necessary Condition for Interaction
 
-Linear regression is an amazing tool for inference and prediction. However, the simplest
-linear model may suffer when the number of predictors increases a lot. This is 
-because there is not a unique way to **exclude** certain covariates.
-
-Recall that the linear model optimization problem is the following: given a set of covariates
-$\mathbf{X} \in \mathbb{R}^p$ and a dependent variable $\mathbf{y} \in \mathbb{R}$, we want to find
-the linear combination of the covariates that minimizes the sum of square residuals:
-
-$$\hat{\boldsymbol{\beta}} = \arg \min_{\beta} \ (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^\top(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}),$$
-
-and the solution is the classic OLS estimator $\hat{\boldsymbol{\beta}} = (\mathbf{X}^\top  \mathbf{X})^{-1}\mathbf{X}^\top \mathbf{y}$.
-
-If we want to exclude some covariates, we have the classic **subset selection methods**:
-find the best set of predictors among all possible alternatives. If we want to include for example
-only $k$ predictors, the total number of models we need to evaluate (either in terms of lowest
-residual sum of squares or highers $R^2$ is $p!/[k!(p-k)!]$). Too much, if we consider all possible $k$.
-
-Alternatives that do not consider all the possibilities are 
-
-- Forward stepwise selection: start from a null model, add recursively one predictor and then pick the best model with cross validation.
-- Backward stepwise selection: start from the full model, and then recursively exclude predictors.
-
+*Statistical interaction* does **not** require predictors to be correlated with each other.  Interaction is present when the **association** between a predictor $x$ and outcome $y$ depends on the level of a third factor, $z$. 
 
 ---
-### Alternative: shrinkage!
 
-A convenient alternative instead is provided by **ridge** and **lasso** regression, that is, we want to control for both the bias and the variance of the estimation procedure.
-Both methods return **shrinkage** estimators: the resulting optimal coefficients 
-are pulled towards zero. In particular, ridge regression solves the following minimization problem
+### Example: Weight Training Study 
 
-$$\hat{\boldsymbol{\beta}} = \arg \min_{\beta} \ (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^\top(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) + \lambda||\boldsymbol{\beta}||_2^2,$$
+To start the study, participants (a random sample of stats majors) use a weight machine to measure the maximum weight they can lift in a bicep curl. Suppose these weights $x$ range from 5 to 80 pounds in the sample.
 
-where $||\boldsymbol{\beta}||_2^2 = \sum_{j=1}^p \beta_j^2.$ Here, $\lambda$ is a 
-shrinkage parameter that we tune via *cross-validation*. In particular, $\lambda$ incorporates a 
-**penalty** in our model: if the size of the coefficients is too high, then we will have a 
-greater penalty.
+After they complete the test, a coin flip is used to randomize participants to receive Treatment A ($z=1$) or Treatment B ($z=0$).
 
-The solution for ridge is famously available in closed form, and is
-
-$$
-\hat{\boldsymbol{\beta}}_{ridge} = (\mathbf{X}^\top  \mathbf{X} + \lambda \mathbf{I}_p)^{-1}\mathbf{X}^\top \mathbf{y}
-$$
-Two important notes:
-
-- Ridge coefficient are pulled to 0, but are never set equal to zero under
-a reasonable penalty (*soft penalty*): **no variable selection!**
-- While OLS estimates are scale equivariant (eg. multiplying predictors by a constant
-leads to a scaling of the estimates by the inverse of such a constant). Instead, **ridge regression is not
-equivariant**. We need to standardize the predictors before regression.
-
+Participants on Treatment A take in a weight training class twice weekly in which they complete 3 sets of 10 reps of bicep curls using 5-20 pounds (maximum). Participants on Treatment B participate in a walking program twice weekly in which they walk the 2.9 mile Al Buehler trail. (Participants are not restricted with respect to their prior activities; these treatments are in addition to anything they were doing for fitness before.) After four weeks, the strength test is repeated, and results are recorded in variable $y$.
 
 ---
-### Lasso regression
 
-If we want to incorporate a *hard penalty* and do variable selection, instead, we rely on *lasso*.  
+### Correlation
 
-$$\hat{\boldsymbol{\beta}} = \arg \min_{\beta} \ (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^\top(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) + \lambda||\boldsymbol{\beta}||_1^2,$$
-where $||\boldsymbol{\beta}||_1^2 = \sum_{j=1}^p |\beta_j|.$ The absolute value
-forces excessively high coefficients to be put to 0. 
+Are $x$ and $z$ correlated?  Explain why or why not.
 
-Unfortunately, the lasso solution is not available in closed form. Ro solve it, we rely on 
-various algorithms such as the LARS (Lasso-modified least angle regression) or
-a pariwise coordinate optimization, optimizing successively over each $\beta_j$.
-
-We do not cover the algorithms here. Refer to Chapters 3.4.4 and 3.8.6 of THe Elements 
-of Statistical Learning if you are interested. 
-
-
-What if we want to include both shrinkage and variable selection? **Elastic net!**
-
-$$\hat{\boldsymbol{\beta}} = \arg \min_{\beta} \ (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^\top(\mathbf{y} - \mathbf{X}\boldsymbol{\beta}) + \lambda[\alpha||\boldsymbol{\beta}||_2^2 +  (1-\alpha)||\boldsymbol{\beta}||_1],$$
-
-and $\alpha \in [0, 1]$ is another tuning parameter.
 ---
-### Ridge and Lasso in pictures
 
-Ridge and Lasso have a famous dual optimization problem. For example, in the Lasso case we have
-$$
-\arg\min_\beta (\mathbf{y} - \mathbf{X}\boldsymbol{\beta})^\top(\mathbf{y} - \mathbf{X}\boldsymbol{\beta})  \quad \text{sub} \quad ||\boldsymbol{\beta}||_1\leq \tau.
-$$
-In other words, the $\lambda$ coefficient is just the Lagrange multiplier for this 
-optimization problem: for every $\lambda$ there exists a $\tau$ and vice-versa, so the two problems are equivalent. 
+### Myth 2: Predictors Need to be Normally Distributed
 
-```{r, echo=FALSE, out.width="50%"}
-knitr::include_graphics("LassoRidgePlot.png")
+Does $x$ have to be normal?  Is $z$ normal?  
+
+Is this a problem? Does linear regression assume a distribution on $x$ or $z$?
+
+---
+
+### Back to Example: Pre-post Model on Treatment B (Walking)
+
+Consider the simple model $$y_i=\beta_0+\beta_1 x_i + \varepsilon_i, ~~~ \varepsilon_i \sim N(0,\sigma^2), ~~ i=1,\ldots,n_B$$  
+
+- Suppose $\beta_0=\sigma^2=0$ and $\beta_1=1$. What does this mean, and is this realistic?
+
+- Suppose $\beta_0=0$, $\beta_1=1$, and $\sigma=2$. Is this more realistic? Why or why not?
+
+---
+
+### Back to Example: Pre-post Model on Treatment A (Lifting 10-30 Pounds)
+
+Consider the simple model $$y_i=\beta_0+\beta_1 x_i + \varepsilon_i, ~~~ \varepsilon_i \sim N(0,\sigma^2), ~~ i=1,\ldots,n_A$$  
+
+- Suppose $\beta_0=\sigma^2=0$ and $\beta_1=1$. What does this mean, and is this realistic?
+
+- If $\beta_0 \neq 0$, is $\beta_0>0$ or $\beta_0<0$ more likely?  Why?
+
+- What values for $\beta_1$ and $\sigma$ may be reasonable?
+
+---
+
+### Back to Example: Combining the Groups in One Model
+
+If we want to evaluate a treatment effect, we need to combine the groups into one model!  Let's say we use the model $$y_i=\beta_0+\beta_1 x_i + \beta_2 z_i + \beta_3 x_i z_i + \varepsilon_i, ~~~ \varepsilon_i \sim N(0,\sigma^2), ~~ i=1,\ldots,n.$$
+
+1. What does $\beta_3=0$ mean in terms of the $\beta_1$ values from the two previous models?
+
+2. What does $\beta_2=0$ mean in terms of the $\beta_0$ values from the two previous models?
+
+3. What values of $(\beta_0, \beta_1, \beta_2, \beta_3)$ seem realistic?
+
+---
+
+### Myth 3: Aesthetics are Irrelevant (meet $\alpha$)
+
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("chartio.png")
+```
+Graphic from chartio.com
+
+---
+
+### Myth 4: Table Format Doesn't Matter
+
+```{r, warning=FALSE, message=FALSE}
+library(tidymodels)
+data(Chicago)
+
+Chicago <- Chicago %>% select(ridership, Clark_Lake, Austin, Harlem)
+lm_spec <- linear_reg()
+
+lm_fit <- fit(lm_spec, ridership ~ ., data=Chicago)
+
+tidy(lm_fit)
 ```
 
 ---
-### Lasso and Ridge for logistic regression
-
-For logistic regression, the idea is basically the same as the standard linear regression case,
-with the caveat that a solution is not availble in closed form. 
-
-Letting $y_i  \in \{0, 1\}$, we optimize the following:
-
-$$\arg \min_{(\beta_0, \boldsymbol{\beta})} = - \left\{\sum_{i = 1}^n y_i(\beta_0 + \mathbf{x}_i^\top \boldsymbol{\beta}) + \log(1 + e^{\beta_0 + \mathbf{x}_i^\top \boldsymbol{\beta}}) \right\} + \lambda||\boldsymbol{\beta}||_1.$$
-
-The shrinkage and the variable selection properties remain the same!
-
-Again, we tune $\lambda$ via cross-validation. For example, 10fold is good way of doing it. 
-
-All of these methods are applied via the package `glmnet`. By default, the package 
-runs lasso for a grid of 100 values for $\lambda$. The ridge penalty is specified by letting the parameter $\alpha = 0$. If this is set between 0 and 1, we have the elastic net penalty. 
-
-
----
-### Lasso and Ridge in practice via `glmnet`
 
 ```{r}
-# Load the package to perform ridge and lasso
-library(glmnet)
-# Load the dataset 
-data("iris")
-# Let's add noise covariates and see if the model is able to exclude them
-y <- as.factor(iris$Species)
-x <- iris[, 1:4]
-X <- cbind(x, matrix(rnorm(nrow(x)*8), ncol= 8))
 
-# Run glmnet (via the default cross validation methods)
-fit <- cv.glmnet(x = as.matrix(X), y = y, nfolds = 10, family = "multinomial")
+# now suppose we want 95% CI
+
+lm_table <- lm_fit %>%
+  tidy() %>%
+  mutate(lower_ci = round(estimate - 1.96*std.error, 3),
+         upper_ci = round(estimate + 1.96*std.error, 3)) %>%
+  mutate(conf.int.95 = paste0("(", lower_ci, ", ", upper_ci, ")")) %>%
+  dplyr::select(-c(lower_ci, upper_ci, statistic, p.value))
+
+lm_table
+
 ```
+
 ---
-### Cross validation and the lasso
-Recall that the multinomial deviance is specified as $-2\sum_{i=1}^n\log \hat{\pi}_{i_j}$,
-where $\hat{\pi}_{i_j}$ is the predicted probability of class $j$ for observation $i$.
 
+```{r }
 
-```{r}
-# Check the multinomial deviance for the model to select the best lamda
-plot(fit)
+#Now we want to get rid of the annoying jargon Clark_Lake
+
+lm_table %>%
+  mutate(term=c("Intercept","Clark Lake","Austin","Harlem")) %>%
+  kbl(digits=2, caption = "Linear Regresssion Estimates", 
+      col.names=c("Variable","Estimate","SE","95% CI")) %>%
+  row_spec(0,bold=TRUE) %>%
+  kable_styling()
+
 ```
+
 ---
-### Predict with glmnet
+
+### Myth 5: Scaling Doesn't Matter!
 
 ```{r}
-# Do prediction with the best lambda
-pred <- predict(fit,newx = as.matrix(X), s = "lambda.min", type="class")
+x=runif(1000,10000000,1000000000) #10 mil to 1 bil
+err=rnorm(1000,0,100)
+y=0.0000001*x+err
+tidy(lm(y~x)) %>%
+  kbl(digits=2) %>%
+  kable_styling()
+
+
 ```
 
-Let's look at the coefficients for the best $\lambda$. 
+How do you interpret the estimate of $\beta$ corresponding to the predictor $x$?
+
+---
+
 ```{r}
-# Re-estimate the model with the best lambda. This in not necessary, since this model
-# is already present in fit
-fit_best <- glmnet(x = as.matrix(X), y = y, family = "multinomial", lambda = fit$lambda.min)
-coeffs <- do.call("cbind", fit_best$beta)
-colnames(coeffs) <- names(fit_best$beta); coeffs
+x2=x/1000000000 #convert to billions
+tidy(lm(y~x2)) %>%
+  kbl(digits=2) %>%
+  kable_styling()
+
+
 ```
 
+Note how the test statistic is unaffected, but the estimate can now be interpreted!
+
+---
+
+### Myth 6: All Predictors Act Linearly
 
 
+```{r, echo=FALSE, out.width="70%"}
+knitr::include_graphics("foodsecurity.jpeg")
+```
 
+Is the association between a 100 percentage point increase in percent of poverty line and food security the same across the scale of percent of poverty (x-axis)?
 
+---
 
+### Back to Example: Pre-post Model on Treatment A (Lifting 10-30 Pounds)
 
+Consider model (1) $$y_i=\beta_0+\beta_1 x_i + \varepsilon_i, ~~~ \varepsilon_i \sim N(0,\sigma^2), ~~ i=1,\ldots,n_A$$  and linear spline model (2) $$y_i=\beta_0+\beta_1 x_i + \beta_2 (x_i-15)_+ + \beta_3 (x_i-30)_+ + \varepsilon_i, ~~~ \varepsilon_i \sim N(0,\sigma^2), ~~ i=1,\ldots,n_A$$
 
-
+Note we can use a higher-order spline to avoid discontinuities at the knots.  What might we expect the values of $(\beta_0, \beta_1, \beta_2, \beta_3)$ to be?
 

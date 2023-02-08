@@ -77,6 +77,8 @@ The Kiva 2012 database provides a collection of information on a random sample o
 
 [Revising a Paper](../decks/revisepaper.html)
 
+[Statistical Myths](../decks/stats_myths.html)
+
 (Versions for simple annotation)
 
 [Introduction to Survival Analysis](../decks/survival_new.html)

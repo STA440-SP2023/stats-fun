@@ -77,10 +77,10 @@ Note: this schedule is approximate and is likely to be modified as the course pr
 | February 2  | Categorical Data Models: Logistic and Multinomial Regression |    |
 | February 3  | Linear Discriminant Analysis and Naive Bayes Classification |  Project: Aims, Introduction, and EDA  |
 | February 7  | Variable Subset Selection |   |
-| February 9  | Case 2 Topic |   |
-| February 10  | Lab  |  |
-| February 14  | Writing a Statistical Analysis Plan |  |
-| February 16  | Case/Project Work Day |  |
+| February 9  | Statistical Myths |   |
+| February 10  | Lab: Case/Project Work Day   |  |
+| February 14  | Case/Project Work Day |  |
+| February 16  | Writing a Statistical Analysis Plan |  |
 | February 17  | Lab |   | 
 | February 21  |  Case 2 Collaborative Review     |  Case 2 \& Reviews |
 | February 23  | Case 2 Work Day |  |
