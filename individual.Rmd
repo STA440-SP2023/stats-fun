@@ -51,6 +51,7 @@ Students seeking interesting datasets may wish to consider one or more of the fo
 - Structure of a Data Analysis Report by Prof. Brian Junker (on Sakai): great guide to the bones of a good project report
 - [Slides on Report Writing](decks/reportintrodata.html)
 - [Slides on Statistical Analysis Plans](decks/sap.html)
+- [Slides on Statistical Analysis Plans - easy annotation](decks/sap2.html)
 
 # Reports 
 
