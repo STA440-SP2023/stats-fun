@@ -16,7 +16,7 @@ output:
 
 A *statistical analysis plan (SAP)* describes planned analyses for a study.  This plan serves numerous purposes.
 
-- NIH *requires* submission of a SAP for any funded clinical trial.  According to the NIH director, Dr. Francis COllins, the goal is go discourage "P-value hacking, where people sort of shop around for a statistical test to give them the p-value that they love."
+- NIH *requires* submission of a SAP for any funded clinical trial.  According to the NIH director, Dr. Francis Collins, the goal is go discourage "P-value hacking, where people sort of shop around for a statistical test to give them the p-value that they love."
 - Many journals (including NEJM and JAMA) request the SAP for publication of clinical trials 
 - SAP's for observational studies enhance reproducibility and transparency
 - "Contract" between study PI's and data scientists facilitating clarity in communication and increased efficiency
@@ -57,7 +57,7 @@ Background/Introduction: *This section should be written by the author of the SA
 
 1.2.2 Secondary Hypotheses
 
-## 1. Study Overview
+## 1. Study Overview: Stander et al. (2018)
 
 <small>Background/Introduction: Stander et al. explored post-election lifetimes of Roman Catholic popes in a paper designed to facilitate teaching of survival analysis techniques. We plan to consider a slightly enlarged group of leaders in an attempt to hone in on potential changes in lifespan over the years as well as across leadership types. </small>
 
@@ -74,11 +74,7 @@ The primary hypothesis is that modern leaders typically enjoy longer lifespans t
 
 The secondary hypothesis is that the relationship between year of birth and lifespan may vary depending on leadership type, which is an imperfect proxy for sociopolitical conditions that may be changing over time.
 
-## Complete this section for your project!
 
-##
-
-![](images/section3.png)
 
 ## Primary Outcome (3.1)
 
@@ -97,7 +93,11 @@ The secondary hypothesis is that the relationship between year of birth and life
 | Leadership Type | Leader of What?| Type (leaders.RData) | 5-level factor (Pope, Emperor of China, Emperor of Japan, Dalai Lama, US President) |
 | Date Assumed Office | Date Assumed Role | Year.Elected (popes_25_December_2016.csv); to be determined for other leaders | Integer year; to be determined for non-popes |
 
-## Fill in outcomes and variables for your project!
+## Complete this section for your project!
+
+##
+
+![](images/section3.png)
 
 ## Study Plan and Design, Sample Size, and Interim Analyses (if planned)
 
