@@ -51,7 +51,7 @@ Glaucoma is the leading cause of irreversible blindness world wide with over 60 
 
 # Lectures
 
-[Introduction to Case Study 3]
+[Introduction to Case Study 3](../decks/CaseStudy3Intro.pdf)
 
 [Areal Spatial Statistics]
 
