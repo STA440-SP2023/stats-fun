@@ -112,7 +112,7 @@ letters, but might have alignemnt gaps *-* or other [special characters](https:/
 how to deal with these terms, as long as you justify yorur choice. 
 
 
-# Assignments and Reports: UPDATE
+# Assignments and Reports: 
 
 -   Report and reproducible code (Group assignment due February 28): produce a 8 page (maximum) report that clearly addresses the case study goals. The first page of the report should include the team number and names of all team members. This report should follow the format of a standard scientific report and should include sections for the introduction, methods, results, and discussion. The methods section should clearly identify the approach to model selection and evaluation, and the results section should clearly specify the final model selected, along with evidence the model provides a good fit to the data. Code should be fully reproducible. Code run time should be clearly specified at the head of the file.
 - Peer review of reports will occur during the class on February 21. During this class you will use the peer review rubric provided to provide constructive feedback on the other group's report you have been assigned.
