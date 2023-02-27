@@ -1,5 +1,5 @@
 ---
-title: "Case Study 3: Disease progression in glaucoma"
+title: "Case Study 3: Disease Progression in Glaucoma"
 ---
 
 ```{r, echo=FALSE, include=FALSE}
