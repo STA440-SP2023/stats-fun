@@ -1,0 +1,74 @@
+---
+title: "Giving a Statistical Presentation"
+output: 
+  revealjs::revealjs_presentation:
+    theme: night
+    highlight: espresso
+    center: true
+    transition: none
+    fig_caption: true
+    reveal_options:
+      progress: true
+      slideNumber: true
+---
+  
+## Statistical Presentations
+
+Statistical presentations walk a fine line between communicating results in terms of subject matter that can be easily understood by a broad audience, and providing sufficient detail regarding modeling to satisfy statisticians in the audience.  
+
+When speaking with statisticians, a quick way to tank quickly is not to make the statistical model and any relevant analysis methods clear.  You want to be sure statisticians know exactly how the results you're sharing are generated!
+
+---
+
+## Good Resources
+
+Two good external resources on scientific presentations include [Ten Simple Rules for Making Good Oral Presentations by Bourne](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1857815/) (2007 PLOS) and [Present Your Data Like a Pro by Schwartzberg](https://hbr.org/2020/02/present-your-data-like-a-pro) in the Harvard Business Review (2020).
+
+---
+
+
+
+## Use Logical Order for Your Story
+
+Set the stage (beginning -- why you're interested in your topic and what you hope to learn -- this piece should capture the interest of the audience), tell the story (nuts and bolts in the middle, provide enough details for them to know what you did without losing them -- or if you lose them, it shouldn't be for long), and you have a big finish (the end), where the take-home message is clearly understood.
+
+---
+
+## Talk to the Audience
+
+Know the audience and their expertise!  You can assume everyone in the room has completed the statistical science core courses, for example. However, not everyone will have taken machine learning or causal inference.  Provide a bit more detail for methods that may not be familiar to the whole audience.
+
+---
+
+## Less is More
+
+You won't be able to talk about every single thing you did. Think about the story you want to tell, and make sure you have time to describe key components.  Don't let the main story get lost in too many details, e.g. descriptions of 10 sensitivity analyses!
+
+---
+
+## Make Sure Graphics are Clear and Easy to Read
+
+Want to annoy your audience?  Add a bunch of tables and figures that are poorly labeled and use very small font.  Then don't give them enough time to make sense of them.
+
+There's no point in a graphic that doesn't help tell the story or that irritates your listeners.
+
+---
+
+## Make Sure the Story Persists
+
+Tell the “so what”: your report and presentation should be more than a list of specifications and interpretations. Focus on what the results mean, i.e. what you want the audience to remember a week after they see your presentation!
+
+
+
+---
+
+## Practice and Time Your Presentation
+
+Practice, practice, practice. Set up zoom to record you in practice, so you can watch afterwards for a sense of where you spent your time, what comes across, and how you relate to your audience.  Then make adjustments accordingly.
+
+--- 
+
+## Acknowledge References and Those Who Helped
+
+Be sure major references are included! If anyone provided a lot of helpful guidance, be sure to thank them. If your project was financially supported (likely not the case in 440), be sure to thank your sponsor!
+

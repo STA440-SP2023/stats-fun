@@ -52,6 +52,7 @@ Students seeking interesting datasets may wish to consider one or more of the fo
 - [Slides on Report Writing](decks/reportintrodata.html)
 - [Slides on Statistical Analysis Plans](decks/sap.html)
 - [Slides on Statistical Analysis Plans - easy annotation](decks/sap2.html)
+- [Slides on Presentations](decks/presentations.html)
 
 # Reports 
 
